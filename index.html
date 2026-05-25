@@ -126,6 +126,14 @@ tailwind.config = {
 
   /* ─── Smooth scroll ─── */
   html { scroll-behavior: smooth; }
+
+  /* ─── UX-01: Navbar hide/show on mobile scroll ─── */
+  #navbar {
+    transition: transform 0.3s ease;
+  }
+  #navbar.nav-hidden {
+    transform: translateY(-100%);
+  }
 </style>
 </head>
 
@@ -947,6 +955,33 @@ function handleFormSubmit(e) {
   });
 
   startTimer();
+})();
+
+/* ─── UX-01: Navbar hide on scroll (mobile only) ─── */
+(function initNavbarScroll() {
+  var navbar  = document.getElementById('navbar');
+  var lastY   = 0;
+  var ticking = false;
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var currentY = window.scrollY;
+        if (window.innerWidth < 768) {
+          if (currentY > lastY && currentY > navbar.offsetHeight) {
+            navbar.classList.add('nav-hidden');
+          } else {
+            navbar.classList.remove('nav-hidden');
+          }
+        } else {
+          navbar.classList.remove('nav-hidden');
+        }
+        lastY = currentY;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 })();
 </script>
 
