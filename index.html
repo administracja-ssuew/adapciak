@@ -120,6 +120,13 @@ tailwind.config = {
 
   /* ─── Smooth scroll for all browsers ─── */
   html { scroll-behavior: smooth; }
+
+  /* ─── ANIM-02: Parallax hero background ─── */
+  #start { background-attachment: fixed; }
+  @media (hover: none) {
+    /* iOS Safari and touch devices: background-attachment:fixed breaks with cover */
+    #start { background-attachment: scroll; }
+  }
 </style>
 </head>
 
@@ -780,6 +787,34 @@ function handleFormSubmit(e) {
   document.getElementById('form-success').classList.remove('hidden');
   e.target.reset();
 }
+
+/* ─── ANIM-02: Parallax logo ─── */
+(function initParallax() {
+  const hero = document.getElementById('start');
+  if (!hero) return;
+  const logo = hero.querySelector('.logo-blend');
+  if (!logo) return;
+  let ticking = false;
+
+  function applyParallax() {
+    const scrollY = window.scrollY;
+    const heroH = hero.offsetHeight;
+    if (scrollY > heroH) {
+      ticking = false;
+      return; // outside hero — skip transform
+    }
+    // Logo moves at 40% of scroll speed — adjust factor (0.3–0.4) if effect too strong
+    logo.style.transform = 'translateY(' + (scrollY * 0.4) + 'px)';
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(applyParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+})();
 </script>
 
 </body>
