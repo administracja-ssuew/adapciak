@@ -15,7 +15,7 @@ the page is production-ready for the August 2026 event.
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Animacje** - Countdown, parallax hero, animowane liczniki, zaktualizowany badge daty
+- [x] **Phase 1: Animacje** - Countdown, parallax hero, animowane liczniki, zaktualizowany badge daty
 - [ ] **Phase 2: Funkcjonalność i treść** - Lightbox galerii, formularz Formspree, nawigacja hide/show, back-to-top, meta i linki
 
 ## Phase Details
@@ -54,5 +54,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Animacje | 2/2 | Complete (pending human verify) | 2026-05-25 |
+| 1. Animacje | 2/2 | Complete — verified | 2026-05-25 |
 | 2. Funkcjonalność i treść | 0/TBD | Not started | - |

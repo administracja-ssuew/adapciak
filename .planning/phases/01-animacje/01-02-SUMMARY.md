@@ -91,9 +91,18 @@ None — plan executed exactly as written.
 
 - `data-target="6"` (Edycji), `data-target="500"` (Uczestnikow), `data-target="3"` (Sceny): placeholder numbers per plan note. Real numbers to be confirmed with client before launch. The counters animate correctly from 0 to the stub values — the feature works, only the content is approximate.
 
-## Checkpoint Pending
+## Checkpoint: APPROVED
 
-Task 3 is a `checkpoint:human-verify` gate. The automated tasks (1 and 2) are complete and committed. Human verification of the full visual experience (badge, countdown, parallax, counters) is required before the phase can be marked fully verified.
+Task 3 was a `checkpoint:human-verify` gate. The user reviewed all 8 visual checks on 2026-05-25 and approved:
+
+1. Hero badge reads "30.08–06.09.2026 • WROCŁAW • UEW"
+2. Countdown shows four numbers (~461 days) updating every second
+3. DevTools Console: ZERO errors on page load
+4. Hero background parallax (fixed-attachment) visible during scroll
+5. Adapciak logo drifts with 40% scroll-rate parallax
+6. Stats strip counters animate from 0 when #liczby enters viewport
+7. iPhone 12 Pro emulation: no fixed-attachment glitch (scrolls normally)
+8. Page reload: countdown shows current values immediately (no blank flash)
 
 ## Verification Checklist
 
@@ -109,6 +118,6 @@ Task 3 is a `checkpoint:human-verify` gate. The automated tasks (1 and 2) are co
 - [x] `counterObs.unobserve` present (1 match — fires once only)
 - [x] Only ONE closing `</script>` for the main script block
 - [x] `#liczby` positioned after `#start` hero and before `#o-wydarzeniu`
-- [ ] Human visual verification: pending checkpoint
+- [x] Human visual verification: APPROVED — all 8 checks passed (2026-05-25)
 
 ## Self-Check: PASSED
