@@ -29,7 +29,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Przewijając stronę w dół, logo i tło hero poruszają się z efektem parallax (wolniejszy scroll niż treść)
   3. Gdy sekcja ze statystykami (np. "500+ uczestników") wjeżdża w viewport, liczby animują się od 0 do wartości docelowej
   4. Hero badge wyświetla "30.08–06.09.2026 • WROCŁAW • UEW" (nie "TBA 2025")
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — Badge date fix (ANIM-04) + parallax CSS & JS (ANIM-02)
+- [ ] 01-02-PLAN.md — Countdown timer HTML & JS (ANIM-01) + stats section & counter animation (ANIM-03)
 **UI hint**: yes
 
 ### Phase 2: Funkcjonalność i treść
@@ -51,5 +54,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Animacje | 0/TBD | Not started | - |
+| 1. Animacje | 0/2 | Not started | - |
 | 2. Funkcjonalność i treść | 0/TBD | Not started | - |
