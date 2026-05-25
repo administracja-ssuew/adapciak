@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html class="dark" lang="pl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Adapciak – flagowe wydarzenie Samorządu Studentów UEW we Wrocławiu. Dołącz do największej studenckiej imprezy integracyjnej!"/>
+<meta property="og:title" content="Adapciak – SSUEW"/>
+<meta property="og:description" content="Największa studencka impreza integracyjna UEW we Wrocławiu."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="./ADAPCIAK_LOGO.png"/>
+<title>Adapciak – SSUEW</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        /* ═══════════════════════════════════
+           BRAND TOKENS — zmień primary na kolor Adapciaka
+           gdy poznasz finalny branding
+        ═══════════════════════════════════ */
+        "primary":                  "#8B5CF6",  /* główny kolor — violet */
+        "primary-dark":             "#6D28D9",  /* hover/ciemniejszy */
+        "surface-border":           "#2E2B42",
+        "surface":                  "#110F1C",
+        "surface-container-low":    "#15111F",
+        "on-surface":               "#E4E1F0",
+        "surface-dim":              "#0D0B14",
+        "secondary":                "#BAB6CC",
+        "surface-container-lowest": "#090712",
+        "surface-container":        "#1A1727",
+        "surface-elevated":         "#1B1827",
+        "surface-container-high":   "#221F33",
+        "surface-bright":           "#3D3A56",
+        "text-muted":               "#8A87A0",
+        "background":               "#0D0B14",
+        "on-background":            "#E4E1F0",
+      },
+      borderRadius: {
+        "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+      },
+      spacing: {
+        "margin-mobile": "16px", "base": "8px",
+        "margin-desktop": "64px", "gutter": "24px", "section-gap": "120px"
+      },
+      fontFamily: {
+        "caption": ["Inter"], "body-md": ["Inter"], "label-bold": ["Inter"],
+        "headline-lg": ["Bebas Neue"], "section-label": ["Inter"],
+        "display-hero": ["Bebas Neue"], "body-lg": ["Inter"], "headline-md": ["Bebas Neue"]
+      },
+      fontSize: {
+        "caption":      ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+        "body-md":      ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+        "label-bold":   ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+        "headline-lg":  ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+        "section-label":["14px", { "lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+        "display-hero": ["80px", { "lineHeight": "80px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+        "body-lg":      ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+        "headline-md":  ["32px", { "lineHeight": "32px", "fontWeight": "400" }]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  /* ─── Clip-path decorative slants ─── */
+  .clip-slant         { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+  .clip-slant-reverse { clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); }
+
+  /* ─── Logo blend: makes black bg transparent on dark surfaces ─── */
+  .logo-blend { mix-blend-mode: screen; filter: brightness(1.3); }
+
+  /* ─── Scroll reveal animations ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible          { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1.visible  { transition-delay: 0.1s; }
+  .reveal-delay-2.visible  { transition-delay: 0.2s; }
+  .reveal-delay-3.visible  { transition-delay: 0.3s; }
+  .reveal-delay-4.visible  { transition-delay: 0.4s; }
+
+  /* ─── Mobile menu slide ─── */
+  #mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #mobile-menu.open { max-height: 600px; }
+
+  /* ─── Hamburger icon swap ─── */
+  #ico-menu  { transition: opacity 0.2s, transform 0.2s; }
+  #ico-close { opacity: 0; transform: rotate(-90deg); position: absolute; transition: opacity 0.2s, transform 0.2s; }
+  .menu-open #ico-menu  { opacity: 0; transform: rotate(90deg); }
+  .menu-open #ico-close { opacity: 1; transform: rotate(0deg); }
+
+  /* ─── Active nav link ─── */
+  .nav-link.is-active { color: #8B5CF6 !important; border-bottom: 2px solid #8B5CF6; padding-bottom: 2px; }
+
+  /* ─── Gallery grid ─── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 280px 280px;
+    gap: 12px;
+  }
+  .gallery-grid .featured { grid-column: span 2; }
+
+  /* ─── Gallery image hover ─── */
+  .gallery-cell img { transition: transform 0.5s ease; }
+  .gallery-cell:hover img { transform: scale(1.05); }
+
+  /* ─── Smooth scroll for all browsers ─── */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+
+<!-- ══════════════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════════════ -->
+<nav id="navbar" class="bg-surface/90 backdrop-blur-md border-b border-surface-border w-full top-0 sticky z-50">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-3">
+
+    <!-- Logo -->
+    <a href="#start" aria-label="Adapciak - powrót na górę">
+      <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-12 logo-blend"/>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex gap-gutter items-center">
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#start"        data-section="start">Start</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#o-wydarzeniu" data-section="o-wydarzeniu">O wydarzeniu</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#harmonogram"  data-section="harmonogram">Harmonogram</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#wolontariat"  data-section="wolontariat">Wolontariat</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy"    data-section="partnerzy">Partnerzy</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#faq"          data-section="faq">FAQ</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#galeria"      data-section="galeria">Galeria</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#kontakt"      data-section="kontakt">Kontakt</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block" href="#zapisy">ZAPISZ SIĘ</a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="menu-btn" class="md:hidden relative w-9 h-9 flex items-center justify-center text-on-surface" aria-label="Menu">
+        <span id="ico-menu"  class="material-symbols-outlined">menu</span>
+        <span id="ico-close" class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div id="mobile-menu" class="md:hidden border-t border-surface-border bg-surface">
+    <div class="flex flex-col px-margin-mobile py-4 gap-1">
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#start"        onclick="closeMobileMenu()">Start</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#o-wydarzeniu" onclick="closeMobileMenu()">O wydarzeniu</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#harmonogram"  onclick="closeMobileMenu()">Harmonogram</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#wolontariat"  onclick="closeMobileMenu()">Wolontariat</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy"    onclick="closeMobileMenu()">Partnerzy</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"          onclick="closeMobileMenu()">FAQ</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#galeria"      onclick="closeMobileMenu()">Galeria</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3"                                     href="#kontakt"      onclick="closeMobileMenu()">Kontakt</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block" href="#zapisy" onclick="closeMobileMenu()">ZAPISZ SIĘ</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════ -->
+<section id="start" class="relative min-h-[90vh] flex items-center justify-center pt-20 pb-32 clip-slant"
+  style="
+    background-image: linear-gradient(to bottom, rgba(13,11,20,0.35), rgba(13,11,20,1)),
+                      url('./images/hero.jpg');
+    background-color: #0D0B14;
+    background-size: cover;
+    background-position: center;
+  ">
+  <!-- Decorative glow orbs -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full blur-3xl" style="background: rgba(139,92,246,0.12);"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full blur-3xl" style="background: rgba(109,40,217,0.15);"></div>
+  </div>
+
+  <div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto flex flex-col items-center gap-8">
+    <!-- Kicker badge -->
+    <div class="inline-flex items-center gap-2 bg-black/50 border border-surface-border backdrop-blur-sm px-4 py-1.5 rounded-full reveal">
+      <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+      <span class="font-section-label text-section-label text-primary uppercase">TBA 2025 • WROCŁAW • UEW</span>
+    </div>
+
+    <!-- Logo jako hero visual -->
+    <div class="reveal reveal-delay-1">
+      <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="logo-blend mx-auto" style="max-width: min(560px, 88vw);"/>
+    </div>
+
+    <p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto reveal reveal-delay-2">
+      Największa studencka impreza integracyjna UEW wraca! Dołącz do społeczności akademickiej i przeżyj coś niezapomnianego.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto reveal reveal-delay-3">
+      <a class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center" href="#zapisy">ZAPISZ SIĘ</a>
+      <a class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors text-center" href="#wolontariat">ZOSTAŃ WOLONTARIUSZEM</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     O WYDARZENIU
+══════════════════════════════════════════════════════ -->
+<section id="o-wydarzeniu" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <!-- Tekst -->
+    <div class="flex flex-col gap-6 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2">
+        <span class="w-4 h-4 bg-primary inline-block" aria-hidden="true"></span>O wydarzeniu
+      </span>
+      <h2 class="font-headline-lg text-headline-lg md:text-[64px] md:leading-[64px] uppercase italic text-white">
+        Więcej niż impreza
+      </h2>
+      <div class="space-y-4 font-body-md text-body-md text-secondary">
+        <p>Adapciak to flagowe wydarzenie Samorządu Studentów Uniwersytetu Ekonomicznego we Wrocławiu, które co roku otwiera nowy rok akademicki z przytupem.</p>
+        <p>To dzień pełen muzyki, atrakcji, networkingu i dobrej energii — stworzony dla studentów przez studentów. Dołącz do setek uczestników i stań się częścią naszej społeczności!</p>
+      </div>
+      <div class="mt-4 bg-surface-elevated p-8 border border-surface-border border-l-4 border-l-primary">
+        <h3 class="font-headline-md text-headline-md text-white mb-4">Adapciak organizuje SSUEW</h3>
+        <p class="font-body-md text-body-md text-secondary mb-6">
+          Samorząd Studentów UEW działa dla Was — studentów Uniwersytetu Ekonomicznego we Wrocławiu. Adapciak to jeden z naszych flagowych projektów, w którym możesz uczestniczyć, ale też współtworzyć jako wolontariusz.
+        </p>
+        <a class="text-primary font-label-bold text-label-bold uppercase hover:text-white transition-colors flex items-center gap-2" href="https://samorzad.ue.wroc.pl" target="_blank" rel="noopener">
+          Odwiedź stronę SSUEW <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Zdjęcie -->
+    <div class="relative h-[480px] lg:h-[580px] w-full reveal reveal-delay-2">
+      <div class="absolute inset-0 bg-primary/20 translate-x-4 translate-y-4 border border-primary" aria-hidden="true"></div>
+      <!-- ← ZAMIEŃ NA ZDJĘCIE: usuń div poniżej i odkomentuj img -->
+      <!-- <img src="./images/o-wydarzeniu.jpg" alt="Adapciak - zdjęcie z poprzedniej edycji" class="absolute inset-0 w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500"> -->
+      <div class="absolute inset-0 bg-surface-elevated border border-surface-border flex items-center justify-center">
+        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie z Adapciaka</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HARMONOGRAM
+══════════════════════════════════════════════════════ -->
+<section id="harmonogram" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-surface-border">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Plan dnia</span>
+      <h2 class="font-headline-lg text-headline-lg md:text-[64px] uppercase italic text-white">Harmonogram</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Pełny plan Adapciaka — od powitania po afterparty. Bądź z nami przez cały dzień!</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+
+      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal">
+        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
+          <span class="font-display-hero text-display-hero text-white">1</span>
+        </div>
+        <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">09:00</span>
+        <h3 class="font-headline-md text-headline-md text-white">Rejestracja</h3>
+        <p class="font-body-md text-body-md text-secondary">Odbiór identyfikatorów i wstępne informacje od organizatorów. Czas na pierwsze znajomości!</p>
+      </div>
+
+      <div class="bg-surface-elevated border border-primary p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 scale-105 shadow-2xl z-10 reveal reveal-delay-1">
+        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
+          <span class="font-display-hero text-display-hero text-primary">2</span>
+        </div>
+        <span class="bg-white text-black font-label-bold text-label-bold px-3 py-1 uppercase w-max">10:00</span>
+        <h3 class="font-headline-md text-headline-md text-primary">Otwarcie</h3>
+        <p class="font-body-md text-body-md text-secondary">Oficjalne otwarcie Adapciaka. Przemówienie władz SSUEW i UEW. Start wielkiej zabawy!</p>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
+        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
+          <span class="font-display-hero text-display-hero text-white">3</span>
+        </div>
+        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">11:00</span>
+        <h3 class="font-headline-md text-headline-md text-white">Warsztaty</h3>
+        <p class="font-body-md text-body-md text-secondary">Bloki tematyczne, integracja i poznawanie środowiska akademickiego UEW.</p>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-1">
+        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
+          <span class="font-display-hero text-display-hero text-white">4</span>
+        </div>
+        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">13:00</span>
+        <h3 class="font-headline-md text-headline-md text-white">Lunch & Networking</h3>
+        <p class="font-body-md text-body-md text-secondary">Przerwa obiadowa — nawiąż znajomości, które zostają na całe studia.</p>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
+        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
+          <span class="font-display-hero text-display-hero text-white">5</span>
+        </div>
+        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">15:00</span>
+        <h3 class="font-headline-md text-headline-md text-white">Strefa Rozrywki</h3>
+        <p class="font-body-md text-body-md text-secondary">Gry, konkursy i atrakcje z nagrodami. Pokaż z czym to się je!</p>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-3">
+        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
+          <span class="font-display-hero text-display-hero text-white">6</span>
+        </div>
+        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">18:00</span>
+        <h3 class="font-headline-md text-headline-md text-white">Afterparty</h3>
+        <p class="font-body-md text-body-md text-secondary">Czas zakończyć Adapciaka tak jak się zaczął — z energią i w dobrym towarzystwie!</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     ZAPISY — CTA BANNER
+══════════════════════════════════════════════════════ -->
+<section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 45%, #8B5CF6 100%);">
+  <div class="max-w-4xl mx-auto text-center reveal">
+    <h2 class="font-display-hero text-display-hero md:text-[100px] md:leading-[90px] uppercase italic text-white mb-6 drop-shadow-2xl">
+      Gotowy<br/>na Adapciaka?
+    </h2>
+    <p class="font-body-lg text-body-lg mb-12 max-w-xl mx-auto" style="color: rgba(255,255,255,0.75);">
+      Zarejestruj się już teraz i zabezpiecz swoje miejsce na największej imprezie studenckiej UEW!
+    </p>
+    <!-- ← podmień href na link do formularza zapisów -->
+    <a class="bg-white text-black font-headline-md text-headline-md px-12 py-4 hover:bg-black hover:text-white transition-colors duration-300 inline-block" href="#">ZAPISZ SIĘ ONLINE</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     WOLONTARIAT
+══════════════════════════════════════════════════════ -->
+<section id="wolontariat" class="relative py-section-gap flex items-center justify-center clip-slant-reverse"
+  style="
+    background-image: linear-gradient(to right, rgba(13,11,20,0.93), rgba(13,11,20,0.5)),
+                      url('./images/wolontariat.jpg');
+    background-color: #15111F;
+    background-size: cover;
+    background-position: center;
+  ">
+  <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-2 gap-gutter">
+    <div class="flex flex-col gap-8 reveal">
+      <div>
+        <span class="font-section-label text-section-label text-primary uppercase mb-2 block">Wolontariat</span>
+        <h2 class="font-display-hero text-display-hero md:text-[80px] md:leading-[72px] uppercase italic text-white drop-shadow-lg">
+          Zostań<br/><span class="text-primary">Wolontariuszem</span>
+        </h2>
+      </div>
+      <p class="font-body-lg text-body-lg text-secondary">
+        Chcesz być częścią ekipy tworzącej Adapciaka? Dołącz do naszego zespołu wolontariuszy i pomóż nam zrobić najlepszą edycję w historii!
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">event</span>
+          <div>
+            <h4 class="font-label-bold text-label-bold text-white mb-1">Dzień Adapciaka</h4>
+            <p class="font-caption text-caption text-secondary">Bądź tam, gdzie dzieje się wszystko</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">favorite</span>
+          <div>
+            <h4 class="font-label-bold text-label-bold text-white mb-1">Działasz w dobrym celu</h4>
+            <p class="font-caption text-caption text-secondary">Tworzysz wydarzenie dla całego UEW</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">school</span>
+          <div>
+            <h4 class="font-label-bold text-label-bold text-white mb-1">Zyskasz doświadczenie</h4>
+            <p class="font-caption text-caption text-secondary">Praktyka + oficjalne zaświadczenie</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">group</span>
+          <div>
+            <h4 class="font-label-bold text-label-bold text-white mb-1">Poznasz ekipę SSUEW</h4>
+            <p class="font-caption text-caption text-secondary">Drzwi do samorządu otwarte!</p>
+          </div>
+        </div>
+      </div>
+      <!-- ← podmień href na link do formularza wolontariatu -->
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors inline-block w-max mt-4" href="#">
+        DOŁĄCZ DO WOLONTARIUSZY
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PARTNERZY
+══════════════════════════════════════════════════════ -->
+<section id="partnerzy" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Partnerzy</span>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Partnerzy Adapciaka</h2>
+    </div>
+
+    <!-- Grid 4×2 — podmień każdy div.partner-cell na <img src="..."> po uzyskaniu loga -->
+    <div class="grid grid-cols-2 md:grid-cols-4 border border-surface-border reveal">
+      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <!-- <img src="./images/partners/uew.svg" alt="Uniwersytet Ekonomiczny we Wrocławiu" class="max-h-10 max-w-full filter grayscale group-hover:grayscale-0 transition-all"> -->
+        <span class="font-headline-md text-headline-md text-surface-bright group-hover:text-primary transition-colors">UEW</span>
+      </div>
+      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-headline-md text-headline-md text-surface-bright group-hover:text-primary transition-colors">SSUEW</span>
+      </div>
+      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 3</span>
+      </div>
+      <div class="partner-cell border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 4</span>
+      </div>
+      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 5</span>
+      </div>
+      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 6</span>
+      </div>
+      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 7</span>
+      </div>
+      <div class="partner-cell p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+        <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 8</span>
+      </div>
+    </div>
+    <p class="text-center font-caption text-caption text-surface-bright mt-6">
+      Chcesz zostać partnerem Adapciaka?
+      <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary hover:underline">Napisz do nas!</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════════════ -->
+<section id="faq" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-surface-border">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">FAQ</span>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Najczęściej zadawane pytania</h2>
+    </div>
+    <div class="space-y-4">
+
+      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+          Jak wygląda rejestracja na Adapciaka?
+          <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
+          Rejestracja odbywa się przez formularz online dostępny po kliknięciu przycisku „Zapisz się". Po rejestracji otrzymasz e-mailem potwierdzenie oraz dalsze instrukcje dotyczące odbioru wejściówki.
+        </div>
+      </details>
+
+      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+          Kiedy i gdzie odbywa się Adapciak?
+          <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
+          Data i dokładne miejsce zostaną ogłoszone wkrótce na stronie i naszych mediach społecznościowych. Śledź nas, żeby nie przegapić ogłoszenia!
+        </div>
+      </details>
+
+      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+          Czy udział w Adapciaku jest płatny?
+          <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
+          Udział w Adapciaku jest bezpłatny dla wszystkich uczestników. Wymagana jest jedynie wcześniejsza rejestracja przez formularz online.
+        </div>
+      </details>
+
+      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+          Jak mogę zostać wolontariuszem?
+          <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
+          Wypełnij formularz zgłoszeniowy wolontariusza dostępny w sekcji „Wolontariat" na tej stronie. Skontaktujemy się z Tobą w ciągu kilku dni roboczych z dalszymi informacjami.
+        </div>
+      </details>
+
+      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+          Czy Adapciak jest tylko dla studentów UEW?
+          <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
+          Adapciak jest przede wszystkim skierowany do studentów UEW, jednak serdecznie zapraszamy również studentów innych wrocławskich uczelni. Szczegółowe warunki uczestnictwa zostaną podane przy ogłoszeniu zapisów.
+        </div>
+      </details>
+
+      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+          Czy mogę zrezygnować po rejestracji?
+          <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </summary>
+        <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
+          Tak — rezygnację zgłoś mailowo na adres organizatorów do 3 dni przed wydarzeniem. Swoje miejsce możesz przekazać innej osobie po wcześniejszym poinformowaniu organizatorów.
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     GALERIA
+══════════════════════════════════════════════════════ -->
+<section id="galeria" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Galeria</span>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Poprzednie edycje</h2>
+    </div>
+    <!-- Gallery: duże zdjęcie (2 kol.) + 4 małe.
+         Podmień placeholder divy na:
+         <div class="gallery-cell featured overflow-hidden">
+           <img src="./images/galeria/1.jpg" alt="..." class="w-full h-full object-cover">
+         </div>
+    -->
+    <div class="gallery-grid reveal">
+      <div class="featured overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center relative group">
+        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie główne (2×)</span>
+      </div>
+      <div class="overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center group">
+        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie 2</span>
+      </div>
+      <div class="overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center group">
+        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie 3</span>
+      </div>
+      <div class="overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center group">
+        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie 4</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     KONTAKT
+══════════════════════════════════════════════════════ -->
+<section id="kontakt" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-surface-border">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Kontakt</span>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Masz pytania?</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Nasz zespół chętnie odpowie na wszystkie pytania dotyczące Adapciaka, rejestracji i wolontariatu.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <!-- Info kontaktowe -->
+      <div class="flex flex-col gap-8 reveal">
+        <div>
+          <p class="font-section-label text-section-label text-primary uppercase mb-3">Email</p>
+          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="font-headline-md text-headline-md text-white hover:text-primary transition-colors break-all">
+            adapciak@samorzad.ue.wroc.pl
+          </a>
+        </div>
+        <div>
+          <p class="font-section-label text-section-label text-primary uppercase mb-3">Social media</p>
+          <div class="flex gap-3 flex-wrap">
+            <a href="#" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-[16px]" aria-hidden="true">group</span> Facebook
+            </a>
+            <a href="#" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-[16px]" aria-hidden="true">photo_camera</span> Instagram
+            </a>
+            <a href="#" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-[16px]" aria-hidden="true">music_video</span> TikTok
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="font-section-label text-section-label text-primary uppercase mb-3">Organizator</p>
+          <p class="font-body-md text-body-md text-secondary leading-relaxed">
+            Samorząd Studentów<br/>
+            Uniwersytetu Ekonomicznego we Wrocławiu<br/>
+            ul. Komandorska 118/120, 53-345 Wrocław
+          </p>
+        </div>
+      </div>
+
+      <!-- Formularz kontaktowy -->
+      <form class="flex flex-col gap-5 reveal reveal-delay-2" onsubmit="handleFormSubmit(event)">
+        <div>
+          <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-name">Imię i nazwisko</label>
+          <input id="contact-name" type="text" placeholder="Jan Kowalski" required
+            class="w-full bg-surface-elevated border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
+        </div>
+        <div>
+          <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-email">Adres e-mail</label>
+          <input id="contact-email" type="email" placeholder="jan.kowalski@example.com" required
+            class="w-full bg-surface-elevated border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
+        </div>
+        <div>
+          <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-msg">Wiadomość</label>
+          <textarea id="contact-msg" rows="5" placeholder="Twoja wiadomość..." required
+            class="w-full bg-surface-elevated border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted resize-none"></textarea>
+        </div>
+        <button type="submit" class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors w-max">
+          WYŚLIJ WIADOMOŚĆ
+        </button>
+        <p id="form-success" class="hidden text-primary font-label-bold text-label-bold">✓ Wiadomość wysłana! Skontaktujemy się wkrótce.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     ORGANIZATORZY
+══════════════════════════════════════════════════════ -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Organizatorzy</span>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Nasz zespół</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Poznaj ludzi stojących za Adapciakiem. Pracujemy z pasją, żeby stworzyć dla Was niezapomniane wydarzenie.</p>
+    </div>
+
+    <!-- Podmień inicjały i dane. Zdjęcie: zamień div.team-photo na <img src="./images/team/1.jpg" ...> -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+
+      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal flex flex-col">
+        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+            <span class="font-headline-md text-headline-md text-primary">XX</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col gap-2 flex-1">
+          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <p class="font-caption text-caption text-secondary flex-1">Koordynator/ka Adapciaka</p>
+          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
+        </div>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal reveal-delay-1 flex flex-col">
+        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+            <span class="font-headline-md text-headline-md text-primary">XX</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col gap-2 flex-1">
+          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Marketingu</p>
+          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
+        </div>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal reveal-delay-2 flex flex-col">
+        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+            <span class="font-headline-md text-headline-md text-primary">XX</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col gap-2 flex-1">
+          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Logistyki</p>
+          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
+        </div>
+      </div>
+
+      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal reveal-delay-3 flex flex-col">
+        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+            <span class="font-headline-md text-headline-md text-primary">XX</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col gap-2 flex-1">
+          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Wolontariatu</p>
+          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer class="bg-surface-container-lowest border-t border-surface-border flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-12 gap-gutter">
+  <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-16 logo-blend"/>
+  <div class="flex flex-wrap justify-center gap-6">
+    <a class="text-text-muted hover:text-primary transition-colors font-body-md text-body-md" href="#">Polityka Prywatności</a>
+    <a class="text-text-muted hover:text-primary transition-colors font-body-md text-body-md" href="#">Regulamin</a>
+    <a class="text-text-muted hover:text-primary transition-colors font-body-md text-body-md" href="#kontakt">Kontakt</a>
+  </div>
+  <div class="font-caption text-caption text-text-muted text-center md:text-right">
+    © 2025 Samorząd Studentów UEW.<br/>Wszelkie prawa zastrzeżone.
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+/* ─── Hamburger menu ─────────────────────── */
+const menuBtn    = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+  menuBtn.classList.remove('menu-open');
+}
+
+menuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+  menuBtn.classList.toggle('menu-open');
+});
+
+document.addEventListener('click', (e) => {
+  if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
+
+/* ─── Scroll reveal (Intersection Observer) ─ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObs.unobserve(entry.target); // jednorazowo
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ─── Active nav link on scroll ─────────── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('is-active'));
+      const active = document.querySelector(`.nav-link[data-section="${entry.target.id}"]`);
+      if (active) active.classList.add('is-active');
+    }
+  });
+}, { threshold: 0.35 });
+
+sections.forEach(s => navObs.observe(s));
+
+/* ─── Formularz kontaktowy (placeholder) ─── */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  // Tu podłącz Formspree / EmailJS / własne API
+  // Np: fetch('https://formspree.io/f/TWÓJ_ID', { method: 'POST', body: new FormData(e.target) })
+  document.getElementById('form-success').classList.remove('hidden');
+  e.target.reset();
+}
+</script>
+
+</body>
+</html>
