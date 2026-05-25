@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: "Completed 01-animacje-01-PLAN.md — hero badge + parallax done"
-last_updated: "2026-05-25T15:30:00.000Z"
-last_activity: 2026-05-25 -- Phase 01 Plan 01 completed
+status: checkpoint
+stopped_at: "Completed 01-animacje-02-PLAN.md tasks 1+2 — countdown + stats strip done; awaiting human verify checkpoint"
+last_updated: "2026-05-25T16:00:00.000Z"
+last_activity: 2026-05-25 -- Phase 01 Plan 02 auto tasks completed
 progress:
   total_phases: 2
   completed_phases: 0
   total_plans: 2
-  completed_plans: 1
-  percent: 50
+  completed_plans: 2
+  percent: 100
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 ## Current Position
 
-Phase: 01 (animacje) — EXECUTING
-Plan: 2 of 2
-Status: Plan 01 complete — executing Plan 02
-Last activity: 2026-05-25 -- Phase 01 Plan 01 completed
+Phase: 01 (animacje) — CHECKPOINT (all auto tasks done)
+Plan: 2 of 2 — auto tasks complete, awaiting human-verify checkpoint
+Status: Plan 02 auto tasks complete — human visual verification pending
+Last activity: 2026-05-25 -- Phase 01 Plan 02 tasks 1+2 committed
 
-Progress: [█████░░░░░] 50%
+Progress: [██████████] 100% (plans)
 
 ## Performance Metrics
 
@@ -44,12 +44,12 @@ Progress: [█████░░░░░] 50%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-animacje | 1/2 | ~5 min | ~5 min |
+| 01-animacje | 2/2 | ~13 min | ~6.5 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (badge + parallax, ~5 min)
-- Trend: —
+- Last 5 plans: 01-01 (badge + parallax, ~5 min), 01-02 (countdown + stats, ~8 min)
+- Trend: consistent
 
 *Updated after each plan completion*
 
@@ -66,6 +66,9 @@ Recent decisions affecting current work:
 - Init: Formspree dla formularza kontaktowego — hosting-agnostic
 - 01-01: Parallax translateY applied to img.logo-blend directly (not .reveal wrapper) to avoid transform conflict
 - 01-01: @media (hover: none) reverts background-attachment to scroll for iOS Safari fix
+- 01-02: countdown div uses reveal reveal-delay-4 so existing revealObs picks it up automatically
+- 01-02: counterObs is a SEPARATE IntersectionObserver (not reusing revealObs/navObs)
+- 01-02: tick() called immediately before setInterval to prevent 1-second blank flash on load
 
 ### Pending Todos
 
@@ -80,5 +83,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-05-25
-Stopped at: Completed 01-animacje-01-PLAN.md — hero badge + parallax done
+Stopped at: 01-02 checkpoint:human-verify — tasks 1+2 complete, awaiting human visual approval
 Resume file: None

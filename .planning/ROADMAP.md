@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 Plans:
 - [x] 01-01-PLAN.md — Badge date fix (ANIM-04) + parallax CSS & JS (ANIM-02)
-- [ ] 01-02-PLAN.md — Countdown timer HTML & JS (ANIM-01) + stats section & counter animation (ANIM-03)
+- [x] 01-02-PLAN.md — Countdown timer HTML & JS (ANIM-01) + stats section & counter animation (ANIM-03)
 **UI hint**: yes
 
 ### Phase 2: Funkcjonalność i treść
@@ -54,5 +54,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Animacje | 1/2 | In progress | - |
+| 1. Animacje | 2/2 | Complete (pending human verify) | 2026-05-25 |
 | 2. Funkcjonalność i treść | 0/TBD | Not started | - |
