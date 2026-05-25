@@ -206,9 +206,10 @@ tailwind.config = {
       <span class="font-section-label text-section-label text-primary uppercase">30.08–06.09.2026 • WROCŁAW • UEW</span>
     </div>
 
-    <!-- Logo jako hero visual -->
-    <div class="reveal reveal-delay-1">
-      <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="logo-blend mx-auto" style="max-width: min(560px, 88vw);"/>
+    <!-- Hero title -->
+    <div id="hero-title" class="reveal reveal-delay-1 text-center select-none">
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(80px,20vw,180px); line-height:0.88; letter-spacing:0.04em; color:#fff;">ADAPCIAK</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,8vw,72px); line-height:1; letter-spacing:0.18em; color:#F97316; margin-top:6px;">2026</div>
     </div>
 
     <p class="font-body-lg text-body-lg text-white/80 max-w-2xl mx-auto reveal reveal-delay-2">
@@ -852,14 +853,14 @@ function handleFormSubmit(e) {
 (function initParallax() {
   const hero = document.getElementById('start');
   if (!hero) return;
-  const logo = hero.querySelector('.logo-blend');
+  const logo = document.getElementById('hero-title');
   if (!logo) return;
   let ticking = false;
 
   function applyParallax() {
     const scrollY = window.scrollY;
     if (scrollY > hero.offsetHeight) { ticking = false; return; }
-    logo.style.transform = 'translateY(' + (scrollY * 0.4) + 'px)';
+    logo.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
     ticking = false;
   }
 
