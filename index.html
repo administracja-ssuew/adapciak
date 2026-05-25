@@ -245,6 +245,39 @@ tailwind.config = {
 
 
 <!-- ══════════════════════════════════════════════════════
+     LICZBY — stats strip
+══════════════════════════════════════════════════════ -->
+<section id="liczby" class="py-16 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-b border-surface-border">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-3 gap-gutter text-center">
+
+      <div class="reveal flex flex-col items-center gap-2">
+        <span class="font-display-hero text-white" style="font-size:64px;line-height:1;">
+          <span class="counter" data-target="6">0</span>
+        </span>
+        <span class="font-section-label text-section-label text-primary uppercase">Edycji</span>
+      </div>
+
+      <div class="reveal reveal-delay-1 flex flex-col items-center gap-2">
+        <span class="font-display-hero text-white" style="font-size:64px;line-height:1;">
+          <span class="counter" data-target="500">0</span><span class="text-primary">+</span>
+        </span>
+        <span class="font-section-label text-section-label text-primary uppercase">Uczestników</span>
+      </div>
+
+      <div class="reveal reveal-delay-2 flex flex-col items-center gap-2">
+        <span class="font-display-hero text-white" style="font-size:64px;line-height:1;">
+          <span class="counter" data-target="3">0</span>
+        </span>
+        <span class="font-section-label text-section-label text-primary uppercase">Sceny</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
      O WYDARZENIU
 ══════════════════════════════════════════════════════ -->
 <section id="o-wydarzeniu" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
@@ -834,6 +867,67 @@ function handleFormSubmit(e) {
       ticking = true;
     }
   }, { passive: true });
+})();
+
+/* ─── ANIM-01: Countdown timer ─── */
+(function initCountdown() {
+  // 2026-08-29T22:00:00Z = midnight Warsaw CEST (UTC+2)
+  const TARGET = new Date('2026-08-29T22:00:00Z');
+  const els = {
+    d: document.getElementById('cd-days'),
+    h: document.getElementById('cd-hours'),
+    m: document.getElementById('cd-mins'),
+    s: document.getElementById('cd-secs'),
+  };
+  if (!els.d) return; // guard: HTML not inserted
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      Object.values(els).forEach(function(el) { el.textContent = '00'; });
+      return;
+    }
+    var t = Math.floor(diff / 1000);
+    els.d.textContent = pad(Math.floor(t / 86400));
+    els.h.textContent = pad(Math.floor((t % 86400) / 3600));
+    els.m.textContent = pad(Math.floor((t % 3600) / 60));
+    els.s.textContent = pad(t % 60);
+  }
+  tick(); // call immediately — no 1-second blank flash
+  setInterval(tick, 1000);
+})();
+
+/* ─── ANIM-03: Number counters ─── */
+(function initCounters() {
+  var DURATION = 1800; // ms
+
+  function animateCounter(el) {
+    var target = parseInt(el.dataset.target, 10);
+    var start = performance.now();
+    function step(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / DURATION, 1);
+      // easeOutQuart: natural deceleration
+      var eased = 1 - Math.pow(1 - progress, 4);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Separate observer — does NOT share state with revealObs or navObs
+  var counterObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObs.unobserve(entry.target); // fire once only
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.counter').forEach(function(el) {
+    counterObs.observe(el);
+  });
 })();
 </script>
 
