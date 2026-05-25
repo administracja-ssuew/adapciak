@@ -44,7 +44,12 @@ Plans:
   2. Wypełnienie i wysłanie formularza kontaktowego dostarcza wiadomość przez Formspree; użytkownik widzi komunikat sukcesu lub błędu
   3. Na urządzeniu mobilnym navbar chowa się przy scrollowaniu w dół i pojawia się przy scrollowaniu w górę; przycisk "wróć na górę" jest widoczny po zjechaniu > 400px i działa płynnie
   4. Meta tagi (description, og:title, og:description) zawierają datę "30.08–06.09.2026"; linki social media mają komentarz HTML ze wskazaniem gdzie wstawić docelowy URL
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [x] 02-01-PLAN.md — Meta tags 2026 date update (CONT-01) + social media placeholder comments (CONT-02)
+- [ ] 02-02-PLAN.md — TBD
+- [ ] 02-03-PLAN.md — TBD
+- [ ] 02-04-PLAN.md — TBD
 **UI hint**: yes
 
 ## Progress
@@ -55,4 +60,4 @@ Phases execute in numeric order: 1 → 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Animacje | 2/2 | Complete — verified | 2026-05-25 |
-| 2. Funkcjonalność i treść | 0/TBD | Not started | - |
+| 2. Funkcjonalność i treść | 1/4 | Executing — 02-01 complete | 2026-05-25 (partial) |
