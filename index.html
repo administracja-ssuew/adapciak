@@ -711,7 +711,8 @@ tailwind.config = {
         <button type="submit" class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors w-max">
           WYŚLIJ WIADOMOŚĆ
         </button>
-        <p id="form-success" class="hidden text-primary font-label-bold text-label-bold">✓ Wiadomość wysłana! Skontaktujemy się wkrótce.</p>
+        <p id="form-success" class="hidden text-green-600 font-semibold mt-2">Wiadomość wysłana! Odezwiemy się wkrótce.</p>
+        <p id="form-error" class="hidden text-red-600 font-semibold mt-2">Wystąpił błąd. Spróbuj ponownie.</p>
       </form>
     </div>
   </div>
@@ -856,13 +857,47 @@ const navObs = new IntersectionObserver((entries) => {
 
 sections.forEach(s => navObs.observe(s));
 
-/* ─── Formularz kontaktowy ─────────────── */
-function handleFormSubmit(e) {
+/* ─── FORM-01/02: Formspree contact form ─── */
+/* <!-- WSTAW TU SWÓJ ENDPOINT FORMSPREE: zmień YOUR_FORM_ID na ID z formspree.io --> */
+var FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+async function handleFormSubmit(e) {
   e.preventDefault();
-  // Tu podłącz Formspree / EmailJS
-  // Np: fetch('https://formspree.io/f/TWÓJ_ID', { method: 'POST', body: new FormData(e.target) })
-  document.getElementById('form-success').classList.remove('hidden');
-  e.target.reset();
+  var form    = e.target;
+  var btn     = form.querySelector('button[type="submit"]');
+  var success = document.getElementById('form-success');
+  var error   = document.getElementById('form-error');
+
+  if (success) success.classList.add('hidden');
+  if (error)   error.classList.add('hidden');
+  if (btn)     { btn.disabled = true; btn.textContent = 'Wysyłanie…'; }
+
+  try {
+    var res = await fetch(FORMSPREE_URL, {
+      method:  'POST',
+      headers: { 'Accept': 'application/json' },
+      body:    new FormData(form)
+    });
+
+    if (res.ok) {
+      form.reset();
+      if (success) success.classList.remove('hidden');
+    } else {
+      var data = await res.json().catch(function() { return {}; });
+      var msg  = (data.errors || []).map(function(err) { return err.message; }).join(', ');
+      if (error) {
+        error.textContent = msg || 'Wystąpił błąd. Spróbuj ponownie.';
+        error.classList.remove('hidden');
+      }
+    }
+  } catch (err) {
+    if (error) {
+      error.textContent = 'Błąd połączenia. Sprawdź internet i spróbuj ponownie.';
+      error.classList.remove('hidden');
+    }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'WYŚLIJ WIADOMOŚĆ'; }
+  }
 }
 
 /* ─── ANIM-02: Parallax logo w hero ─────── */
@@ -1007,6 +1042,68 @@ function handleFormSubmit(e) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+
+/* ─── GAL-01/02/03: Lightbox ────────────── */
+(function initLightbox() {
+  var slides = Array.from(document.querySelectorAll('.g-slide'));
+  if (!slides.length) return;
+
+  // Build image list from DOM — adding a new .g-slide auto-extends this array (GAL-03)
+  var images = slides.map(function(s) {
+    var img = s.querySelector('img');
+    return { src: img.src, alt: img.alt };
+  });
+
+  var lb      = document.getElementById('lightbox');
+  var lbImg   = document.getElementById('lb-img');
+  var lbClose = document.getElementById('lb-close');
+  var lbPrev  = document.getElementById('lb-prev');
+  var lbNext  = document.getElementById('lb-next');
+  var lbIndex = 0;
+
+  function openLightbox(index) {
+    lbIndex = (index + images.length) % images.length;
+    lbImg.src = images[lbIndex].src;
+    lbImg.alt = images[lbIndex].alt;
+    lb.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  // Attach click to each slide's img — opens lightbox at the carousel's current active index
+  slides.forEach(function(slide, i) {
+    var img = slide.querySelector('img');
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', function() {
+      // Read active index from DOM at click time — avoids stale closure over carousel's private `current`
+      var dots      = Array.from(document.querySelectorAll('.g-dot'));
+      var activeDot = document.querySelector('.g-dot.active');
+      var activeIndex = activeDot ? dots.indexOf(activeDot) : i;
+      openLightbox(activeIndex);
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', function() { openLightbox(lbIndex - 1); });
+  lbNext.addEventListener('click', function() { openLightbox(lbIndex + 1); });
+
+  // Click on overlay background (not on image or buttons) closes lightbox
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) closeLightbox();
+  });
+
+  // Keyboard: Escape closes; ArrowLeft/ArrowRight navigates when open
+  document.addEventListener('keydown', function(e) {
+    if (lb.classList.contains('hidden')) return;
+    if (e.key === 'Escape')      { closeLightbox(); }
+    if (e.key === 'ArrowLeft')   { openLightbox(lbIndex - 1); }
+    if (e.key === 'ArrowRight')  { openLightbox(lbIndex + 1); }
+  });
+})();
 </script>
 
 <!-- UX-02: Back to top -->
@@ -1015,6 +1112,27 @@ function handleFormSubmit(e) {
   aria-label="Wróć na górę">
   <span class="material-symbols-outlined">arrow_upward</span>
 </button>
+
+<!-- GAL-01/02: Lightbox overlay -->
+<div id="lightbox" class="hidden fixed inset-0 z-[9999] flex items-center justify-center"
+     style="background: rgba(0,0,0,0.92);">
+  <button id="lb-close"
+          class="absolute top-4 right-4 text-white hover:text-primary transition-colors"
+          aria-label="Zamknij">
+    <span class="material-symbols-outlined" style="font-size:36px;">close</span>
+  </button>
+  <button id="lb-prev"
+          class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-black/50 hover:bg-primary text-white transition-colors"
+          aria-label="Poprzednie zdjęcie">
+    <span class="material-symbols-outlined">chevron_left</span>
+  </button>
+  <button id="lb-next"
+          class="absolute right-16 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-black/50 hover:bg-primary text-white transition-colors"
+          aria-label="Następne zdjęcie">
+    <span class="material-symbols-outlined">chevron_right</span>
+  </button>
+  <img id="lb-img" src="" alt="" class="max-h-[90vh] max-w-[90vw] object-contain"/>
+</div>
 
 </body>
 </html>
