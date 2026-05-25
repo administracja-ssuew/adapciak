@@ -11,9 +11,9 @@
 
 ### Galeria
 
-- [ ] **GAL-01**: Kliknięcie zdjęcia w galerii otwiera lightbox z powiększonym zdjęciem
-- [ ] **GAL-02**: Lightbox ma nawigację (poprzednie/następne) i zamknięcie (klawisz Escape + klik poza)
-- [ ] **GAL-03**: Struktura kodu galerii obsługuje wrzucenie plików do `images/galeria/` bez edycji HTML (lub z minimalną edycją)
+- [x] **GAL-01**: Kliknięcie zdjęcia w galerii otwiera lightbox z powiększonym zdjęciem
+- [x] **GAL-02**: Lightbox ma nawigację (poprzednie/następne) i zamknięcie (klawisz Escape + klik poza)
+- [x] **GAL-03**: Struktura kodu galerii obsługuje wrzucenie plików do `images/galeria/` bez edycji HTML (lub z minimalną edycją)
 
 ### Formularz i kontakt
 
@@ -52,9 +52,9 @@
 | ANIM-02 | 1     | Pending |
 | ANIM-03 | 1     | Pending |
 | ANIM-04 | 1     | Pending |
-| GAL-01  | 2     | Pending |
-| GAL-02  | 2     | Pending |
-| GAL-03  | 2     | Pending |
+| GAL-01  | 2     | Complete — 02-03 |
+| GAL-02  | 2     | Complete — 02-03 |
+| GAL-03  | 2     | Complete — 02-03 |
 | FORM-01 | 2     | Pending |
 | FORM-02 | 2     | Pending |
 | CONT-01 | 2     | Pending |

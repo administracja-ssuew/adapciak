@@ -48,7 +48,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — Meta tags 2026 date update (CONT-01) + social media placeholder comments (CONT-02)
 - [x] 02-02-PLAN.md — Mobile navbar hide/show on scroll (UX-01) + back-to-top button (UX-02)
-- [ ] 02-03-PLAN.md — TBD
+- [x] 02-03-PLAN.md — Vanilla JS lightbox for gallery (GAL-01, GAL-02, GAL-03)
 - [ ] 02-04-PLAN.md — TBD
 **UI hint**: yes
 
@@ -60,4 +60,4 @@ Phases execute in numeric order: 1 → 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Animacje | 2/2 | Complete — verified | 2026-05-25 |
-| 2. Funkcjonalność i treść | 2/4 | Executing — 02-02 complete | 2026-05-25 (partial) |
+| 2. Funkcjonalność i treść | 3/4 | Executing — 02-03 complete | 2026-05-25 (partial) |
