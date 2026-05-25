@@ -695,17 +695,17 @@ tailwind.config = {
       <form class="flex flex-col gap-5 reveal reveal-delay-2" onsubmit="handleFormSubmit(event)">
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-name">Imię i nazwisko</label>
-          <input id="contact-name" type="text" placeholder="Jan Kowalski" required
+          <input id="contact-name" type="text" name="name" placeholder="Jan Kowalski" required
             class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
         </div>
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-email">Adres e-mail</label>
-          <input id="contact-email" type="email" placeholder="jan.kowalski@example.com" required
+          <input id="contact-email" type="email" name="email" placeholder="jan.kowalski@example.com" required
             class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
         </div>
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-msg">Wiadomość</label>
-          <textarea id="contact-msg" rows="5" placeholder="Twoja wiadomość..." required
+          <textarea id="contact-msg" name="message" rows="5" placeholder="Twoja wiadomość..." required
             class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted resize-none"></textarea>
         </div>
         <button type="submit" class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors w-max">
