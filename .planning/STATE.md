@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 02 Plan 01 complete — meta tags updated, social media comments added
-last_updated: "2026-05-25T18:40:00.000Z"
-last_activity: 2026-05-25 -- 02-01 completed (meta tags + social placeholders)
+stopped_at: Phase 02 Plan 02 complete — mobile navbar hide/show + back-to-top button
+last_updated: "2026-05-25T19:00:00.000Z"
+last_activity: 2026-05-25 -- 02-02 completed (UX-01 navbar scroll + UX-02 back-to-top)
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
-  percent: 50
+  completed_plans: 4
+  percent: 67
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 2 (Funkcjonalność i treść) — EXECUTING
-Plan: 2 of 4
-Status: 02-01 complete, advancing to 02-02
-Last activity: 2026-05-25 -- 02-01 completed (meta tags + social placeholders)
+Plan: 3 of 4
+Status: 02-02 complete, advancing to 02-03
+Last activity: 2026-05-25 -- 02-02 completed (UX-01 navbar scroll + UX-02 back-to-top)
 
-Progress: [███░░░░░░░] 50% (plans)
+Progress: [██████░░░░] 67% (plans)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 3
-- Average duration: ~4 min
-- Total execution time: ~18 min
+- Total plans completed: 4
+- Average duration: ~5 min
+- Total execution time: ~24 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-animacje | 2/2 | ~13 min | ~6.5 min |
-| 02-funkcjonalno-i-tre | 1/4 | ~3 min | ~3 min |
+| 02-funkcjonalno-i-tre | 2/4 | ~9 min | ~4.5 min |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (badge + parallax, ~5 min), 01-02 (countdown + stats, ~8 min), 02-01 (meta + social comments, ~3 min)
+- Last 5 plans: 01-01 (badge + parallax, ~5 min), 01-02 (countdown + stats, ~8 min), 02-01 (meta + social comments, ~3 min), 02-02 (navbar scroll + back-to-top, ~6 min)
 - Trend: consistent
 
 *Updated after each plan completion*
@@ -71,6 +71,9 @@ Recent decisions affecting current work:
 - 01-02: counterObs is a SEPARATE IntersectionObserver (not reusing revealObs/navObs)
 - 01-02: tick() called immediately before setInterval to prevent 1-second blank flash on load
 - 02-01: Per-link HTML comments (WSTAW URL {Platform}: ...) chosen over single generic comment for clarity
+- 02-02: initNavbarScroll checks window.innerWidth on scroll — no resize listener needed
+- 02-02: back-to-top uses opacity-0 + pointer-events-none (not display:none) to allow future CSS fade transition
+- 02-02: back-to-top z-40 < navbar z-50 < planned lightbox z-[9999]
 
 ### Pending Todos
 
@@ -85,5 +88,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-05-25
-Stopped at: Phase 02 Plan 01 complete — meta tags + social media comments (02-01)
+Stopped at: Phase 02 Plan 02 complete — navbar scroll hide/show + back-to-top button (02-02)
 Resume file: None
