@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="pl">
+<html lang="pl">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -21,25 +21,24 @@ tailwind.config = {
     extend: {
       colors: {
         /* ═══════════════════════════════════
-           BRAND TOKENS — zmień primary na kolor Adapciaka
-           gdy poznasz finalny branding
+           WAKACYJNY VIBE — lato, słońce, energia
         ═══════════════════════════════════ */
-        "primary":                  "#8B5CF6",  /* główny kolor — violet */
-        "primary-dark":             "#6D28D9",  /* hover/ciemniejszy */
-        "surface-border":           "#2E2B42",
-        "surface":                  "#110F1C",
-        "surface-container-low":    "#15111F",
-        "on-surface":               "#E4E1F0",
-        "surface-dim":              "#0D0B14",
-        "secondary":                "#BAB6CC",
-        "surface-container-lowest": "#090712",
-        "surface-container":        "#1A1727",
-        "surface-elevated":         "#1B1827",
-        "surface-container-high":   "#221F33",
-        "surface-bright":           "#3D3A56",
-        "text-muted":               "#8A87A0",
-        "background":               "#0D0B14",
-        "on-background":            "#E4E1F0",
+        "primary":                  "#F97316",  /* ciepły pomarańcz */
+        "primary-dark":             "#EA580C",  /* głębszy pomarańcz — hover */
+        "surface-border":           "#E5D5B5",  /* piaskowa ramka */
+        "surface":                  "#FFFFFF",  /* białe sekcje */
+        "surface-container-low":    "#FFF8ED",  /* jasno-kremowy */
+        "on-surface":               "#1C1917",  /* ciemny tekst */
+        "surface-dim":              "#F5F0E8",  /* przyciemniony krem */
+        "secondary":                "#78716C",  /* ciepły szary — tekst pomocniczy */
+        "surface-container-lowest": "#FFF8ED",
+        "surface-container":        "#FFF4E0",  /* ciepło tintowany */
+        "surface-elevated":         "#FFFFFF",  /* białe karty */
+        "surface-container-high":   "#FFE8C0",  /* ciepła karta podświetlona */
+        "surface-bright":           "#C2A882",  /* ciepły brąz — dekoracyjny */
+        "text-muted":               "#A8A29E",
+        "background":               "#FFFBF0",  /* ciepły krem — tło */
+        "on-background":            "#1C1917",
       },
       borderRadius: {
         "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
@@ -73,8 +72,10 @@ tailwind.config = {
   .clip-slant         { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
   .clip-slant-reverse { clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); }
 
-  /* ─── Logo blend: makes black bg transparent on dark surfaces ─── */
+  /* ─── Logo w hero (ciemne tło): screen — robi czarne piksele przezroczystymi ─── */
   .logo-blend { mix-blend-mode: screen; filter: brightness(1.3); }
+  /* ─── Logo na jasnym tle: multiply — robi białe piksele przezroczystymi ─── */
+  .logo-light { mix-blend-mode: multiply; filter: brightness(0.92); }
 
   /* ─── Scroll reveal animations ─── */
   .reveal {
@@ -102,31 +103,29 @@ tailwind.config = {
   .menu-open #ico-menu  { opacity: 0; transform: rotate(90deg); }
   .menu-open #ico-close { opacity: 1; transform: rotate(0deg); }
 
-  /* ─── Active nav link ─── */
-  .nav-link.is-active { color: #8B5CF6 !important; border-bottom: 2px solid #8B5CF6; padding-bottom: 2px; }
+  /* ─── Active nav link — teraz pomarańczowy ─── */
+  .nav-link.is-active { color: #F97316 !important; border-bottom: 2px solid #F97316; padding-bottom: 2px; }
 
-  /* ─── Gallery grid ─── */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 280px 280px;
-    gap: 12px;
+  /* ─── Gallery slider ─── */
+  #gallery-slider { position: relative; }
+  .g-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
+  .g-slide.active { opacity: 1; position: relative; pointer-events: auto; }
+  .g-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .g-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(249,115,22,0.35); cursor: pointer;
+    transition: background 0.25s, transform 0.25s; border: none;
   }
-  .gallery-grid .featured { grid-column: span 2; }
-
-  /* ─── Gallery image hover ─── */
-  .gallery-cell img { transition: transform 0.5s ease; }
-  .gallery-cell:hover img { transform: scale(1.05); }
-
-  /* ─── Smooth scroll for all browsers ─── */
-  html { scroll-behavior: smooth; }
+  .g-dot.active { background: #F97316; transform: scale(1.25); }
 
   /* ─── ANIM-02: Parallax hero background ─── */
   #start { background-attachment: fixed; }
   @media (hover: none) {
-    /* iOS Safari and touch devices: background-attachment:fixed breaks with cover */
     #start { background-attachment: scroll; }
   }
+
+  /* ─── Smooth scroll ─── */
+  html { scroll-behavior: smooth; }
 </style>
 </head>
 
@@ -135,12 +134,12 @@ tailwind.config = {
 <!-- ══════════════════════════════════════════════════════
      NAVBAR
 ══════════════════════════════════════════════════════ -->
-<nav id="navbar" class="bg-surface/90 backdrop-blur-md border-b border-surface-border w-full top-0 sticky z-50">
+<nav id="navbar" class="bg-white/90 backdrop-blur-md border-b border-surface-border w-full top-0 sticky z-50 shadow-sm">
   <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-3">
 
     <!-- Logo -->
     <a href="#start" aria-label="Adapciak - powrót na górę">
-      <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-12 logo-blend"/>
+      <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-12 logo-light"/>
     </a>
 
     <!-- Desktop nav -->
@@ -167,7 +166,7 @@ tailwind.config = {
   </div>
 
   <!-- Mobile dropdown -->
-  <div id="mobile-menu" class="md:hidden border-t border-surface-border bg-surface">
+  <div id="mobile-menu" class="md:hidden border-t border-surface-border bg-white">
     <div class="flex flex-col px-margin-mobile py-4 gap-1">
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#start"        onclick="closeMobileMenu()">Start</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#o-wydarzeniu" onclick="closeMobileMenu()">O wydarzeniu</a>
@@ -184,25 +183,25 @@ tailwind.config = {
 
 
 <!-- ══════════════════════════════════════════════════════
-     HERO
+     HERO — zdjęcie grupowe z poprzedniej edycji
 ══════════════════════════════════════════════════════ -->
 <section id="start" class="relative min-h-[90vh] flex items-center justify-center pt-20 pb-32 clip-slant"
   style="
-    background-image: linear-gradient(to bottom, rgba(13,11,20,0.35), rgba(13,11,20,1)),
+    background-image: linear-gradient(to bottom, rgba(28,25,23,0.3), rgba(28,25,23,0.88)),
                       url('./images/hero.jpg');
-    background-color: #0D0B14;
+    background-color: #1C1917;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
   ">
-  <!-- Decorative glow orbs -->
+  <!-- Dekoracyjne świecące orby — ciepłe, letnie barwy -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full blur-3xl" style="background: rgba(139,92,246,0.12);"></div>
-    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full blur-3xl" style="background: rgba(109,40,217,0.15);"></div>
+    <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full blur-3xl" style="background: rgba(249,115,22,0.12);"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full blur-3xl" style="background: rgba(234,88,12,0.15);"></div>
   </div>
 
   <div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto flex flex-col items-center gap-8">
     <!-- Kicker badge -->
-    <div class="inline-flex items-center gap-2 bg-black/50 border border-surface-border backdrop-blur-sm px-4 py-1.5 rounded-full reveal">
+    <div class="inline-flex items-center gap-2 bg-black/50 border border-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full reveal">
       <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
       <span class="font-section-label text-section-label text-primary uppercase">30.08–06.09.2026 • WROCŁAW • UEW</span>
     </div>
@@ -212,7 +211,7 @@ tailwind.config = {
       <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="logo-blend mx-auto" style="max-width: min(560px, 88vw);"/>
     </div>
 
-    <p class="font-body-lg text-body-lg text-secondary max-w-2xl mx-auto reveal reveal-delay-2">
+    <p class="font-body-lg text-body-lg text-white/80 max-w-2xl mx-auto reveal reveal-delay-2">
       Największa studencka impreza integracyjna UEW wraca! Dołącz do społeczności akademickiej i przeżyj coś niezapomnianego.
     </p>
 
@@ -245,9 +244,10 @@ tailwind.config = {
 
 
 <!-- ══════════════════════════════════════════════════════
-     LICZBY — stats strip
+     LICZBY — statsy na ciemnym pasku (kontrast do jasnego body)
 ══════════════════════════════════════════════════════ -->
-<section id="liczby" class="py-16 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-b border-surface-border">
+<section id="liczby" class="py-16 px-margin-mobile md:px-margin-desktop border-b border-black/10"
+  style="background: linear-gradient(135deg, #1C1917 0%, #292524 100%);">
   <div class="max-w-7xl mx-auto">
     <div class="grid grid-cols-3 gap-gutter text-center">
 
@@ -287,32 +287,28 @@ tailwind.config = {
       <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2">
         <span class="w-4 h-4 bg-primary inline-block" aria-hidden="true"></span>O wydarzeniu
       </span>
-      <h2 class="font-headline-lg text-headline-lg md:text-[64px] md:leading-[64px] uppercase italic text-white">
+      <h2 class="font-headline-lg text-headline-lg md:text-[64px] md:leading-[64px] uppercase italic text-on-surface">
         Więcej niż impreza
       </h2>
       <div class="space-y-4 font-body-md text-body-md text-secondary">
         <p>Adapciak to flagowe wydarzenie Samorządu Studentów Uniwersytetu Ekonomicznego we Wrocławiu, które co roku otwiera nowy rok akademicki z przytupem.</p>
         <p>To dzień pełen muzyki, atrakcji, networkingu i dobrej energii — stworzony dla studentów przez studentów. Dołącz do setek uczestników i stań się częścią naszej społeczności!</p>
       </div>
-      <div class="mt-4 bg-surface-elevated p-8 border border-surface-border border-l-4 border-l-primary">
-        <h3 class="font-headline-md text-headline-md text-white mb-4">Adapciak organizuje SSUEW</h3>
+      <div class="mt-4 bg-surface-container-low p-8 border border-surface-border border-l-4 border-l-primary">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-4">Adapciak organizuje SSUEW</h3>
         <p class="font-body-md text-body-md text-secondary mb-6">
           Samorząd Studentów UEW działa dla Was — studentów Uniwersytetu Ekonomicznego we Wrocławiu. Adapciak to jeden z naszych flagowych projektów, w którym możesz uczestniczyć, ale też współtworzyć jako wolontariusz.
         </p>
-        <a class="text-primary font-label-bold text-label-bold uppercase hover:text-white transition-colors flex items-center gap-2" href="https://samorzad.ue.wroc.pl" target="_blank" rel="noopener">
+        <a class="text-primary font-label-bold text-label-bold uppercase hover:text-primary-dark transition-colors flex items-center gap-2" href="https://samorzad.ue.wroc.pl" target="_blank" rel="noopener">
           Odwiedź stronę SSUEW <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
         </a>
       </div>
     </div>
 
-    <!-- Zdjęcie -->
+    <!-- Zdjęcie — używa galeria/2.jpg (wstęga przy budynku UEW) -->
     <div class="relative h-[480px] lg:h-[580px] w-full reveal reveal-delay-2">
       <div class="absolute inset-0 bg-primary/20 translate-x-4 translate-y-4 border border-primary" aria-hidden="true"></div>
-      <!-- ← ZAMIEŃ NA ZDJĘCIE: usuń div poniżej i odkomentuj img -->
-      <!-- <img src="./images/o-wydarzeniu.jpg" alt="Adapciak - zdjęcie z poprzedniej edycji" class="absolute inset-0 w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500"> -->
-      <div class="absolute inset-0 bg-surface-elevated border border-surface-border flex items-center justify-center">
-        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie z Adapciaka</span>
-      </div>
+      <img src="./images/galeria/2.jpg" alt="Adapciak - poprzednia edycja przy budynku UEW" class="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500">
     </div>
   </div>
 </section>
@@ -321,66 +317,66 @@ tailwind.config = {
 <!-- ══════════════════════════════════════════════════════
      HARMONOGRAM
 ══════════════════════════════════════════════════════ -->
-<section id="harmonogram" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-surface-border">
+<section id="harmonogram" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container border-y border-surface-border">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Plan dnia</span>
-      <h2 class="font-headline-lg text-headline-lg md:text-[64px] uppercase italic text-white">Harmonogram</h2>
+      <h2 class="font-headline-lg text-headline-lg md:text-[64px] uppercase italic text-on-surface">Harmonogram</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Pełny plan Adapciaka — od powitania po afterparty. Bądź z nami przez cały dzień!</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
 
-      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal">
+      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal">
         <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-white">1</span>
+          <span class="font-display-hero text-display-hero text-on-surface">1</span>
         </div>
-        <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">09:00</span>
-        <h3 class="font-headline-md text-headline-md text-white">Rejestracja</h3>
+        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">09:00</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Rejestracja</h3>
         <p class="font-body-md text-body-md text-secondary">Odbiór identyfikatorów i wstępne informacje od organizatorów. Czas na pierwsze znajomości!</p>
       </div>
 
-      <div class="bg-surface-elevated border border-primary p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 scale-105 shadow-2xl z-10 reveal reveal-delay-1">
+      <div class="bg-surface border border-primary p-8 hover:shadow-xl transition-all group relative overflow-hidden flex flex-col gap-4 scale-105 shadow-lg z-10 reveal reveal-delay-1">
         <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
           <span class="font-display-hero text-display-hero text-primary">2</span>
         </div>
-        <span class="bg-white text-black font-label-bold text-label-bold px-3 py-1 uppercase w-max">10:00</span>
+        <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">10:00</span>
         <h3 class="font-headline-md text-headline-md text-primary">Otwarcie</h3>
         <p class="font-body-md text-body-md text-secondary">Oficjalne otwarcie Adapciaka. Przemówienie władz SSUEW i UEW. Start wielkiej zabawy!</p>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
+      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
         <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-white">3</span>
+          <span class="font-display-hero text-display-hero text-on-surface">3</span>
         </div>
-        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">11:00</span>
-        <h3 class="font-headline-md text-headline-md text-white">Warsztaty</h3>
+        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">11:00</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Warsztaty</h3>
         <p class="font-body-md text-body-md text-secondary">Bloki tematyczne, integracja i poznawanie środowiska akademickiego UEW.</p>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-1">
+      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-1">
         <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-white">4</span>
+          <span class="font-display-hero text-display-hero text-on-surface">4</span>
         </div>
-        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">13:00</span>
-        <h3 class="font-headline-md text-headline-md text-white">Lunch & Networking</h3>
+        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">13:00</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Lunch & Networking</h3>
         <p class="font-body-md text-body-md text-secondary">Przerwa obiadowa — nawiąż znajomości, które zostają na całe studia.</p>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
+      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
         <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-white">5</span>
+          <span class="font-display-hero text-display-hero text-on-surface">5</span>
         </div>
-        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">15:00</span>
-        <h3 class="font-headline-md text-headline-md text-white">Strefa Rozrywki</h3>
+        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">15:00</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Strefa Rozrywki</h3>
         <p class="font-body-md text-body-md text-secondary">Gry, konkursy i atrakcje z nagrodami. Pokaż z czym to się je!</p>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border p-8 hover:border-primary transition-colors group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-3">
+      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-3">
         <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-white">6</span>
+          <span class="font-display-hero text-display-hero text-on-surface">6</span>
         </div>
-        <span class="bg-surface-border text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">18:00</span>
-        <h3 class="font-headline-md text-headline-md text-white">Afterparty</h3>
+        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">18:00</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Afterparty</h3>
         <p class="font-body-md text-body-md text-secondary">Czas zakończyć Adapciaka tak jak się zaczął — z energią i w dobrym towarzystwie!</p>
       </div>
 
@@ -390,18 +386,18 @@ tailwind.config = {
 
 
 <!-- ══════════════════════════════════════════════════════
-     ZAPISY — CTA BANNER
+     ZAPISY — CTA BANNER (ciepły pomarańczowo-złoty gradient)
 ══════════════════════════════════════════════════════ -->
-<section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 45%, #8B5CF6 100%);">
+<section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #C2410C 0%, #F97316 45%, #FB923C 100%);">
   <div class="max-w-4xl mx-auto text-center reveal">
     <h2 class="font-display-hero text-display-hero md:text-[100px] md:leading-[90px] uppercase italic text-white mb-6 drop-shadow-2xl">
       Gotowy<br/>na Adapciaka?
     </h2>
-    <p class="font-body-lg text-body-lg mb-12 max-w-xl mx-auto" style="color: rgba(255,255,255,0.75);">
+    <p class="font-body-lg text-body-lg mb-12 max-w-xl mx-auto" style="color: rgba(255,255,255,0.85);">
       Zarejestruj się już teraz i zabezpiecz swoje miejsce na największej imprezie studenckiej UEW!
     </p>
     <!-- ← podmień href na link do formularza zapisów -->
-    <a class="bg-white text-black font-headline-md text-headline-md px-12 py-4 hover:bg-black hover:text-white transition-colors duration-300 inline-block" href="#">ZAPISZ SIĘ ONLINE</a>
+    <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block" href="#">ZAPISZ SIĘ ONLINE</a>
   </div>
 </section>
 
@@ -411,9 +407,9 @@ tailwind.config = {
 ══════════════════════════════════════════════════════ -->
 <section id="wolontariat" class="relative py-section-gap flex items-center justify-center clip-slant-reverse"
   style="
-    background-image: linear-gradient(to right, rgba(13,11,20,0.93), rgba(13,11,20,0.5)),
+    background-image: linear-gradient(to right, rgba(28,25,23,0.93), rgba(28,25,23,0.55)),
                       url('./images/wolontariat.jpg');
-    background-color: #15111F;
+    background-color: #1C1917;
     background-size: cover;
     background-position: center;
   ">
@@ -425,7 +421,7 @@ tailwind.config = {
           Zostań<br/><span class="text-primary">Wolontariuszem</span>
         </h2>
       </div>
-      <p class="font-body-lg text-body-lg text-secondary">
+      <p class="font-body-lg text-body-lg text-white/75">
         Chcesz być częścią ekipy tworzącej Adapciaka? Dołącz do naszego zespołu wolontariuszy i pomóż nam zrobić najlepszą edycję w historii!
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
@@ -433,28 +429,28 @@ tailwind.config = {
           <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">event</span>
           <div>
             <h4 class="font-label-bold text-label-bold text-white mb-1">Dzień Adapciaka</h4>
-            <p class="font-caption text-caption text-secondary">Bądź tam, gdzie dzieje się wszystko</p>
+            <p class="font-caption text-caption text-white/60">Bądź tam, gdzie dzieje się wszystko</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">favorite</span>
           <div>
             <h4 class="font-label-bold text-label-bold text-white mb-1">Działasz w dobrym celu</h4>
-            <p class="font-caption text-caption text-secondary">Tworzysz wydarzenie dla całego UEW</p>
+            <p class="font-caption text-caption text-white/60">Tworzysz wydarzenie dla całego UEW</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">school</span>
           <div>
             <h4 class="font-label-bold text-label-bold text-white mb-1">Zyskasz doświadczenie</h4>
-            <p class="font-caption text-caption text-secondary">Praktyka + oficjalne zaświadczenie</p>
+            <p class="font-caption text-caption text-white/60">Praktyka + oficjalne zaświadczenie</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <span class="material-symbols-outlined text-primary text-[32px]" aria-hidden="true">group</span>
           <div>
             <h4 class="font-label-bold text-label-bold text-white mb-1">Poznasz ekipę SSUEW</h4>
-            <p class="font-caption text-caption text-secondary">Drzwi do samorządu otwarte!</p>
+            <p class="font-caption text-caption text-white/60">Drzwi do samorządu otwarte!</p>
           </div>
         </div>
       </div>
@@ -474,38 +470,36 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Partnerzy</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Partnerzy Adapciaka</h2>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Partnerzy Adapciaka</h2>
     </div>
 
-    <!-- Grid 4×2 — podmień każdy div.partner-cell na <img src="..."> po uzyskaniu loga -->
     <div class="grid grid-cols-2 md:grid-cols-4 border border-surface-border reveal">
-      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
-        <!-- <img src="./images/partners/uew.svg" alt="Uniwersytet Ekonomiczny we Wrocławiu" class="max-h-10 max-w-full filter grayscale group-hover:grayscale-0 transition-all"> -->
+      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-headline-md text-headline-md text-surface-bright group-hover:text-primary transition-colors">UEW</span>
       </div>
-      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-headline-md text-headline-md text-surface-bright group-hover:text-primary transition-colors">SSUEW</span>
       </div>
-      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell border-r border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 3</span>
       </div>
-      <div class="partner-cell border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell border-b border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 4</span>
       </div>
-      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 5</span>
       </div>
-      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 6</span>
       </div>
-      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell border-r border-surface-border p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 7</span>
       </div>
-      <div class="partner-cell p-8 flex items-center justify-center h-28 hover:bg-surface-elevated transition-colors group">
+      <div class="partner-cell p-8 flex items-center justify-center h-28 hover:bg-surface-container-low transition-colors group">
         <span class="font-section-label text-section-label text-surface-bright group-hover:text-primary transition-colors uppercase">Partner 8</span>
       </div>
     </div>
-    <p class="text-center font-caption text-caption text-surface-bright mt-6">
+    <p class="text-center font-caption text-caption text-secondary mt-6">
       Chcesz zostać partnerem Adapciaka?
       <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary hover:underline">Napisz do nas!</a>
     </p>
@@ -516,16 +510,16 @@ tailwind.config = {
 <!-- ══════════════════════════════════════════════════════
      FAQ
 ══════════════════════════════════════════════════════ -->
-<section id="faq" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-surface-border">
+<section id="faq" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low border-y border-surface-border">
   <div class="max-w-4xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">FAQ</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Najczęściej zadawane pytania</h2>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Najczęściej zadawane pytania</h2>
     </div>
     <div class="space-y-4">
 
-      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
-        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+      <details class="group bg-surface border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-on-surface hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
           Jak wygląda rejestracja na Adapciaka?
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
@@ -534,18 +528,18 @@ tailwind.config = {
         </div>
       </details>
 
-      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
-        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+      <details class="group bg-surface border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-on-surface hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
           Kiedy i gdzie odbywa się Adapciak?
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
         <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
-          Data i dokładne miejsce zostaną ogłoszone wkrótce na stronie i naszych mediach społecznościowych. Śledź nas, żeby nie przegapić ogłoszenia!
+          Adapciak 2026 odbędzie się w dniach 30 sierpnia – 6 września 2026 we Wrocławiu. Dokładna lokalizacja zostanie ogłoszona wkrótce na naszych mediach społecznościowych!
         </div>
       </details>
 
-      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
-        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+      <details class="group bg-surface border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-on-surface hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
           Czy udział w Adapciaku jest płatny?
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
@@ -554,8 +548,8 @@ tailwind.config = {
         </div>
       </details>
 
-      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
-        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+      <details class="group bg-surface border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-on-surface hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
           Jak mogę zostać wolontariuszem?
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
@@ -564,8 +558,8 @@ tailwind.config = {
         </div>
       </details>
 
-      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
-        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+      <details class="group bg-surface border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-on-surface hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
           Czy Adapciak jest tylko dla studentów UEW?
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
@@ -574,8 +568,8 @@ tailwind.config = {
         </div>
       </details>
 
-      <details class="group bg-surface-elevated border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
-        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-white hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
+      <details class="group bg-surface border border-surface-border [&_summary::-webkit-details-marker]:hidden reveal">
+        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-on-surface hover:text-primary transition-colors font-headline-md text-headline-md text-[24px]">
           Czy mogę zrezygnować po rejestracji?
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
@@ -590,32 +584,45 @@ tailwind.config = {
 
 
 <!-- ══════════════════════════════════════════════════════
-     GALERIA
+     GALERIA — auto-slider z poprzednich edycji
 ══════════════════════════════════════════════════════ -->
 <section id="galeria" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Galeria</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Poprzednie edycje</h2>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Poprzednie edycje</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4">Wspomnienia, które zostają na długo.</p>
     </div>
-    <!-- Gallery: duże zdjęcie (2 kol.) + 4 małe.
-         Podmień placeholder divy na:
-         <div class="gallery-cell featured overflow-hidden">
-           <img src="./images/galeria/1.jpg" alt="..." class="w-full h-full object-cover">
-         </div>
-    -->
-    <div class="gallery-grid reveal">
-      <div class="featured overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center relative group">
-        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie główne (2×)</span>
+
+    <!-- Slider główny -->
+    <div id="gallery-slider" class="relative overflow-hidden h-[420px] md:h-[560px] reveal">
+      <div class="g-slide active">
+        <img src="./images/galeria/1.jpg" alt="Adapciak — zdjęcie grupowe z lotu ptaka" loading="lazy">
       </div>
-      <div class="overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center group">
-        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie 2</span>
+      <div class="g-slide">
+        <img src="./images/galeria/2.jpg" alt="Adapciak — wolontariusze przy budynku UEW" loading="lazy">
       </div>
-      <div class="overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center group">
-        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie 3</span>
+      <div class="g-slide">
+        <img src="./images/galeria/3.jpg" alt="Adapciak — uczestnicy w różowych koszulkach" loading="lazy">
       </div>
-      <div class="overflow-hidden bg-surface-elevated border border-surface-border flex items-center justify-center group">
-        <span class="font-section-label text-section-label text-surface-bright uppercase">📸 Zdjęcie 4</span>
+      <div class="g-slide">
+        <img src="./images/galeria/4.jpg" alt="Adapciak — aula z prelegentem" loading="lazy">
+      </div>
+
+      <!-- Strzałki nawigacji -->
+      <button id="g-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center bg-black/50 hover:bg-primary text-white transition-colors duration-200" aria-label="Poprzednie zdjęcie">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button id="g-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center bg-black/50 hover:bg-primary text-white transition-colors duration-200" aria-label="Następne zdjęcie">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+
+      <!-- Wskaźniki dot -->
+      <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-3 z-20" role="tablist" aria-label="Nawigacja galerii">
+        <button class="g-dot active" aria-label="Zdjęcie 1" role="tab"></button>
+        <button class="g-dot" aria-label="Zdjęcie 2" role="tab"></button>
+        <button class="g-dot" aria-label="Zdjęcie 3" role="tab"></button>
+        <button class="g-dot" aria-label="Zdjęcie 4" role="tab"></button>
       </div>
     </div>
   </div>
@@ -625,11 +632,11 @@ tailwind.config = {
 <!-- ══════════════════════════════════════════════════════
      KONTAKT
 ══════════════════════════════════════════════════════ -->
-<section id="kontakt" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-surface-border">
+<section id="kontakt" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low border-y border-surface-border">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Kontakt</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Masz pytania?</h2>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Masz pytania?</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Nasz zespół chętnie odpowie na wszystkie pytania dotyczące Adapciaka, rejestracji i wolontariatu.</p>
     </div>
 
@@ -638,13 +645,14 @@ tailwind.config = {
       <div class="flex flex-col gap-8 reveal">
         <div>
           <p class="font-section-label text-section-label text-primary uppercase mb-3">Email</p>
-          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="font-headline-md text-headline-md text-white hover:text-primary transition-colors break-all">
+          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="font-headline-md text-headline-md text-on-surface hover:text-primary transition-colors break-all">
             adapciak@samorzad.ue.wroc.pl
           </a>
         </div>
         <div>
           <p class="font-section-label text-section-label text-primary uppercase mb-3">Social media</p>
           <div class="flex gap-3 flex-wrap">
+            <!-- ← podmień # na prawdziwe URL mediów społecznościowych -->
             <a href="#" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2">
               <span class="material-symbols-outlined text-[16px]" aria-hidden="true">group</span> Facebook
             </a>
@@ -671,17 +679,17 @@ tailwind.config = {
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-name">Imię i nazwisko</label>
           <input id="contact-name" type="text" placeholder="Jan Kowalski" required
-            class="w-full bg-surface-elevated border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
+            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
         </div>
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-email">Adres e-mail</label>
           <input id="contact-email" type="email" placeholder="jan.kowalski@example.com" required
-            class="w-full bg-surface-elevated border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
+            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
         </div>
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-msg">Wiadomość</label>
           <textarea id="contact-msg" rows="5" placeholder="Twoja wiadomość..." required
-            class="w-full bg-surface-elevated border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted resize-none"></textarea>
+            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted resize-none"></textarea>
         </div>
         <button type="submit" class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors w-max">
           WYŚLIJ WIADOMOŚĆ
@@ -700,60 +708,59 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Organizatorzy</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-white">Nasz zespół</h2>
+      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Nasz zespół</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Poznaj ludzi stojących za Adapciakiem. Pracujemy z pasją, żeby stworzyć dla Was niezapomniane wydarzenie.</p>
     </div>
 
-    <!-- Podmień inicjały i dane. Zdjęcie: zamień div.team-photo na <img src="./images/team/1.jpg" ...> -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
 
-      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal flex flex-col">
-        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal flex flex-col">
+        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
         <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
           <p class="font-caption text-caption text-secondary flex-1">Koordynator/ka Adapciaka</p>
           <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
         </div>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal reveal-delay-1 flex flex-col">
-        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-1 flex flex-col">
+        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
         <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
           <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Marketingu</p>
           <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
         </div>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal reveal-delay-2 flex flex-col">
-        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-2 flex flex-col">
+        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
         <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
           <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Logistyki</p>
           <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
         </div>
       </div>
 
-      <div class="bg-surface-elevated border border-surface-border hover:border-primary transition-all duration-300 group reveal reveal-delay-3 flex flex-col">
-        <div class="h-64 bg-surface-container-lowest border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(139,92,246,0.15);">
+      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-3 flex flex-col">
+        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
         <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-white group-hover:text-primary transition-colors">Imię Nazwisko</h3>
+          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
           <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Wolontariatu</p>
           <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
         </div>
@@ -765,17 +772,17 @@ tailwind.config = {
 
 
 <!-- ══════════════════════════════════════════════════════
-     FOOTER
+     FOOTER — ciemny, żeby logo-blend działało
 ══════════════════════════════════════════════════════ -->
-<footer class="bg-surface-container-lowest border-t border-surface-border flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-12 gap-gutter">
+<footer style="background: #1C1917; border-top: 1px solid #2C2415;" class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-12 gap-gutter">
   <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-16 logo-blend"/>
   <div class="flex flex-wrap justify-center gap-6">
-    <a class="text-text-muted hover:text-primary transition-colors font-body-md text-body-md" href="#">Polityka Prywatności</a>
-    <a class="text-text-muted hover:text-primary transition-colors font-body-md text-body-md" href="#">Regulamin</a>
-    <a class="text-text-muted hover:text-primary transition-colors font-body-md text-body-md" href="#kontakt">Kontakt</a>
+    <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="#">Polityka Prywatności</a>
+    <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="#">Regulamin</a>
+    <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="#kontakt">Kontakt</a>
   </div>
-  <div class="font-caption text-caption text-text-muted text-center md:text-right">
-    © 2025 Samorząd Studentów UEW.<br/>Wszelkie prawa zastrzeżone.
+  <div class="font-caption text-caption text-center md:text-right" style="color: #A8A29E;">
+    © 2026 Samorząd Studentów UEW.<br/>Wszelkie prawa zastrzeżone.
   </div>
 </footer>
 
@@ -809,7 +816,7 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      revealObs.unobserve(entry.target); // jednorazowo
+      revealObs.unobserve(entry.target);
     }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
@@ -832,16 +839,16 @@ const navObs = new IntersectionObserver((entries) => {
 
 sections.forEach(s => navObs.observe(s));
 
-/* ─── Formularz kontaktowy (placeholder) ─── */
+/* ─── Formularz kontaktowy ─────────────── */
 function handleFormSubmit(e) {
   e.preventDefault();
-  // Tu podłącz Formspree / EmailJS / własne API
+  // Tu podłącz Formspree / EmailJS
   // Np: fetch('https://formspree.io/f/TWÓJ_ID', { method: 'POST', body: new FormData(e.target) })
   document.getElementById('form-success').classList.remove('hidden');
   e.target.reset();
 }
 
-/* ─── ANIM-02: Parallax logo ─── */
+/* ─── ANIM-02: Parallax logo w hero ─────── */
 (function initParallax() {
   const hero = document.getElementById('start');
   if (!hero) return;
@@ -851,83 +858,92 @@ function handleFormSubmit(e) {
 
   function applyParallax() {
     const scrollY = window.scrollY;
-    const heroH = hero.offsetHeight;
-    if (scrollY > heroH) {
-      ticking = false;
-      return; // outside hero — skip transform
-    }
-    // Logo moves at 40% of scroll speed — adjust factor (0.3–0.4) if effect too strong
+    if (scrollY > hero.offsetHeight) { ticking = false; return; }
     logo.style.transform = 'translateY(' + (scrollY * 0.4) + 'px)';
     ticking = false;
   }
 
   window.addEventListener('scroll', function () {
-    if (!ticking) {
-      requestAnimationFrame(applyParallax);
-      ticking = true;
-    }
+    if (!ticking) { requestAnimationFrame(applyParallax); ticking = true; }
   }, { passive: true });
 })();
 
-/* ─── ANIM-01: Countdown timer ─── */
+/* ─── ANIM-01: Countdown timer ──────────── */
 (function initCountdown() {
-  // 2026-08-29T22:00:00Z = midnight Warsaw CEST (UTC+2)
-  const TARGET = new Date('2026-08-29T22:00:00Z');
+  const TARGET = new Date('2026-08-29T22:00:00Z'); // midnight Warsaw CEST
   const els = {
     d: document.getElementById('cd-days'),
     h: document.getElementById('cd-hours'),
     m: document.getElementById('cd-mins'),
     s: document.getElementById('cd-secs'),
   };
-  if (!els.d) return; // guard: HTML not inserted
+  if (!els.d) return;
   function pad(n) { return String(n).padStart(2, '0'); }
   function tick() {
     const diff = TARGET - Date.now();
-    if (diff <= 0) {
-      Object.values(els).forEach(function(el) { el.textContent = '00'; });
-      return;
-    }
+    if (diff <= 0) { Object.values(els).forEach(el => el.textContent = '00'); return; }
     var t = Math.floor(diff / 1000);
     els.d.textContent = pad(Math.floor(t / 86400));
     els.h.textContent = pad(Math.floor((t % 86400) / 3600));
     els.m.textContent = pad(Math.floor((t % 3600) / 60));
     els.s.textContent = pad(t % 60);
   }
-  tick(); // call immediately — no 1-second blank flash
+  tick();
   setInterval(tick, 1000);
 })();
 
-/* ─── ANIM-03: Number counters ─── */
+/* ─── ANIM-03: Number counters ──────────── */
 (function initCounters() {
-  var DURATION = 1800; // ms
-
+  var DURATION = 1800;
   function animateCounter(el) {
     var target = parseInt(el.dataset.target, 10);
     var start = performance.now();
     function step(now) {
       var elapsed = now - start;
       var progress = Math.min(elapsed / DURATION, 1);
-      // easeOutQuart: natural deceleration
       var eased = 1 - Math.pow(1 - progress, 4);
       el.textContent = Math.round(eased * target);
       if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
-
-  // Separate observer — does NOT share state with revealObs or navObs
   var counterObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        counterObs.unobserve(entry.target); // fire once only
-      }
+      if (entry.isIntersecting) { animateCounter(entry.target); counterObs.unobserve(entry.target); }
     });
   }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(function(el) { counterObs.observe(el); });
+})();
 
-  document.querySelectorAll('.counter').forEach(function(el) {
-    counterObs.observe(el);
+/* ─── Gallery slider ────────────────────── */
+(function initGallerySlider() {
+  var slides = document.querySelectorAll('.g-slide');
+  var dots   = document.querySelectorAll('.g-dot');
+  if (!slides.length) return;
+  var current = 0;
+  var timer;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function startTimer() { timer = setInterval(function() { goTo(current + 1); }, 5000); }
+  function resetTimer() { clearInterval(timer); startTimer(); }
+
+  var prevBtn = document.getElementById('g-prev');
+  var nextBtn = document.getElementById('g-next');
+  if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); resetTimer(); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); resetTimer(); });
+
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { goTo(i); resetTimer(); });
   });
+
+  startTimer();
 })();
 </script>
 
