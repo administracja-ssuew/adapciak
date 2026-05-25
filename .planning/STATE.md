@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 02 Plan 03 complete — gallery lightbox (GAL-01, GAL-02, GAL-03)
-last_updated: "2026-05-25T19:10:00.000Z"
-last_activity: 2026-05-25 -- 02-03 completed (vanilla JS lightbox for gallery)
+status: completed
+stopped_at: Phase 02 Plan 03 complete — gallery lightbox (02-03)
+last_updated: "2026-05-25T18:40:10.950Z"
+last_activity: 2026-05-25
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
   percent: 83
 ---
 
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 ## Current Position
 
-Phase: 2 (Funkcjonalność i treść) — EXECUTING
-Plan: 4 of 4
+Phase: 2
+Plan: Not started
 Status: 02-03 complete, advancing to 02-04
-Last activity: 2026-05-25 -- 02-03 completed (vanilla JS lightbox for gallery)
+Last activity: 2026-05-25
 
 Progress: [████████░░] 83% (plans)
 
