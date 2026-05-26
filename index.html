@@ -128,6 +128,26 @@ tailwind.config = {
   .sched-tab { color: #78716C; border-color: #E5D5B5; background: transparent; }
   .sched-tab:hover { border-color: #22C55E; color: #22C55E; }
   .sched-tab.active { background: #22C55E; color: #fff; border-color: #22C55E; }
+  /* Panele — CSS kontroluje widoczność (nie Tailwind hidden) */
+  .sched-panel { display: none; }
+  .sched-panel.sp-active { display: block; }
+
+  /* ─── Scroll progress bar ─── */
+  #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: #22C55E;
+    width: 0%; z-index: 10000; pointer-events: none; }
+
+  /* ─── Cookie banner ─── */
+  #cookie-banner { transform: translateY(0); transition: transform 0.4s ease; }
+  #cookie-banner.cookie-hidden { transform: translateY(120%); }
+
+  /* ─── Share toast ─── */
+  #share-toast { transition: opacity 0.3s ease, transform 0.3s ease; }
+
+  /* ─── Magnetic button ─── */
+  [data-magnetic] { transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+
+  /* ─── Hero letter animation ─── */
+  .hero-letter { display: inline-block; }
 
   /* ─── Smooth scroll ─── */
   html { scroll-behavior: smooth; }
@@ -149,6 +169,7 @@ tailwind.config = {
 </head>
 
 <body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+<div id="scroll-progress"></div>
 
 <!-- ══════════════════════════════════════════════════════
      NAVBAR
@@ -236,8 +257,15 @@ tailwind.config = {
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto reveal reveal-delay-3">
-      <a class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center" href="#zapisy">ZAPISZ SIĘ</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center" data-magnetic href="#zapisy">ZAPISZ SIĘ</a>
       <a class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors text-center" href="#wolontariat">ZOSTAŃ WOLONTARIUSZEM</a>
+      <button onclick="shareAdapciak()" class="border border-white/50 text-white/80 font-label-bold text-label-bold uppercase px-6 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center" aria-label="Udostępnij">
+        <span class="material-symbols-outlined text-[18px]">share</span> Udostępnij
+      </button>
+    </div>
+    <!-- Share toast -->
+    <div id="share-toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-on-surface text-white font-label-bold text-label-bold px-6 py-3 z-[9999] opacity-0 pointer-events-none -translate-y-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary text-[18px]">check_circle</span> Link skopiowany!
     </div>
 
     <!-- ANIM-01: countdown timer -->
@@ -359,7 +387,7 @@ tailwind.config = {
     <!-- Panele dni -->
     <div id="sched-panels">
 
-      <div class="sched-panel" data-day="1">
+      <div class="sched-panel sp-active" data-day="1">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
             <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">09:00</span>
@@ -384,7 +412,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="sched-panel hidden" data-day="2">
+      <div class="sched-panel" data-day="2">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
             <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">08:00</span>
@@ -409,7 +437,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="sched-panel hidden" data-day="3">
+      <div class="sched-panel" data-day="3">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
             <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">09:00</span>
@@ -434,7 +462,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="sched-panel hidden" data-day="4">
+      <div class="sched-panel" data-day="4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
             <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">10:00</span>
@@ -455,7 +483,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="sched-panel hidden" data-day="6">
+      <div class="sched-panel" data-day="6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
             <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">09:00</span>
@@ -480,7 +508,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="sched-panel hidden" data-day="7">
+      <div class="sched-panel" data-day="7">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
             <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">09:00</span>
@@ -505,7 +533,7 @@ tailwind.config = {
         </div>
       </div>
 
-      <div class="sched-panel hidden" data-day="8">
+      <div class="sched-panel" data-day="8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
             <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">08:00</span>
@@ -540,6 +568,35 @@ tailwind.config = {
     </p>
     <!-- ← podmień href na link do formularza zapisów -->
     <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block" href="#">ZAPISZ SIĘ ONLINE</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PRE-REJESTRACJA — formularz powiadomień
+══════════════════════════════════════════════════════ -->
+<section id="prerejestracja" class="py-20 px-margin-mobile md:px-margin-desktop bg-surface-container-low border-b border-surface-border">
+  <div class="max-w-xl mx-auto text-center reveal">
+    <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2 justify-center mb-4">
+      <span class="w-4 h-4 bg-primary inline-block" aria-hidden="true"></span>Powiadomienia
+    </span>
+    <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface mb-4">
+      Zapisy wkrótce
+    </h2>
+    <p class="font-body-md text-body-md text-secondary mb-8">
+      Zostaw nam swój e-mail — poinformujemy Cię jako pierwszą osobę, gdy zapisy się otworzą!
+    </p>
+    <!-- WSTAW TU SWÓJ ENDPOINT FORMSPREE: zmień PREREJESTRACJA_FORM_ID na ID z formspree.io -->
+    <form id="prerejestracja-form" onsubmit="handlePrerejestracjaSubmit(event)" class="flex flex-col sm:flex-row gap-3">
+      <input type="email" name="email" required placeholder="Twój adres e-mail"
+        class="flex-1 border border-surface-border bg-white px-4 py-3 font-body-md text-body-md text-on-surface placeholder:text-secondary focus:outline-none focus:border-primary transition-colors"/>
+      <button type="submit" id="prerejestracja-btn"
+        class="bg-primary text-white font-label-bold text-label-bold uppercase px-6 py-3 hover:bg-primary-dark transition-colors whitespace-nowrap">
+        Powiadom mnie
+      </button>
+    </form>
+    <p id="prerejestracja-success" class="hidden mt-4 font-label-bold text-label-bold text-primary">Gotowe! Damy Ci znać gdy zapisy ruszą.</p>
+    <p id="prerejestracja-error"   class="hidden mt-4 font-label-bold text-label-bold text-red-600">Wystąpił błąd. Spróbuj ponownie.</p>
   </div>
 </section>
 
@@ -1224,6 +1281,118 @@ async function handleFormSubmit(e) {
   });
 })();
 
+/* ─── Pre-rejestracja form ─── */
+var PREREJESTRACJA_URL = 'https://formspree.io/f/PREREJESTRACJA_FORM_ID';
+async function handlePrerejestracjaSubmit(e) {
+  e.preventDefault();
+  var form    = e.target;
+  var btn     = document.getElementById('prerejestracja-btn');
+  var success = document.getElementById('prerejestracja-success');
+  var error   = document.getElementById('prerejestracja-error');
+  if (success) success.classList.add('hidden');
+  if (error)   error.classList.add('hidden');
+  if (btn)     { btn.disabled = true; btn.textContent = 'Wysyłanie…'; }
+  try {
+    var res = await fetch(PREREJESTRACJA_URL, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+    if (res.ok) {
+      form.reset();
+      if (success) success.classList.remove('hidden');
+    } else {
+      if (error) error.classList.remove('hidden');
+    }
+  } catch (_) {
+    if (error) error.classList.remove('hidden');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Powiadom mnie'; }
+  }
+}
+
+/* ─── Share button ─── */
+function shareAdapciak() {
+  var url   = window.location.href;
+  var title = 'Adapciak 2026 — największa impreza studencka UEW!';
+  var text  = 'Dołącz do Adapciaka 30.08–06.09.2026 we Wrocławiu!';
+  if (navigator.share) {
+    navigator.share({ title: title, text: text, url: url }).catch(function() {});
+  } else {
+    navigator.clipboard.writeText(url).then(function() {
+      var toast = document.getElementById('share-toast');
+      if (!toast) return;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      setTimeout(function() {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-16px)';
+      }, 2500);
+    }).catch(function() {});
+  }
+}
+
+/* ─── Scroll progress bar ─── */
+(function initScrollProgress() {
+  var bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+/* ─── Cookie banner ─── */
+(function initCookieBanner() {
+  var banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  if (localStorage.getItem('cookies-ok')) {
+    banner.classList.add('cookie-hidden');
+    return;
+  }
+  var acceptBtn = document.getElementById('cookie-accept');
+  if (acceptBtn) {
+    acceptBtn.addEventListener('click', function() {
+      localStorage.setItem('cookies-ok', '1');
+      banner.classList.add('cookie-hidden');
+    });
+  }
+})();
+
+/* ─── Magnetic button ─── */
+(function initMagneticButtons() {
+  document.querySelectorAll('[data-magnetic]').forEach(function(el) {
+    el.addEventListener('mousemove', function(e) {
+      var rect   = el.getBoundingClientRect();
+      var dx     = e.clientX - (rect.left + rect.width  / 2);
+      var dy     = e.clientY - (rect.top  + rect.height / 2);
+      el.style.transform = 'translate(' + dx * 0.2 + 'px, ' + dy * 0.2 + 'px)';
+    });
+    el.addEventListener('mouseleave', function() {
+      el.style.transform = '';
+    });
+  });
+})();
+
+/* ─── Hero letter animation ─── */
+(function initHeroLetters() {
+  var heroTitle = document.getElementById('hero-title');
+  if (!heroTitle) return;
+  var wordEl = heroTitle.querySelector('div');
+  if (!wordEl) return;
+  var text = wordEl.textContent;
+  wordEl.innerHTML = text.split('').map(function(ch, i) {
+    return '<span class="hero-letter" style="opacity:0;transform:translateY(40px);transition:opacity 0.5s ease ' + (i * 0.04) + 's,transform 0.5s ease ' + (i * 0.04) + 's;">' + ch + '</span>';
+  }).join('');
+  setTimeout(function() {
+    wordEl.querySelectorAll('.hero-letter').forEach(function(span) {
+      span.style.opacity = '1';
+      span.style.transform = 'translateY(0)';
+    });
+  }, 300);
+})();
+
 /* ─── Harmonogram: przełączanie dni ─── */
 (function initScheduleTabs() {
   var tabs   = document.querySelectorAll('.sched-tab');
@@ -1237,7 +1406,7 @@ async function handleFormSubmit(e) {
       t.setAttribute('aria-selected', active ? 'true' : 'false');
     });
     panels.forEach(function(p) {
-      p.classList.toggle('hidden', p.dataset.day !== day);
+      p.classList.toggle('sp-active', p.dataset.day === day);
     });
   }
 
@@ -1253,6 +1422,17 @@ async function handleFormSubmit(e) {
   aria-label="Wróć na górę">
   <span class="material-symbols-outlined">arrow_upward</span>
 </button>
+
+<!-- Cookie banner -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[9998] bg-on-surface text-white px-margin-mobile md:px-margin-desktop py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+  <p class="font-caption text-caption text-white/80 max-w-2xl">
+    Ta strona używa plików cookie wyłącznie do celów statystycznych i poprawy działania. Kontynuując przeglądanie, akceptujesz naszą
+    <a href="#" class="text-primary underline hover:no-underline">politykę prywatności</a>.
+  </p>
+  <button id="cookie-accept" class="bg-primary text-white font-label-bold text-label-bold uppercase px-6 py-2 hover:bg-primary-dark transition-colors whitespace-nowrap shrink-0">
+    Rozumiem
+  </button>
+</div>
 
 <!-- GAL-01/02: Lightbox overlay -->
 <div id="lightbox" class="hidden fixed inset-0 z-[9999] flex items-center justify-center"
