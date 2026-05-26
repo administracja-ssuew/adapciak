@@ -23,8 +23,8 @@ tailwind.config = {
         /* ═══════════════════════════════════
            WAKACYJNY VIBE — lato, słońce, energia
         ═══════════════════════════════════ */
-        "primary":                  "#F97316",  /* ciepły pomarańcz */
-        "primary-dark":             "#EA580C",  /* głębszy pomarańcz — hover */
+        "primary":                  "#22C55E",  /* wakacyjna zieleń */
+        "primary-dark":             "#16A34A",  /* głębsza zieleń — hover */
         "surface-border":           "#E5D5B5",  /* piaskowa ramka */
         "surface":                  "#FFFFFF",  /* białe sekcje */
         "surface-container-low":    "#FFF8ED",  /* jasno-kremowy */
@@ -74,8 +74,8 @@ tailwind.config = {
 
   /* ─── Logo w hero (ciemne tło): screen — robi czarne piksele przezroczystymi ─── */
   .logo-blend { mix-blend-mode: screen; filter: brightness(1.3); }
-  /* ─── Logo na jasnym tle: multiply — robi białe piksele przezroczystymi ─── */
-  .logo-light { mix-blend-mode: multiply; filter: brightness(0.92); }
+  /* ─── Logo na jasnym tle: invert odwraca czarne tło na białe, multiply usuwa białe ─── */
+  .logo-light { mix-blend-mode: multiply; filter: invert(1); }
 
   /* ─── Scroll reveal animations ─── */
   .reveal {
@@ -104,7 +104,7 @@ tailwind.config = {
   .menu-open #ico-close { opacity: 1; transform: rotate(0deg); }
 
   /* ─── Active nav link — teraz pomarańczowy ─── */
-  .nav-link.is-active { color: #F97316 !important; border-bottom: 2px solid #F97316; padding-bottom: 2px; }
+  .nav-link.is-active { color: #22C55E !important; border-bottom: 2px solid #22C55E; padding-bottom: 2px; }
 
   /* ─── Gallery slider ─── */
   #gallery-slider { position: relative; }
@@ -113,16 +113,21 @@ tailwind.config = {
   .g-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .g-dot {
     width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(249,115,22,0.35); cursor: pointer;
+    background: rgba(34,197,94,0.35); cursor: pointer;
     transition: background 0.25s, transform 0.25s; border: none;
   }
-  .g-dot.active { background: #F97316; transform: scale(1.25); }
+  .g-dot.active { background: #22C55E; transform: scale(1.25); }
 
   /* ─── ANIM-02: Parallax hero background ─── */
   #start { background-attachment: fixed; }
   @media (hover: none) {
     #start { background-attachment: scroll; }
   }
+
+  /* ─── Harmonogram tabs ─── */
+  .sched-tab { color: #78716C; border-color: #E5D5B5; background: transparent; }
+  .sched-tab:hover { border-color: #22C55E; color: #22C55E; }
+  .sched-tab.active { background: #22C55E; color: #fff; border-color: #22C55E; }
 
   /* ─── Smooth scroll ─── */
   html { scroll-behavior: smooth; }
@@ -209,7 +214,7 @@ tailwind.config = {
   ">
   <!-- Dekoracyjne świecące orby — ciepłe, letnie barwy -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full blur-3xl" style="background: rgba(249,115,22,0.12);"></div>
+    <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full blur-3xl" style="background: rgba(34,197,94,0.12);"></div>
     <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full blur-3xl" style="background: rgba(234,88,12,0.15);"></div>
   </div>
 
@@ -223,7 +228,7 @@ tailwind.config = {
     <!-- Hero title -->
     <div id="hero-title" class="reveal reveal-delay-1 text-center select-none">
       <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(80px,20vw,180px); line-height:0.88; letter-spacing:0.04em; color:#fff;">ADAPCIAK</div>
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,8vw,72px); line-height:1; letter-spacing:0.18em; color:#F97316; margin-top:6px;">2026</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,8vw,72px); line-height:1; letter-spacing:0.18em; color:#22C55E; margin-top:6px;">2026</div>
     </div>
 
     <p class="font-body-lg text-body-lg text-white/80 max-w-2xl mx-auto reveal reveal-delay-2">
@@ -333,66 +338,188 @@ tailwind.config = {
      HARMONOGRAM
 ══════════════════════════════════════════════════════ -->
 <section id="harmonogram" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container border-y border-surface-border">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Plan dnia</span>
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Plan wydarzenia</span>
       <h2 class="font-headline-lg text-headline-lg md:text-[64px] uppercase italic text-on-surface">Harmonogram</h2>
-      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Pełny plan Adapciaka — od powitania po afterparty. Bądź z nami przez cały dzień!</p>
+      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Wybierz dzień i sprawdź co na Ciebie czeka!</p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
 
-      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal">
-        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-on-surface">1</span>
+    <!-- Zakładki dni -->
+    <div class="flex flex-wrap gap-2 justify-center mb-10 reveal" id="sched-tabs" role="tablist">
+      <button class="sched-tab active font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="1" role="tab" aria-selected="true">Dzień 1<span class="block text-[10px] font-caption normal-case opacity-70">30 sie</span></button>
+      <button class="sched-tab font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="2" role="tab" aria-selected="false">Dzień 2<span class="block text-[10px] font-caption normal-case opacity-70">31 sie</span></button>
+      <button class="sched-tab font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="3" role="tab" aria-selected="false">Dzień 3<span class="block text-[10px] font-caption normal-case opacity-70">1 wrz</span></button>
+      <button class="sched-tab font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="4" role="tab" aria-selected="false">Dzień 4<span class="block text-[10px] font-caption normal-case opacity-70">2 wrz</span></button>
+      <button class="sched-tab font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="6" role="tab" aria-selected="false">Dzień 6<span class="block text-[10px] font-caption normal-case opacity-70">4 wrz</span></button>
+      <button class="sched-tab font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="7" role="tab" aria-selected="false">Dzień 7<span class="block text-[10px] font-caption normal-case opacity-70">5 wrz</span></button>
+      <button class="sched-tab font-label-bold text-label-bold uppercase px-4 py-2 border transition-colors" data-day="8" role="tab" aria-selected="false">Dzień 8<span class="block text-[10px] font-caption normal-case opacity-70">6 wrz</span></button>
+    </div>
+
+    <!-- Panele dni -->
+    <div id="sched-panels">
+
+      <div class="sched-panel" data-day="1">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">09:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Rejestracja</h3><p class="font-body-md text-body-md text-secondary">Odbiór identyfikatorów, pakietów powitalnych i pierwsze znajomości.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">11:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Oficjalne otwarcie</h3><p class="font-body-md text-body-md text-secondary">Przemówienie władz SSUEW i UEW. Start największej imprezy studenckiej!</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">13:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Lunch & Networking</h3><p class="font-body-md text-body-md text-secondary">Przerwa obiadowa — nawiąż znajomości, które zostaną na całe studia.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">15:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Warsztaty integracyjne</h3><p class="font-body-md text-body-md text-secondary">Gry i zabawy grupowe — czas poznać nowych ludzi.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">20:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wieczór powitalny</h3><p class="font-body-md text-body-md text-secondary">Muzyka, dobra energia i pierwsze wspomnienia Adapciaka 2026.</p></div>
+          </div>
         </div>
-        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">09:00</span>
-        <h3 class="font-headline-md text-headline-md text-on-surface">Rejestracja</h3>
-        <p class="font-body-md text-body-md text-secondary">Odbiór identyfikatorów i wstępne informacje od organizatorów. Czas na pierwsze znajomości!</p>
       </div>
 
-      <div class="bg-surface border border-primary p-8 hover:shadow-xl transition-all group relative overflow-hidden flex flex-col gap-4 scale-105 shadow-lg z-10 reveal reveal-delay-1">
-        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-primary">2</span>
+      <div class="sched-panel hidden" data-day="2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">08:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Pobudka & Śniadanie</h3><p class="font-body-md text-body-md text-secondary">Wspólne śniadanie i plan dnia na porannym briefingu.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">10:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Aktywności terenowe</h3><p class="font-body-md text-body-md text-secondary">Wyzwania zespołowe na świeżym powietrzu — sport i integracja.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">14:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Obiad</h3><p class="font-body-md text-body-md text-secondary">Chwila odpoczynku i doładowanie energii na popołudnie.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">16:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Czas wolny</h3><p class="font-body-md text-body-md text-secondary">Twój czas — plażowanie, siatkówka, kajaki lub odpoczynek.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">21:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wieczór tematyczny</h3><p class="font-body-md text-body-md text-secondary">Impreza z motywem przewodnim — szczegóły wkrótce!</p></div>
+          </div>
         </div>
-        <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase w-max">10:00</span>
-        <h3 class="font-headline-md text-headline-md text-primary">Otwarcie</h3>
-        <p class="font-body-md text-body-md text-secondary">Oficjalne otwarcie Adapciaka. Przemówienie władz SSUEW i UEW. Start wielkiej zabawy!</p>
       </div>
 
-      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
-        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-on-surface">3</span>
+      <div class="sched-panel hidden" data-day="3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">09:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Śniadanie</h3><p class="font-body-md text-body-md text-secondary">Spokojny poranek i naładowanie baterii.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">11:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Warsztaty tematyczne</h3><p class="font-body-md text-body-md text-secondary">Bloki edukacyjne i branżowe — networking z praktykami.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">13:30</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Obiad</h3><p class="font-body-md text-body-md text-secondary">Przerwa obiadowa i czas na rozmowy kuluarowe.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">16:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Turniej sportowy</h3><p class="font-body-md text-body-md text-secondary">Siatkówka, badminton, tenis — kibicuj lub graj!</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">20:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wieczór karaoke</h3><p class="font-body-md text-body-md text-secondary">Pokaż talent — mikrofonowy wieczór z nagrodami!</p></div>
+          </div>
         </div>
-        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">11:00</span>
-        <h3 class="font-headline-md text-headline-md text-on-surface">Warsztaty</h3>
-        <p class="font-body-md text-body-md text-secondary">Bloki tematyczne, integracja i poznawanie środowiska akademickiego UEW.</p>
       </div>
 
-      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-1">
-        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-on-surface">4</span>
+      <div class="sched-panel hidden" data-day="4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">10:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wycieczka po Wrocławiu</h3><p class="font-body-md text-body-md text-secondary">Zwiedzanie miasta — Ostrów Tumski, Rynek, Hala Stulecia. Odkryj Wrocław razem z Adapciakiem!</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">14:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Lunch w mieście</h3><p class="font-body-md text-body-md text-secondary">Wrocławska gastronimia — każdy znajdzie coś dla siebie.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">17:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Powrót i odpoczynek</h3><p class="font-body-md text-body-md text-secondary">Czas na relaks przed wieczornym programem.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">21:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wieczór filmowy</h3><p class="font-body-md text-body-md text-secondary">Seans pod gołym niebem lub w plenerze — klasyki i nowości.</p></div>
+          </div>
         </div>
-        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">13:00</span>
-        <h3 class="font-headline-md text-headline-md text-on-surface">Lunch & Networking</h3>
-        <p class="font-body-md text-body-md text-secondary">Przerwa obiadowa — nawiąż znajomości, które zostają na całe studia.</p>
       </div>
 
-      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-2">
-        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-on-surface">5</span>
+      <div class="sched-panel hidden" data-day="6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">09:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Śniadanie & Briefing</h3><p class="font-body-md text-body-md text-secondary">Plan na finisz — przygotowania do ostatnich dni.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">11:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Olimpiada Adapciaka</h3><p class="font-body-md text-body-md text-secondary">Zawody drużynowe — sport, wiedza i kreatywność.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">14:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Obiad</h3><p class="font-body-md text-body-md text-secondary">Wytchnienie po rannych zmaganiach.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">16:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Warsztaty kreatywne</h3><p class="font-body-md text-body-md text-secondary">Fotografia, street art, taniec — wybierz swój blok.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">21:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wieczór muzyczny</h3><p class="font-body-md text-body-md text-secondary">Live music i DJ set — tańczymy do białego rana.</p></div>
+          </div>
         </div>
-        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">15:00</span>
-        <h3 class="font-headline-md text-headline-md text-on-surface">Strefa Rozrywki</h3>
-        <p class="font-body-md text-body-md text-secondary">Gry, konkursy i atrakcje z nagrodami. Pokaż z czym to się je!</p>
       </div>
 
-      <div class="bg-surface border border-surface-border p-8 hover:border-primary hover:shadow-md transition-all group relative overflow-hidden flex flex-col gap-4 reveal reveal-delay-3">
-        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-          <span class="font-display-hero text-display-hero text-on-surface">6</span>
+      <div class="sched-panel hidden" data-day="7">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">09:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Powolny poranek</h3><p class="font-body-md text-body-md text-secondary">Wyjątkowe śniadanie i retrospekcja tygodnia.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">11:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Finałowe konkursy</h3><p class="font-body-md text-body-md text-secondary">Ostatnia szansa na punkty drużynowe i indywidualne nagrody.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">14:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Gala nagród</h3><p class="font-body-md text-body-md text-secondary">Ogłoszenie wyników, podziękowania i pamiątkowe zdjęcia.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">16:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Czas wolny</h3><p class="font-body-md text-body-md text-secondary">Ostatni moment na wspólne przygody przed finałem.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">21:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Wielka Afterparty</h3><p class="font-body-md text-body-md text-secondary">Finałowa impreza Adapciaka 2026 — żegnamy się z klasą!</p></div>
+          </div>
         </div>
-        <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase w-max border border-primary/20">18:00</span>
-        <h3 class="font-headline-md text-headline-md text-on-surface">Afterparty</h3>
-        <p class="font-body-md text-body-md text-secondary">Czas zakończyć Adapciaka tak jak się zaczął — z energią i w dobrym towarzystwie!</p>
+      </div>
+
+      <div class="sched-panel hidden" data-day="8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">08:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Śniadanie pożegnalne</h3><p class="font-body-md text-body-md text-secondary">Ostatni wspólny posiłek — nostalgicznie, ale z uśmiechem.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors">
+            <span class="bg-primary/10 text-primary font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1 border border-primary/20">10:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Pakowanie i porządki</h3><p class="font-body-md text-body-md text-secondary">Wspólne sprzątanie i zbieranie rzeczy.</p></div>
+          </div>
+          <div class="bg-surface border border-surface-border p-6 flex gap-4 items-start hover:border-primary transition-colors md:col-span-2">
+            <span class="bg-primary text-white font-label-bold text-label-bold px-3 py-1 uppercase shrink-0 mt-1">12:00</span>
+            <div><h3 class="font-headline-md text-headline-md text-on-surface mb-1">Oficjalne zamknięcie</h3><p class="font-body-md text-body-md text-secondary">Podsumowanie, pożegnania i obietnica powrotu na Adapciak 2027. Do zobaczenia!</p></div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -403,7 +530,7 @@ tailwind.config = {
 <!-- ══════════════════════════════════════════════════════
      ZAPISY — CTA BANNER (ciepły pomarańczowo-złoty gradient)
 ══════════════════════════════════════════════════════ -->
-<section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #C2410C 0%, #F97316 45%, #FB923C 100%);">
+<section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #15803D 0%, #22C55E 50%, #4ADE80 100%);">
   <div class="max-w-4xl mx-auto text-center reveal">
     <h2 class="font-display-hero text-display-hero md:text-[100px] md:leading-[90px] uppercase italic text-white mb-6 drop-shadow-2xl">
       Gotowy<br/>na Adapciaka?
@@ -734,7 +861,7 @@ tailwind.config = {
 
       <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal flex flex-col">
         <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(34,197,94,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
@@ -747,7 +874,7 @@ tailwind.config = {
 
       <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-1 flex flex-col">
         <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(34,197,94,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
@@ -760,7 +887,7 @@ tailwind.config = {
 
       <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-2 flex flex-col">
         <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(34,197,94,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
@@ -773,7 +900,7 @@ tailwind.config = {
 
       <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-3 flex flex-col">
         <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(249,115,22,0.12);">
+          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(34,197,94,0.12);">
             <span class="font-headline-md text-headline-md text-primary">XX</span>
           </div>
         </div>
@@ -904,16 +1031,8 @@ async function handleFormSubmit(e) {
 (function initParallax() {
   const hero = document.getElementById('start');
   if (!hero) return;
-  const logo = document.getElementById('hero-title');
-  if (!logo) return;
-  let ticking = false;
-
-  function applyParallax() {
-    const scrollY = window.scrollY;
-    if (scrollY > hero.offsetHeight) { ticking = false; return; }
-    logo.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
-    ticking = false;
-  }
+  // Parallax na tle zapewnia CSS background-attachment:fixed — tytuł jest statyczny
+  return;
 
   window.addEventListener('scroll', function () {
     if (!ticking) { requestAnimationFrame(applyParallax); ticking = true; }
@@ -1102,6 +1221,28 @@ async function handleFormSubmit(e) {
     if (e.key === 'Escape')      { closeLightbox(); }
     if (e.key === 'ArrowLeft')   { openLightbox(lbIndex - 1); }
     if (e.key === 'ArrowRight')  { openLightbox(lbIndex + 1); }
+  });
+})();
+
+/* ─── Harmonogram: przełączanie dni ─── */
+(function initScheduleTabs() {
+  var tabs   = document.querySelectorAll('.sched-tab');
+  var panels = document.querySelectorAll('.sched-panel');
+  if (!tabs.length) return;
+
+  function switchDay(day) {
+    tabs.forEach(function(t) {
+      var active = t.dataset.day === day;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    panels.forEach(function(p) {
+      p.classList.toggle('hidden', p.dataset.day !== day);
+    });
+  }
+
+  tabs.forEach(function(t) {
+    t.addEventListener('click', function() { switchDay(t.dataset.day); });
   });
 })();
 </script>
