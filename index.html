@@ -94,10 +94,9 @@ tailwind.config = {
   .clip-slant         { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
   .clip-slant-reverse { clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); }
 
-  /* ─── Logo w hero (ciemne tło): screen — robi czarne piksele przezroczystymi ─── */
-  .logo-blend { mix-blend-mode: screen; filter: brightness(1.3); }
-  /* ─── Logo na jasnym tle: invert odwraca czarne tło na białe, multiply usuwa białe ─── */
-  .logo-light { mix-blend-mode: multiply; filter: invert(1); }
+  /* ─── Logo (transparentne PNG, białe kształty): invert na jasnym tle → czarne ─── */
+  .logo-light { filter: invert(1); }
+  .dark .logo-light { filter: none; }  /* w dark mode zostaje białe */
 
   /* ─── Scroll reveal animations ─── */
   .reveal {
