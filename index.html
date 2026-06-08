@@ -35,10 +35,8 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<!-- ═══ FONT FUNKYDORI (Adobe Fonts) ═══
-     ↓ PODMIEŃ XXXXXXX na ID swojego web-projektu Adobe Fonts (z dodanym Funkydori).
-       Dopóki tego nie zrobisz, nagłówki używają fallbacku (Bebas Neue). -->
-<link rel="stylesheet" href="https://use.typekit.net/XXXXXXX.css"/>
+<!-- ═══ FONT FUNKYDORI (Adobe Fonts / Typekit) ═══ -->
+<link rel="stylesheet" href="https://use.typekit.net/wxf7ujd.css"/>
 
 <script>
 tailwind.config = {
@@ -254,20 +252,38 @@ tailwind.config = {
     position: absolute;
     top: 0;
     left: 0;
-    width: 62px;
-    height: 46px;
+    width: 72px;
+    height: 60px;
     pointer-events: none;
     z-index: 5;
     transform: translateX(-90px);          /* schowana za lewą krawędzią */
   }
   #koza-easter-egg .koza-hop {
     display: block;
+    width: 100%;
+    height: 100%;
     transform-origin: 50% 100%;
     transform: translateY(-100%);          /* stoi stopami na krawędzi stopki */
   }
+  /* klatki skoku (4 zdjęcia, koza_1..4) nałożone na siebie, przełączane opacity */
+  #koza-easter-egg .koza-frames { position: relative; width: 100%; height: 100%; }
+  #koza-easter-egg .koza-frames img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    opacity: 0;
+  }
+  #koza-easter-egg .koza-frames img:first-child { opacity: 1; } /* poza skokiem: stoi (klatka 1) */
   /* animacja startuje po dojechaniu na dół (klasa dodawana przez IntersectionObserver) */
   .footer-goat-active #koza-easter-egg            { animation: koza-run 14s linear infinite; }
   .footer-goat-active #koza-easter-egg .koza-hop  { animation: koza-hop 1.15s ease-in-out infinite; }
+  .footer-goat-active #koza-easter-egg .koza-frames img {
+    animation-duration: 1.15s; animation-iteration-count: infinite; animation-timing-function: step-end;
+  }
+  .footer-goat-active #koza-easter-egg .koza-frames img:nth-child(1) { animation-name: koza-f1; }
+  .footer-goat-active #koza-easter-egg .koza-frames img:nth-child(2) { animation-name: koza-f2; }
+  .footer-goat-active #koza-easter-egg .koza-frames img:nth-child(3) { animation-name: koza-f3; }
+  .footer-goat-active #koza-easter-egg .koza-frames img:nth-child(4) { animation-name: koza-f4; }
   @keyframes koza-run {
     from { transform: translateX(-90px); }
     to   { transform: translateX(100vw); }
@@ -279,9 +295,15 @@ tailwind.config = {
     78%  { transform: translateY(-100%)              scaleX(1.05) scaleY(0.9);  } /* lądowanie */
     100% { transform: translateY(-100%)              scaleX(1)    scaleY(1);    }
   }
+  /* przełączanie klatek zsynchronizowane z koza-hop */
+  @keyframes koza-f1 { 0% { opacity: 1; } 15% { opacity: 0; } 90% { opacity: 1; } } /* stój */
+  @keyframes koza-f2 { 0% { opacity: 0; } 15% { opacity: 1; } 35% { opacity: 0; } } /* odbicie */
+  @keyframes koza-f3 { 0% { opacity: 0; } 35% { opacity: 1; } 65% { opacity: 0; } } /* lot (szczyt) */
+  @keyframes koza-f4 { 0% { opacity: 0; } 65% { opacity: 1; } 90% { opacity: 0; } } /* lądowanie */
   @media (prefers-reduced-motion: reduce) {
     #koza-easter-egg           { animation: none !important; transform: translateX(28px); }
     #koza-easter-egg .koza-hop { animation: none !important; }
+    #koza-easter-egg .koza-frames img { animation: none !important; }
   }
 </style>
 </head>
@@ -604,6 +626,7 @@ tailwind.config = {
           </div>
         </div>
       </div>
+    </div><!-- /grid kafelków imprez -->
 
     <!-- Dawne panele dni (usunięte) -->
     <div id="sched-panels" class="hidden">
@@ -1188,38 +1211,12 @@ tailwind.config = {
   <!-- Easter egg: koza Matylda skacze po górnej krawędzi stopki -->
   <div id="koza-easter-egg" aria-hidden="true">
     <div class="koza-hop">
-      <svg viewBox="0 0 130 95" width="62" height="46" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Koza Matylda">
-        <!-- ogon -->
-        <path d="M24 40 L10 28 L17 47 Z" fill="#A8662A"/>
-        <!-- nogi dalsze (ciemniejsze) -->
-        <line x1="49" y1="58" x2="26" y2="82" stroke="#CDB890" stroke-width="8" stroke-linecap="round"/>
-        <line x1="81" y1="58" x2="101" y2="84" stroke="#CDB890" stroke-width="8" stroke-linecap="round"/>
-        <ellipse cx="26" cy="83" rx="5" ry="4" fill="#3F464B"/>
-        <ellipse cx="101" cy="85" rx="5" ry="4" fill="#3F464B"/>
-        <!-- ciało -->
-        <ellipse cx="62" cy="46" rx="41" ry="23" fill="#C17D3A"/>
-        <path d="M28 52 Q62 74 96 52 Q62 64 28 52 Z" fill="#A8662A"/>
-        <!-- nogi bliższe (jaśniejsze) -->
-        <line x1="57" y1="62" x2="41" y2="88" stroke="#E4D6BC" stroke-width="9" stroke-linecap="round"/>
-        <line x1="87" y1="62" x2="107" y2="88" stroke="#E4D6BC" stroke-width="9" stroke-linecap="round"/>
-        <ellipse cx="41" cy="89" rx="5.5" ry="4.5" fill="#4C5358"/>
-        <ellipse cx="107" cy="89" rx="5.5" ry="4.5" fill="#4C5358"/>
-        <!-- szyja -->
-        <path d="M90 30 Q98 24 105 27 L107 44 Q98 48 89 45 Z" fill="#C17D3A"/>
-        <!-- ucho -->
-        <ellipse cx="100" cy="25" rx="7" ry="4.5" fill="#A8662A" transform="rotate(-24 100 25)"/>
-        <!-- głowa -->
-        <ellipse cx="109" cy="31" rx="14" ry="11.5" fill="#C17D3A"/>
-        <!-- róg -->
-        <path d="M105 22 C100 6 112 2 118 7 C113 9 109 13 109 23 Z" fill="#6E6A66"/>
-        <!-- pysk -->
-        <ellipse cx="121" cy="34" rx="7" ry="6" fill="#EFE7D6"/>
-        <circle cx="124" cy="33" r="1.4" fill="#3A3A3A"/>
-        <!-- broda -->
-        <path d="M113 41 L111 54 L118 43 Z" fill="#EFE7D6"/>
-        <!-- oko -->
-        <circle cx="110" cy="29" r="2.1" fill="#2B2B2B"/>
-      </svg>
+      <div class="koza-frames" role="img" aria-label="Koza Matylda">
+        <img src="./images/koza_1.png" alt="" loading="lazy" decoding="async"/>
+        <img src="./images/koza_2.png" alt="" loading="lazy" decoding="async"/>
+        <img src="./images/koza_3.png" alt="" loading="lazy" decoding="async"/>
+        <img src="./images/koza_4.png" alt="" loading="lazy" decoding="async"/>
+      </div>
     </div>
   </div>
   <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-16 logo-blend"/>
