@@ -17,10 +17,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="apple-mobile-web-app-title" content="Adapciak"/>
+<link rel="icon" href="./ADAPCIAK_LOGO.png" type="image/png"/>
 <link rel="apple-touch-icon" href="./ADAPCIAK_LOGO.png"/>
 
 <!-- Confetti -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" integrity="sha384-Rv68Y7adOjMMJc1/xFMcdNvXre/HF51to4GZjBALmXr7ABnVl5V4UajJwBu7zbhN" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- OneSignal (push notifications) — aby aktywować: utwórz konto na onesignal.com,
      utwórz Web App, wstaw swój App ID poniżej i odkomentuj te 4 linie -->
@@ -47,8 +48,9 @@ tailwind.config = {
         /* ═══════════════════════════════════
            ADAPCIAK 2026 — teal + żółty + pomarańcz
         ═══════════════════════════════════ */
-        "primary":                  "#30BEB9",  /* teal — główny kolor marki */
-        "primary-dark":             "#239E99",  /* głębszy teal — hover */
+        "primary":                  "#1B7A75",  /* teal dostępny (5.14:1 na białym) — tekst/przyciski/borders */
+        "primary-bright":           "#30BEB9",  /* jasny teal marki — dekoracyjne wypełnienia / tekst na ciemnym */
+        "primary-dark":             "#14605C",  /* najgłębszy teal — hover */
         "accent":                   "#F2CB49",  /* żółty z wizualizacji — wyróżnienia */
         "accent-light":             "#8FD9CC",  /* jaśniejszy teal — akcenty na ciemnym */
         "orange":                   "#FF9657",  /* pomarańcz — rzadki akcent */
@@ -129,17 +131,31 @@ tailwind.config = {
   .menu-open #ico-menu  { opacity: 0; transform: rotate(90deg); }
   .menu-open #ico-close { opacity: 1; transform: rotate(0deg); }
 
-  /* ─── Active nav link — teraz pomarańczowy ─── */
-  .nav-link.is-active { color: #30BEB9 !important; border-bottom: 2px solid #30BEB9; padding-bottom: 2px; }
+  /* ─── Active nav link ─── */
+  .nav-link.is-active { color: #1B7A75 !important; border-bottom: 2px solid #1B7A75; padding-bottom: 2px; }
 
-  /* ─── Korekta linii bazowej Funkydori (font pisany siada za wysoko) ───
-     Globalny hak: tokeny nagłówków + wszystkie elementy z inline font-family funkydori.
-     top to JEDYNA liczba do regulacji — zwiększ, jeśli nadal za wysoko; zmniejsz, jeśli za nisko. */
-  .font-display-hero, .font-headline-lg,
-  [style*="funkydori"] {
-    position: relative;
-    top: 0.08em;
+  /* ─── Kontrast: na ciemnych tłach używamy jasnego teal marki (#30BEB9) ───
+     (token primary jest ciemny dla czytelności na jasnych sekcjach) */
+  #start .text-primary, #liczby .text-primary, footer .text-primary,
+  .party-tile .text-primary, #party-popup .text-primary { color: #30BEB9 !important; }
+
+  /* ─── Widoczny fokus klawiatury (WCAG 2.4.7 / 2.4.11) ─── */
+  :focus-visible { outline: 3px solid #1B7A75 !important; outline-offset: 2px; border-radius: 2px; }
+  .dark :focus-visible { outline-color: #8FD9CC !important; }
+
+  /* ─── Ograniczenie ruchu (WCAG 2.3.3 / 2.2.2) ─── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    html { scroll-behavior: auto !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
   }
+
+  /* Funkydori (font pisany) renderujemy w naturalnej wielkości liter, bez italic —
+     uppercase/faux-italic powodował „uciekanie" wielkich liter ponad linię bazową. */
 
   /* ─── Gallery slider ─── */
   #gallery-slider { position: relative; }
@@ -147,11 +163,15 @@ tailwind.config = {
   .g-slide.active { opacity: 1; position: relative; pointer-events: auto; }
   .g-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .g-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(48,190,185,0.35); cursor: pointer;
-    transition: background 0.25s, transform 0.25s; border: none;
+    width: 24px; height: 24px; border: none; background: transparent;
+    cursor: pointer; padding: 0; position: relative;
   }
-  .g-dot.active { background: #30BEB9; transform: scale(1.25); }
+  .g-dot::before {
+    content: ''; position: absolute; inset: 7px; border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.25s, transform 0.25s;
+  }
+  .g-dot.active::before { background: #fff; transform: scale(1.25); }
 
   /* ─── ANIM-02: Parallax hero background ─── */
   #start { background-attachment: fixed; }
@@ -248,7 +268,8 @@ tailwind.config = {
     to   { transform: translateX(-50%); }
   }
   .marquee-track { animation: marquee-scroll 28s linear infinite; display: flex; align-items: center; width: max-content; }
-  .marquee-outer:hover .marquee-track { animation-play-state: paused; }
+  .marquee-outer:hover .marquee-track,
+  .marquee-outer:focus-within .marquee-track { animation-play-state: paused; }
 
   /* ─── Partner popup overlay ─── */
   #partner-popup { transition: opacity 0.2s ease, transform 0.2s ease; }
@@ -351,7 +372,7 @@ tailwind.config = {
       </button>
 
       <!-- Hamburger (mobile only) -->
-      <button id="menu-btn" class="md:hidden relative w-9 h-9 flex items-center justify-center text-on-surface" aria-label="Menu">
+      <button id="menu-btn" class="md:hidden relative w-9 h-9 flex items-center justify-center text-on-surface" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
         <span id="ico-menu"  class="material-symbols-outlined">menu</span>
         <span id="ico-close" class="material-symbols-outlined">close</span>
       </button>
@@ -400,7 +421,8 @@ tailwind.config = {
 
     <!-- Logo -->
     <div id="hero-title" class="reveal reveal-delay-1">
-      <img src="./ADAPCIAK_LOGO.png" alt="Adapciak" class="h-44 md:h-64 mx-auto select-none" draggable="false"/>
+      <h1 class="sr-only">Adapciak 2026 — największa studencka impreza integracyjna UEW we Wrocławiu, 30 sierpnia – 6 września 2026, Głuchołazy</h1>
+      <img src="./ADAPCIAK_LOGO.png" alt="" class="h-44 md:h-64 mx-auto select-none" draggable="false"/>
     </div>
 
     <p class="font-body-lg text-body-lg text-white/80 max-w-2xl mx-auto reveal reveal-delay-2">
@@ -422,7 +444,7 @@ tailwind.config = {
     <div class="reveal text-center" style="margin-top: -8px;">
       <a href="https://maps.google.com/maps?q=G%C5%82ucho%C5%82azy,+Poland" target="_blank" rel="noopener"
          style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,5.5vw,52px); letter-spacing:0.1em;"
-         class="text-primary hover:text-white transition-colors uppercase inline-flex items-center gap-2">
+         class="text-primary hover:text-white transition-colors inline-flex items-center gap-2">
         <span class="material-symbols-outlined" style="font-size:0.75em; vertical-align:middle;">location_on</span>Głuchołazy
       </a>
       <div style="font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(16px,2.5vw,26px); letter-spacing:0.08em;"
@@ -496,7 +518,7 @@ tailwind.config = {
       <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2">
         <span class="w-4 h-4 bg-primary inline-block" aria-hidden="true"></span>O wydarzeniu
       </span>
-      <h2 class="font-headline-lg text-headline-lg md:text-[64px] md:leading-[64px] uppercase italic text-on-surface">
+      <h2 class="font-headline-lg text-headline-lg md:text-[64px] md:leading-[64px] text-on-surface">
         Więcej niż impreza
       </h2>
       <div class="space-y-4 font-body-md text-body-md text-secondary">
@@ -530,7 +552,7 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-12 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Motywy wieczorów</span>
-      <h2 class="font-headline-lg text-headline-lg md:text-[64px] uppercase italic text-on-surface">Imprezy</h2>
+      <h2 class="font-headline-lg text-headline-lg md:text-[64px] text-on-surface">Imprezy</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Każdy wieczór to inne przebranie — sprawdź co na Ciebie czeka i zacznij planować strój!</p>
     </div>
 
@@ -544,7 +566,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#1a1a2e,#16213e);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #1<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #1<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -558,7 +580,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#0d1b2a,#1b4332);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #2<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #2<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -572,7 +594,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#2d1b33,#1a0a2e);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #3<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #3<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -586,7 +608,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#1a2a1a,#0a2a0a);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #4<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #4<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -600,7 +622,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#2a1a0a,#1a0a00);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #5<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #5<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -614,7 +636,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#0a1a2a,#002244);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #6<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #6<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -628,7 +650,7 @@ tailwind.config = {
            style="background: linear-gradient(135deg,#1a1a1a,#2a0a2a);">
         <div class="party-tile-content h-full flex flex-col justify-end p-6">
           <span class="font-section-label text-section-label text-primary uppercase mb-1">Wielki Finał</span>
-          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white uppercase mb-2">IMPREZA #7<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
+          <h3 style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(28px,4vw,40px); line-height:1.1;" class="text-white mb-2">Impreza #7<br/><span class="text-primary text-[0.6em]">Nazwa do ogłoszenia</span></h3>
           <p class="font-caption text-caption text-white/60 mb-3">Opis klimatu wieczoru — uzupełnij</p>
           <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
             <span class="material-symbols-outlined text-[16px]">style</span> Dress code →
@@ -813,7 +835,7 @@ tailwind.config = {
 ══════════════════════════════════════════════════════ -->
 <section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #1B7A75 0%, #30BEB9 50%, #8FD9CC 100%);">
   <div class="max-w-4xl mx-auto text-center reveal">
-    <h2 class="font-display-hero text-display-hero md:text-[100px] md:leading-[90px] uppercase italic text-white mb-6 drop-shadow-2xl">
+    <h2 class="font-display-hero text-display-hero md:text-[100px] md:leading-[90px] text-white mb-6 drop-shadow-2xl">
       Gotowy<br/>na Adapciaka?
     </h2>
     <p class="font-body-lg text-body-lg mb-12 max-w-xl mx-auto" style="color: rgba(255,255,255,0.85);">
@@ -833,7 +855,7 @@ tailwind.config = {
     <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2 justify-center mb-4">
       <span class="w-4 h-4 bg-primary inline-block" aria-hidden="true"></span>Powiadomienia
     </span>
-    <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface mb-4">
+    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">
       Zapisy wkrótce
     </h2>
     <p class="font-body-md text-body-md text-secondary mb-8">
@@ -841,7 +863,8 @@ tailwind.config = {
     </p>
     <!-- WSTAW TU SWÓJ ENDPOINT FORMSPREE: zmień PREREJESTRACJA_FORM_ID na ID z formspree.io -->
     <form id="prerejestracja-form" onsubmit="handlePrerejestracjaSubmit(event)" class="flex flex-col sm:flex-row gap-3">
-      <input type="email" name="email" required placeholder="Twój adres e-mail"
+      <label for="prerejestracja-email" class="sr-only">Twój adres e-mail</label>
+      <input id="prerejestracja-email" type="email" name="email" required placeholder="Twój adres e-mail"
         class="flex-1 border border-surface-border bg-white px-4 py-3 font-body-md text-body-md text-on-surface placeholder:text-secondary focus:outline-none focus:border-primary transition-colors"/>
       <button type="submit" id="prerejestracja-btn"
         class="bg-primary text-white font-label-bold text-label-bold uppercase px-6 py-3 hover:bg-primary-dark transition-colors whitespace-nowrap">
@@ -863,7 +886,7 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Partnerzy</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Partnerzy Adapciaka</h2>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Partnerzy Adapciaka</h2>
     </div>
 
     <!-- Marquee: hover = pause, klik = popup z opisem partnera -->
@@ -905,7 +928,7 @@ tailwind.config = {
   <div class="max-w-4xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">FAQ</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Najczęściej zadawane pytania</h2>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Najczęściej zadawane pytania</h2>
     </div>
     <div class="space-y-4">
 
@@ -981,7 +1004,7 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Kontakt</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Masz pytania?</h2>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Masz pytania?</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Nasz zespół chętnie odpowie na wszystkie pytania dotyczące Adapciaka i rejestracji.</p>
     </div>
 
@@ -1056,7 +1079,7 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Galeria</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Poprzednie edycje</h2>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Poprzednie edycje</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4">Wspomnienia, które zostają na długo.</p>
     </div>
 
@@ -1084,11 +1107,11 @@ tailwind.config = {
       </button>
 
       <!-- Wskaźniki dot -->
-      <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-3 z-20" role="tablist" aria-label="Nawigacja galerii">
-        <button class="g-dot active" aria-label="Zdjęcie 1" role="tab"></button>
-        <button class="g-dot" aria-label="Zdjęcie 2" role="tab"></button>
-        <button class="g-dot" aria-label="Zdjęcie 3" role="tab"></button>
-        <button class="g-dot" aria-label="Zdjęcie 4" role="tab"></button>
+      <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-3 z-20" role="group" aria-label="Nawigacja galerii">
+        <button class="g-dot active" aria-label="Pokaż zdjęcie 1"></button>
+        <button class="g-dot" aria-label="Pokaż zdjęcie 2"></button>
+        <button class="g-dot" aria-label="Pokaż zdjęcie 3"></button>
+        <button class="g-dot" aria-label="Pokaż zdjęcie 4"></button>
       </div>
     </div>
   </div>
@@ -1105,11 +1128,11 @@ tailwind.config = {
         <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2">
           <span class="material-symbols-outlined text-[18px]">location_on</span>Jak do nas trafić
         </span>
-        <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Miejsce wydarzenia</h2>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Miejsce wydarzenia</h2>
         <div>
           <a href="https://maps.google.com/maps?q=G%C5%82ucho%C5%82azy,+Poland" target="_blank" rel="noopener"
              style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:clamp(36px,5vw,56px); letter-spacing:0.08em; line-height:1;"
-             class="text-primary hover:text-on-surface transition-colors uppercase inline-flex items-center gap-2">
+             class="text-primary hover:text-on-surface transition-colors inline-flex items-center gap-2">
             <span class="material-symbols-outlined" style="font-size:0.75em;">location_on</span>Głuchołazy
           </a>
           <div class="space-y-1 font-body-md text-body-md text-secondary mt-3">
@@ -1150,7 +1173,7 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Organizatorzy</span>
-      <h2 class="font-headline-lg text-headline-lg uppercase italic text-on-surface">Nasz zespół</h2>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Nasz zespół</h2>
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Poznaj ludzi stojących za Adapciakiem. Pracujemy z pasją, żeby stworzyć dla Was niezapomniane wydarzenie.</p>
     </div>
 
@@ -1251,11 +1274,13 @@ const mobileMenu = document.getElementById('mobile-menu');
 function closeMobileMenu() {
   mobileMenu.classList.remove('open');
   menuBtn.classList.remove('menu-open');
+  menuBtn.setAttribute('aria-expanded', 'false');
 }
 
 menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
+  const open = mobileMenu.classList.toggle('open');
   menuBtn.classList.toggle('menu-open');
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 
 document.addEventListener('click', (e) => {
@@ -1294,9 +1319,9 @@ const navLinks  = document.querySelectorAll('.nav-link');
 const navObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      navLinks.forEach(l => l.classList.remove('is-active'));
+      navLinks.forEach(l => { l.classList.remove('is-active'); l.removeAttribute('aria-current'); });
       const active = document.querySelector(`.nav-link[data-section="${entry.target.id}"]`);
-      if (active) active.classList.add('is-active');
+      if (active) { active.classList.add('is-active'); active.setAttribute('aria-current', 'true'); }
     }
   });
 }, { threshold: 0.35 });
@@ -1387,6 +1412,7 @@ async function handleFormSubmit(e) {
   var DURATION = 1800;
   function animateCounter(el) {
     var target = parseInt(el.dataset.target, 10);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = target; return; }
     var start = performance.now();
     function step(now) {
       var elapsed = now - start;
@@ -1421,8 +1447,10 @@ async function handleFormSubmit(e) {
     dots[current].classList.add('active');
   }
 
-  function startTimer() { timer = setInterval(function() { goTo(current + 1); }, 5000); }
-  function resetTimer() { clearInterval(timer); startTimer(); }
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function startTimer() { if (reduceMotion) return; timer = setInterval(function() { goTo(current + 1); }, 5000); }
+  function stopTimer()  { clearInterval(timer); }
+  function resetTimer() { stopTimer(); startTimer(); }
 
   var prevBtn = document.getElementById('g-prev');
   var nextBtn = document.getElementById('g-next');
@@ -1432,6 +1460,15 @@ async function handleFormSubmit(e) {
   dots.forEach(function(dot, i) {
     dot.addEventListener('click', function() { goTo(i); resetTimer(); });
   });
+
+  // Pauza przy najechaniu / fokusie klawiatury (WCAG 2.2.2)
+  var slider = document.getElementById('gallery-slider');
+  if (slider) {
+    slider.addEventListener('mouseenter', stopTimer);
+    slider.addEventListener('mouseleave', startTimer);
+    slider.addEventListener('focusin',  stopTimer);
+    slider.addEventListener('focusout', startTimer);
+  }
 
   startTimer();
 })();
@@ -1500,16 +1537,20 @@ async function handleFormSubmit(e) {
   var lbIndex = 0;
 
   function openLightbox(index) {
+    var wasHidden = lb.classList.contains('hidden');
     lbIndex = (index + images.length) % images.length;
     lbImg.src = images[lbIndex].src;
     lbImg.alt = images[lbIndex].alt;
     lb.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    if (wasHidden) trapFocus(lb);
   }
 
   function closeLightbox() {
+    if (lb.classList.contains('hidden')) return;
     lb.classList.add('hidden');
     document.body.style.overflow = '';
+    releaseFocus(lb);
   }
 
   // Attach click to each slide's img — opens lightbox at the carousel's current active index
@@ -1586,6 +1627,7 @@ function subscribePush() {
 /* ─── Confetti ─── */
 function fireConfetti() {
   if (typeof confetti === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   confetti({ particleCount: 140, spread: 90, origin: { y: 0.6 },
     colors: ['#30BEB9', '#8FD9CC', '#ffffff', '#239E99', '#B8EBE0'] });
 }
@@ -1671,6 +1713,7 @@ function shareAdapciak() {
 
 /* ─── Magnetic button ─── */
 (function initMagneticButtons() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelectorAll('[data-magnetic]').forEach(function(el) {
     el.addEventListener('mousemove', function(e) {
       var rect   = el.getBoundingClientRect();
@@ -1687,6 +1730,27 @@ function shareAdapciak() {
 /* ─── Hero letter animation ─── */
 /* initHeroLetters — disabled (hero title is now an img, not text) */
 
+/* ─── Zarządzanie fokusem w modalach (WCAG 2.4.3 / 2.1.2) ─── */
+var _lastFocus = null;
+function trapFocus(container) {
+  _lastFocus = document.activeElement;
+  var focusables = Array.prototype.slice.call(
+    container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])')
+  ).filter(function(el) { return el.offsetParent !== null; });
+  if (focusables.length) focusables[0].focus();
+  container._trap = function(e) {
+    if (e.key !== 'Tab' || !focusables.length) return;
+    var first = focusables[0], last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  container.addEventListener('keydown', container._trap);
+}
+function releaseFocus(container) {
+  if (container._trap) { container.removeEventListener('keydown', container._trap); container._trap = null; }
+  if (_lastFocus && _lastFocus.focus) { _lastFocus.focus(); _lastFocus = null; }
+}
+
 /* ─── Party popup ─── */
 function openPartyPopup(name, desc, dress, pinterest) {
   document.getElementById('party-popup-name').textContent = name;
@@ -1695,24 +1759,34 @@ function openPartyPopup(name, desc, dress, pinterest) {
   var link = document.getElementById('party-popup-link');
   if (pinterest) { link.href = pinterest; link.classList.remove('hidden'); }
   else { link.classList.add('hidden'); }
-  document.getElementById('party-popup').classList.remove('hidden');
+  var pp = document.getElementById('party-popup');
+  pp.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  trapFocus(pp);
 }
 function closePartyPopup() {
-  document.getElementById('party-popup').classList.add('hidden');
+  var pp = document.getElementById('party-popup');
+  if (pp.classList.contains('hidden')) return;
+  pp.classList.add('hidden');
   document.body.style.overflow = '';
+  releaseFocus(pp);
 }
 
 /* ─── Partner popup ─── */
 function openPartnerPopup(name, desc) {
   document.getElementById('partner-popup-name').textContent = name;
   document.getElementById('partner-popup-desc').textContent = desc;
-  document.getElementById('partner-popup').classList.remove('hidden');
+  var pp = document.getElementById('partner-popup');
+  pp.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  trapFocus(pp);
 }
 function closePartnerPopup() {
-  document.getElementById('partner-popup').classList.add('hidden');
+  var pp = document.getElementById('partner-popup');
+  if (pp.classList.contains('hidden')) return;
+  pp.classList.add('hidden');
   document.body.style.overflow = '';
+  releaseFocus(pp);
 }
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closePartyPopup(); closePartnerPopup(); }
@@ -1728,10 +1802,10 @@ document.addEventListener('keydown', function(e) {
 
 <!-- Party theme popup -->
 <div id="party-popup" class="hidden fixed inset-0 z-[9998] flex items-center justify-center" style="background:rgba(0,0,0,0.75);" onclick="if(event.target===this)closePartyPopup()">
-  <div class="bg-on-surface text-white max-w-md w-full mx-4 p-8 relative" onclick="event.stopPropagation()">
-    <button onclick="closePartyPopup()" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"><span class="material-symbols-outlined">close</span></button>
+  <div class="bg-on-surface text-white max-w-md w-full mx-4 p-8 relative" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="party-popup-name">
+    <button onclick="closePartyPopup()" aria-label="Zamknij" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
     <span class="font-section-label text-section-label text-primary uppercase block mb-2">Motyw wieczoru</span>
-    <h3 id="party-popup-name" style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:40px; line-height:1;" class="text-white uppercase mb-4">Nazwa imprezy</h3>
+    <h3 id="party-popup-name" style="font-family:'funkydori','Bebas Neue',sans-serif; font-size:40px; line-height:1;" class="text-white mb-4">Nazwa imprezy</h3>
     <p id="party-popup-desc" class="font-body-md text-body-md text-white/70 mb-4">Opis imprezy.</p>
     <div class="border-t border-white/20 pt-4">
       <p class="font-section-label text-section-label text-primary uppercase mb-1">Dress code</p>
@@ -1745,8 +1819,8 @@ document.addEventListener('keydown', function(e) {
 
 <!-- Partner popup -->
 <div id="partner-popup" class="hidden fixed inset-0 z-[9997] flex items-center justify-center" style="background:rgba(0,0,0,0.6);" onclick="if(event.target===this)closePartnerPopup()">
-  <div class="bg-white text-on-surface max-w-sm w-full mx-4 p-8 relative shadow-2xl border border-surface-border" onclick="event.stopPropagation()">
-    <button onclick="closePartnerPopup()" class="absolute top-4 right-4 text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">close</span></button>
+  <div class="bg-white text-on-surface max-w-sm w-full mx-4 p-8 relative shadow-2xl border border-surface-border" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="partner-popup-name">
+    <button onclick="closePartnerPopup()" aria-label="Zamknij" class="absolute top-4 right-4 text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined" aria-hidden="true">close</span></button>
     <p class="font-section-label text-section-label text-primary uppercase mb-2">Partner</p>
     <h3 id="partner-popup-name" class="font-headline-md text-headline-md text-on-surface uppercase mb-4">Nazwa</h3>
     <p id="partner-popup-desc" class="font-body-md text-body-md text-secondary">Opis.</p>
@@ -1766,7 +1840,7 @@ document.addEventListener('keydown', function(e) {
 
 <!-- GAL-01/02: Lightbox overlay -->
 <div id="lightbox" class="hidden fixed inset-0 z-[9999] flex items-center justify-center"
-     style="background: rgba(0,0,0,0.92);">
+     style="background: rgba(0,0,0,0.92);" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia z galerii">
   <button id="lb-close"
           class="absolute top-4 right-4 text-white hover:text-primary transition-colors"
           aria-label="Zamknij">
