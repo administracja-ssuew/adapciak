@@ -137,7 +137,8 @@
 <link rel="preconnect" href="https://p.typekit.net" crossorigin/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" as="image" href="./images/hero.jpg" fetchpriority="high"/>
+<link rel="preload" as="image" href="./images/hero.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high"/>
+<link rel="preload" as="image" href="./images/hero-sm.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high"/>
 
 <!-- Confetti — defer: potrzebne dopiero po kliknięciu, nie blokuje renderu -->
 <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" integrity="sha384-Rv68Y7adOjMMJc1/xFMcdNvXre/HF51to4GZjBALmXr7ABnVl5V4UajJwBu7zbhN" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -276,6 +277,18 @@
   #start { background-attachment: fixed; }
   @media (hover: none) {
     #start { background-attachment: scroll; }
+  }
+
+  /* ─── Hero LCP: WebP + wersja mobilna (image-set; url() = fallback dla starszych) ─── */
+  #start {
+    background-image: linear-gradient(to bottom, rgba(28,25,23,0.3), rgba(28,25,23,0.88)), url('./images/hero.jpg');
+    background-image: linear-gradient(to bottom, rgba(28,25,23,0.3), rgba(28,25,23,0.88)), image-set(url('./images/hero.webp') type('image/webp'), url('./images/hero.jpg') type('image/jpeg'));
+  }
+  @media (max-width: 768px) {
+    #start {
+      background-image: linear-gradient(to bottom, rgba(28,25,23,0.3), rgba(28,25,23,0.88)), url('./images/hero-sm.jpg');
+      background-image: linear-gradient(to bottom, rgba(28,25,23,0.3), rgba(28,25,23,0.88)), image-set(url('./images/hero-sm.webp') type('image/webp'), url('./images/hero-sm.jpg') type('image/jpeg'));
+    }
   }
 
   /* ─── Harmonogram tabs ─── */
@@ -499,8 +512,6 @@
 ══════════════════════════════════════════════════════ -->
 <section id="start" class="relative min-h-[90vh] flex items-center justify-center pt-20 pb-32 clip-slant"
   style="
-    background-image: linear-gradient(to bottom, rgba(28,25,23,0.3), rgba(28,25,23,0.88)),
-                      url('./images/hero.jpg');
     background-color: #1C1917;
     background-size: cover;
     background-position: center top;
@@ -643,7 +654,7 @@
     <!-- Zdjęcie — używa galeria/2.jpg (wstęga przy budynku UEW) -->
     <div class="relative h-[480px] lg:h-[580px] w-full reveal reveal-delay-2">
       <div class="absolute inset-0 bg-primary/20 translate-x-4 translate-y-4 border border-primary" aria-hidden="true"></div>
-      <img src="./images/galeria/2.jpg" alt="Adapciak - poprzednia edycja przy budynku UEW" class="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500">
+      <img src="./images/galeria/2.jpg" alt="Adapciak - poprzednia edycja przy budynku UEW" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500">
     </div>
   </div>
 </section>
