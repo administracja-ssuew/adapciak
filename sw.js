@@ -1,4 +1,4 @@
-const CACHE = 'adapciak-v4';
+const CACHE = 'adapciak-v5';
 const STATIC = [
   './',
   './index.html',
@@ -35,6 +35,20 @@ self.addEventListener('fetch', e => {
   if (!e.request.url.startsWith(self.location.origin) &&
       !e.request.url.includes('fonts.googleapis') &&
       !e.request.url.includes('fonts.gstatic')) return;
+
+  /* tailwind.css: network-first — po każdym rebuildzie CSS ma być świeży (cache tylko jako fallback offline) */
+  if (e.request.url.includes('/tailwind.css')) {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        if (res && res.ok) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
 
   /* HTML / nawigacja: network-first, aby zmiany na stronie były widoczne od razu */
   const isHTML = e.request.mode === 'navigate' ||

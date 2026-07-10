@@ -1,0 +1,41 @@
+name: Build Tailwind CSS
+
+# Auto-rebuild statycznego CSS po zmianie klas w index.html (lub configu).
+# Dzięki temu edytujesz tylko index.html — CSS przebuduje się sam i zostanie zacommitowany.
+# Vercel wdraża stronę jako czysto statyczną (bez builda), więc deploy jest bezpieczny.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tailwind.config.js'
+      - 'src/input.css'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Commit rebuilt tailwind.css if changed
+        run: |
+          if ! git diff --quiet -- tailwind.css; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add tailwind.css
+            git commit -m "chore: rebuild tailwind.css [skip ci]"
+            git push
+          else
+            echo "tailwind.css bez zmian — nic do commitu."
+          fi
