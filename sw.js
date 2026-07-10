@@ -1,4 +1,4 @@
-const CACHE = 'adapciak-v3';
+const CACHE = 'adapciak-v4';
 const STATIC = [
   './',
   './index.html',

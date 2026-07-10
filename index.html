@@ -132,8 +132,15 @@
 <link rel="icon" href="./ADAPCIAK_LOGO.png" type="image/png"/>
 <link rel="apple-touch-icon" href="./ADAPCIAK_LOGO.png"/>
 
-<!-- Confetti -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" integrity="sha384-Rv68Y7adOjMMJc1/xFMcdNvXre/HF51to4GZjBALmXr7ABnVl5V4UajJwBu7zbhN" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Wydajność: preconnect do hostów fontów + preload obrazu LCP (tło hero) -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin/>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preload" as="image" href="./images/hero.jpg" fetchpriority="high"/>
+
+<!-- Confetti — defer: potrzebne dopiero po kliknięciu, nie blokuje renderu -->
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" integrity="sha384-Rv68Y7adOjMMJc1/xFMcdNvXre/HF51to4GZjBALmXr7ABnVl5V4UajJwBu7zbhN" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- OneSignal (push notifications) — aby aktywować: utwórz konto na onesignal.com,
      utwórz Web App, wstaw swój App ID poniżej i odkomentuj te 4 linie -->
