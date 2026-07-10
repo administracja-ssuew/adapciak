@@ -11,4 +11,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://adapciak-uewroc.pl/sitemap.xml
+Sitemap: https://www.adapciak-uewroc.pl/sitemap.xml
