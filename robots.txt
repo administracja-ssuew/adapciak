@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Boty AI (GEO) — świadomie dopuszczone, by Adapciak mógł być cytowany w odpowiedziach AI
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://adapciak-uewroc.pl/sitemap.xml

@@ -8,25 +8,24 @@
 <meta name="robots" content="index, follow"/>
 <meta name="author" content="Samorząd Studentów UEW"/>
 
-<!-- ⚠️ KANONICZNY URL + obrazy społecznościowe wymagają PEŁNEJ domeny produkcyjnej.
-     ZMIEŃ wszystkie wystąpienia https://WSTAW-DOMENE na realny adres (np. https://adapciak.pl) — to jeden find&replace. -->
-<link rel="canonical" href="https://WSTAW-DOMENE/"/>
+<!-- Domena kanoniczna: adapciak-uewroc.pl (bez www — www przekierowuje na non-www). -->
+<link rel="canonical" href="https://adapciak-uewroc.pl/"/>
 
 <!-- Open Graph (Facebook / Messenger / LinkedIn) -->
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="pl_PL"/>
 <meta property="og:site_name" content="Adapciak — SSUEW"/>
-<meta property="og:url" content="https://WSTAW-DOMENE/"/>
+<meta property="og:url" content="https://adapciak-uewroc.pl/"/>
 <meta property="og:title" content="Adapciak 2026 (30.08–06.09) – SSUEW"/>
 <meta property="og:description" content="Największa studencka impreza integracyjna UEW we Wrocławiu. Adapciak 30.08–06.09.2026 – bądź tam!"/>
-<meta property="og:image" content="https://WSTAW-DOMENE/ADAPCIAK_LOGO.png"/>
+<meta property="og:image" content="https://adapciak-uewroc.pl/ADAPCIAK_LOGO.png"/>
 <meta property="og:image:alt" content="Logo Adapciak 2026"/>
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Adapciak 2026 (30.08–06.09) – SSUEW"/>
 <meta name="twitter:description" content="Największa studencka impreza integracyjna UEW we Wrocławiu. Adapciak 30.08–06.09.2026 – bądź tam!"/>
-<meta name="twitter:image" content="https://WSTAW-DOMENE/ADAPCIAK_LOGO.png"/>
+<meta name="twitter:image" content="https://adapciak-uewroc.pl/ADAPCIAK_LOGO.png"/>
 
 <!-- Dane strukturalne wydarzenia — Google rich results (event) -->
 <script type="application/ld+json">
@@ -39,8 +38,8 @@
   "endDate": "2026-09-06",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "eventStatus": "https://schema.org/EventScheduled",
-  "image": "https://WSTAW-DOMENE/ADAPCIAK_LOGO.png",
-  "url": "https://WSTAW-DOMENE/",
+  "image": "https://adapciak-uewroc.pl/ADAPCIAK_LOGO.png",
+  "url": "https://adapciak-uewroc.pl/",
   "location": {
     "@type": "Place",
     "name": "Kompleks Turystyczny „Sudety” — Ośrodek Banderoza",
@@ -56,8 +55,70 @@
   "organizer": {
     "@type": "Organization",
     "name": "Samorząd Studentów Uniwersytetu Ekonomicznego we Wrocławiu",
-    "url": "https://WSTAW-DOMENE/"
+    "url": "https://samorzad.ue.wroc.pl"
+  },
+  "sameAs": [
+    "https://www.facebook.com/AdapciakUEW/",
+    "https://www.instagram.com/adapciak.ue/"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://adapciak-uewroc.pl/"
   }
+}
+</script>
+
+<!-- Organizacja (encja SSUEW) — knowledge graph / GEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Samorząd Studentów Uniwersytetu Ekonomicznego we Wrocławiu",
+  "alternateName": "SSUEW",
+  "url": "https://samorzad.ue.wroc.pl",
+  "logo": "https://adapciak-uewroc.pl/ADAPCIAK_LOGO.png",
+  "sameAs": [
+    "https://www.facebook.com/AdapciakUEW/",
+    "https://www.instagram.com/adapciak.ue/"
+  ]
+}
+</script>
+
+<!-- FAQ — Google rich results / AEO (snippety odpowiedzi) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Jak wygląda rejestracja na Adapciaka?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Rejestracja odbywa się przez formularz online dostępny po kliknięciu przycisku „Zapisz się”. Po rejestracji otrzymasz e-mailem potwierdzenie oraz dalsze instrukcje dotyczące odbioru wejściówki." }
+    },
+    {
+      "@type": "Question",
+      "name": "Kiedy i gdzie odbywa się Adapciak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Adapciak 2026 odbędzie się w dniach 30 sierpnia – 6 września 2026 w Ośrodku Banderoza (Kompleks Turystyczny „Sudety”), ul. Powstańców Śląskich 23, 48-340 Głuchołazy." }
+    },
+    {
+      "@type": "Question",
+      "name": "Czy udział w Adapciaku jest płatny?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Udział w Adapciaku jest bezpłatny dla wszystkich uczestników. Wymagana jest jedynie wcześniejsza rejestracja przez formularz online." }
+    },
+    {
+      "@type": "Question",
+      "name": "Czy Adapciak jest tylko dla studentów UEW?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Adapciak jest przede wszystkim skierowany do studentów UEW, jednak serdecznie zapraszamy również studentów innych wrocławskich uczelni. Szczegółowe warunki uczestnictwa zostaną podane przy ogłoszeniu zapisów." }
+    },
+    {
+      "@type": "Question",
+      "name": "Czy mogę zrezygnować po rejestracji?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tak — rezygnację zgłoś mailowo na adres organizatorów do 3 dni przed wydarzeniem. Swoje miejsce możesz przekazać innej osobie po wcześniejszym poinformowaniu organizatorów." }
+    }
+  ]
 }
 </script>
 
@@ -1018,7 +1079,7 @@ tailwind.config = {
           <span class="shrink-0 transition duration-300 group-open:-rotate-180 material-symbols-outlined" aria-hidden="true">expand_more</span>
         </summary>
         <div class="px-6 pb-6 text-secondary font-body-md text-body-md border-t border-surface-border pt-4">
-          Adapciak 2026 odbędzie się w dniach 30 sierpnia – 6 września 2026 we Wrocławiu. Dokładna lokalizacja zostanie ogłoszona wkrótce na naszych mediach społecznościowych!
+          Adapciak 2026 odbędzie się w dniach 30 sierpnia – 6 września 2026 w Ośrodku Banderoza (Kompleks Turystyczny „Sudety") w Głuchołazach, ul. Powstańców Śląskich 23. Szczegóły dojazdu znajdziesz w sekcji „Miejsce wydarzenia".
         </div>
       </details>
 
