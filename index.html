@@ -372,8 +372,8 @@
 
   /* ─── Gallery slider ─── */
   #gallery-slider { position: relative; }
-  .g-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
-  .g-slide.active { opacity: 1; position: relative; pointer-events: auto; }
+  .g-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+  .g-slide.active { opacity: 1; pointer-events: auto; }
   .g-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .g-dot {
     width: 24px; height: 24px; border: none; background: transparent;
@@ -1631,7 +1631,7 @@ async function handleFormSubmit(e) {
   }
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function startTimer() { if (reduceMotion) return; timer = setInterval(function() { goTo(current + 1); }, 5000); }
+  function startTimer() { if (reduceMotion) return; timer = setInterval(function() { goTo(current + 1); }, 6500); }
   function stopTimer()  { clearInterval(timer); }
   function resetTimer() { stopTimer(); startTimer(); }
 
