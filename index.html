@@ -350,6 +350,19 @@
      do optycznego środka liter (zamiast wyrównania do środka pełnego boxa). */
   .fd-pin { transform: translateY(-0.28em); }
 
+  /* ─── Imprezy: „taśma” Stay Tuned (zapowiedź motywów) ─── */
+  .tape-strip{
+    position:absolute; left:-10%; width:120%;
+    padding:9px 0; font:800 15px/1 system-ui,sans-serif; letter-spacing:.2em;
+    color:#141414; background:#F2CB49; white-space:nowrap; text-align:center; overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+    border-top:2px dashed rgba(0,0,0,.35); border-bottom:2px dashed rgba(0,0,0,.35);
+    user-select:none; pointer-events:none;
+  }
+  .ts1{ top:15%; transform:rotate(-11deg); }
+  .ts2{ top:45%; transform:rotate(7deg); background:#141414; color:#F2CB49; border-color:rgba(242,203,73,.45); }
+  .ts3{ top:75%; transform:rotate(-6deg); }
+
   /* ─── Gallery slider ─── */
   #gallery-slider { position: relative; }
   .g-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
@@ -541,6 +554,8 @@
     #koza-easter-egg .koza-frames img { animation: none !important; }
   }
 </style>
+<!-- Vercel Web Analytics - bez cookies, zgodne z RODO. WŁĄCZ: Vercel -> projekt -> Analytics -> Enable. -->
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 
 <body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary selection:text-white">
@@ -733,107 +748,18 @@
     </div>
 
     <!-- PARTY TILES - ZMIEŃ: nazwy, opisy, dress code, linki Pinterest, zdjęcia (kafelki) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 reveal">
-      <!-- ZMIEŃ: wstaw prawdziwe nazwy od organizatorów; kolejność celowo losowa (nie zdradza dni) -->
-
-      <!-- Tile 1 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group"
-           onclick="openPartyPopup('Motyw wieczoru #1', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#1a1a2e,#16213e);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #1<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
+    <div class="reveal relative overflow-hidden border border-white/10" style="min-height:360px; background:linear-gradient(135deg,#1a1a2e,#16213e);">
+      <div class="tape-strip ts1">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
+      <div class="tape-strip ts2">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
+      <div class="tape-strip ts3">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-10">
+        <div class="px-8 py-6" style="background:rgba(15,15,20,.66); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); border:1px solid rgba(255,255,255,.12);">
+          <span class="font-section-label text-section-label uppercase" style="color:#F2CB49;">Motywy wieczorów</span>
+          <div style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(40px,8vw,76px); line-height:1; color:#fff;" class="mt-1">Stay tuned</div>
+          <p class="font-body-md text-white/75 mt-3 max-w-sm mx-auto">Motywy wieczorów i dress code ogłosimy wkrótce. Śledźcie <a href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" style="color:#F2CB49;" class="underline">@adapciak.ue</a>!</p>
         </div>
       </div>
-
-      <!-- Tile 2 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group"
-           onclick="openPartyPopup('Motyw wieczoru #2', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#0d1b2a,#1b4332);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #2<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
-        </div>
-      </div>
-
-      <!-- Tile 3 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group"
-           onclick="openPartyPopup('Motyw wieczoru #3', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#2d1b33,#1a0a2e);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #3<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
-        </div>
-      </div>
-
-      <!-- Tile 4 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group"
-           onclick="openPartyPopup('Motyw wieczoru #4', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#1a2a1a,#0a2a0a);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #4<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
-        </div>
-      </div>
-
-      <!-- Tile 5 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group"
-           onclick="openPartyPopup('Motyw wieczoru #5', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#2a1a0a,#1a0a00);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #5<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
-        </div>
-      </div>
-
-      <!-- Tile 6 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group"
-           onclick="openPartyPopup('Motyw wieczoru #6', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#0a1a2a,#002244);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Motyw</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #6<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
-        </div>
-      </div>
-
-      <!-- Tile 7 -->
-      <div class="party-tile h-[320px] md:h-[380px] bg-[#1C1917] border border-white/10 cursor-pointer group sm:col-span-2 lg:col-span-1"
-           onclick="openPartyPopup('Motyw wieczoru #7', 'Stay tuned', 'Stay tuned', '')"
-           style="background: linear-gradient(135deg,#1a1a1a,#2a0a2a);">
-        <div class="party-tile-content h-full flex flex-col justify-end p-6">
-          <span class="font-section-label text-section-label text-primary uppercase mb-1">Wielki Finał</span>
-          <h3 style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(28px,4vw,40px); line-height:1.25;" class="text-white mb-2">Impreza #7<br/><span class="text-primary text-[0.6em]">Stay tuned</span></h3>
-          <p class="font-caption text-caption text-white/60 mb-3">Stay tuned</p>
-          <div class="flex items-center gap-2 text-primary font-label-bold text-label-bold uppercase text-[12px] opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="material-symbols-outlined text-[16px]">&#xE41D;</span> Dress code →
-          </div>
-        </div>
-      </div>
-    </div><!-- /grid kafelków imprez -->
+    </div>
 
     <!-- Dawne panele dni (usunięte) -->
     <div id="sched-panels" class="hidden">
@@ -1897,6 +1823,27 @@ function toggleFaqMore() {
   if (icon) icon.style.transform = isHidden ? '' : 'rotate(180deg)';
   if (btn)  btn.setAttribute('aria-expanded', String(!isHidden));
 }
+
+/* ─── Typografia: pojedyncze litery (a, i, o, u, w, z) nie zostają na końcu linii ─── */
+function fixPolishOrphans(root) {
+  var re = /(^|[\s(„"])([aiouwzAIOUWZ])[ \t]+/g;
+  function walk(node) {
+    if (node.nodeType === 3) {
+      var v = node.nodeValue;
+      if (v.indexOf(' ') > -1) {
+        var nv = v.replace(re, function(m, pre, ltr) { return pre + ltr + '\u00A0'; });
+        if (nv !== v) node.nodeValue = nv;
+      }
+    } else if (node.nodeType === 1) {
+      var t = node.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'CODE' || t === 'PRE') return;
+      for (var i = 0; i < node.childNodes.length; i++) walk(node.childNodes[i]);
+    }
+  }
+  walk(root || document.body);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ fixPolishOrphans(); });
+else fixPolishOrphans();
 
 /* ─── Share button ─── */
 function shareAdapciak() {

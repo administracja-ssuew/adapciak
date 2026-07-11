@@ -22,7 +22,7 @@
   .updated{color:var(--muted);font-size:14px;margin-bottom:8px}
   .note{background:#FFF4E0;border:1px solid var(--border);border-left:4px solid var(--teal);padding:14px 18px;border-radius:4px;font-size:14px;color:var(--muted);margin:20px 0}
   h2{font-size:20px;margin:34px 0 8px;color:var(--ink)}
-  p,li{color:#3f3b38}
+  p,li{color:#3f3b38;text-wrap:pretty}
   ul{padding-left:22px}
   li{margin:4px 0}
   .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin:12px 0}
@@ -39,10 +39,6 @@
 
   <h1>Polityka Prywatności</h1>
   <p class="updated">Ostatnia aktualizacja: lipiec 2026 r.</p>
-
-  <div class="note">
-    ⚠️ <strong>Dokument roboczy do weryfikacji.</strong> Przed publikacją prosimy o sprawdzenie treści przez Inspektora Ochrony Danych UEW (iod@ue.wroc.pl) oraz o dostosowanie do ogólnej dokumentacji RODO Uniwersytetu.
-  </div>
 
   <p>Niniejsza Polityka Prywatności opisuje, w jaki sposób przetwarzane są dane osobowe osób korzystających ze strony internetowej <strong>adapciak-uewroc.pl</strong> (dalej: „Strona"), poświęconej obozowi adaptacyjnemu <strong>Adapciak</strong>, organizowanemu przez Samorząd Studentów Uniwersytetu Ekonomicznego we Wrocławiu.</p>
 
@@ -63,13 +59,13 @@
   <p>Zasady przetwarzania danych związanych z <strong>zapisem i uczestnictwem w obozie</strong> (rejestracja, płatność) określone są odrębnie - w regulaminie wydarzenia oraz w informacji przekazywanej przy zapisach.</p>
 
   <h2>3. Cookies i pamięć przeglądarki</h2>
-  <p>Strona <strong>nie używa plików cookies</strong> do celów analitycznych, marketingowych ani śledzących. Nie korzystamy z zewnętrznych narzędzi analitycznych (np. Google Analytics).</p>
+  <p>Strona <strong>nie używa plików cookies</strong> do celów marketingowych ani śledzących. Do analizy oglądalności korzystamy z <strong>Vercel Web Analytics</strong> - narzędzia, które działa <strong>bez plików cookies</strong> i mierzy dane w sposób zanonimizowany (m.in. liczba odsłon, źródła wejść, typ urządzenia), bez identyfikowania poszczególnych osób.</p>
   <p>Wykorzystujemy jedynie <strong>pamięć lokalną przeglądarki (localStorage)</strong> w celach technicznych - do zapamiętania wybranego motywu (jasny/ciemny) oraz akceptacji komunikatu o prywatności. Dane te pozostają w Twojej przeglądarce i nie są nam przesyłane.</p>
 
   <h2>4. Odbiorcy danych i podmioty przetwarzające</h2>
   <ul>
     <li><strong>Formspree, Inc.</strong> - dostawca obsługi formularza kontaktowego (przekazuje wiadomości na e-mail organizatorów).</li>
-    <li><strong>Vercel Inc.</strong> - dostawca hostingu Strony.</li>
+    <li><strong>Vercel Inc.</strong> - dostawca hostingu Strony oraz analityki oglądalności (Vercel Web Analytics, bez cookies).</li>
   </ul>
   <p>Wymienieni dostawcy mają siedzibę w USA - przekazanie danych poza Europejski Obszar Gospodarczy następuje na podstawie standardowych klauzul umownych zatwierdzonych przez Komisję Europejską.</p>
 
@@ -93,5 +89,15 @@
     © 2026 Samorząd Studentów Uniwersytetu Ekonomicznego we Wrocławiu. Wszelkie prawa zastrzeżone. · <a href="/">Strona główna</a>
   </footer>
 </div>
+<script>
+/* Pojedyncze litery (a, i, o, u, w, z) nie zostają na końcu linii */
+(function(){
+  var re=/(^|[\s(„"])([aiouwzAIOUWZ])[ \t]+/g;
+  (function walk(n){
+    if(n.nodeType===3){var v=n.nodeValue;if(v.indexOf(' ')>-1){var nv=v.replace(re,function(m,p,l){return p+l+' ';});if(nv!==v)n.nodeValue=nv;}}
+    else if(n.nodeType===1&&!/^(SCRIPT|STYLE|CODE|PRE)$/.test(n.tagName)){for(var i=0;i<n.childNodes.length;i++)walk(n.childNodes[i]);}
+  })(document.body);
+})();
+</script>
 </body>
 </html>
