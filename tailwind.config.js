@@ -38,7 +38,7 @@ module.exports = {
       fontFamily: {
         'caption': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'body-md': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'label-bold': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         'headline-lg': ['funkydori', 'Pacifico', 'cursive'], 'section-label': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        'display-hero': ['funkydori', 'Pacifico', 'cursive'], 'body-lg': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'headline-md': ['Fredoka', 'Plus Jakarta Sans', 'sans-serif']
+        'display-hero': ['funkydori', 'Pacifico', 'cursive'], 'body-lg': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'headline-md': ['Baloo 2', 'Plus Jakarta Sans', 'sans-serif']
       },
       fontSize: {
         'caption':      ['12px', { lineHeight: '16px', fontWeight: '400' }],
