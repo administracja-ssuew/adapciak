@@ -1,4 +1,4 @@
-const CACHE = 'adapciak-v6';
+const CACHE = 'adapciak-v7';
 const STATIC = [
   './',
   './index.html',
@@ -32,9 +32,9 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
-  if (!e.request.url.startsWith(self.location.origin) &&
-      !e.request.url.includes('fonts.googleapis') &&
-      !e.request.url.includes('fonts.gstatic')) return;
+  // Tylko żądania z naszej domeny. Cross-origin (fonty Google, Typekit, CDN) obsługuje
+  // przeglądarka bezpośrednio — inaczej fetch w SW łamał connect-src CSP i zwracał HTML zamiast CSS.
+  if (!e.request.url.startsWith(self.location.origin)) return;
 
   /* tailwind.css: network-first — po każdym rebuildzie CSS ma być świeży (cache tylko jako fallback offline) */
   if (e.request.url.includes('/tailwind.css')) {
