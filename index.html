@@ -412,6 +412,28 @@
   .g-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
   .g-slide.active { opacity: 1; pointer-events: auto; }
   .g-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ─── Galeria masonry ─── */
+  .masonry { columns: 1; column-gap: 16px; }
+  @media (min-width:640px){ .masonry{ columns: 2; } }
+  @media (min-width:1024px){ .masonry{ columns: 3; } }
+  @media (min-width:1280px){ .masonry{ columns: 4; } }
+  .masonry-item{
+    display:block; width:100%; break-inside:avoid; margin:0 0 16px; padding:0; border:0;
+    background:none; cursor:pointer; position:relative; overflow:hidden; border-radius:1rem;
+    line-height:0; box-shadow:0 1px 2px rgba(28,25,23,.05), 0 8px 20px rgba(28,25,23,.06);
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+  }
+  .masonry-item:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(28,25,23,.14); }
+  .masonry-item img{ width:100%; height:auto; display:block; transition:transform .55s cubic-bezier(.2,.8,.2,1); }
+  .masonry-item:hover img{ transform:scale(1.06); }
+  .masonry-item::after{
+    content:''; position:absolute; inset:0; border-radius:1rem;
+    background:linear-gradient(to top, rgba(27,122,117,.45), transparent 55%);
+    opacity:0; transition:opacity .3s;
+  }
+  .masonry-item:hover::after{ opacity:1; }
+  .masonry-item:focus-visible{ outline:3px solid var(--tw-ring, #1B7A75); outline-offset:2px; }
   .g-dot {
     width: 24px; height: 24px; border: none; background: transparent;
     cursor: pointer; padding: 0; position: relative;
@@ -771,10 +793,10 @@
       </div>
     </div>
 
-    <!-- Zdjęcie - używa galeria/2.jpg (wstęga przy budynku UEW) -->
+    <!-- Zdjęcie - używa galeria/2.webp (wstęga przy budynku UEW) -->
     <div class="relative h-[480px] lg:h-[580px] w-full reveal reveal-delay-2 reveal-right">
       <div class="absolute inset-0 bg-primary/20 translate-x-4 translate-y-4 border border-primary rounded-2xl" aria-hidden="true"></div>
-      <img src="./images/galeria/2.jpg" alt="Adapciak - poprzednia edycja przy budynku UEW" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500 rounded-2xl">
+      <img src="./images/galeria/2.webp" alt="Adapciak - poprzednia edycja przy budynku UEW" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500 rounded-2xl">
     </div>
   </div>
 </section>
@@ -1310,36 +1332,98 @@
       <p class="font-body-lg text-body-lg text-secondary mt-4">Wspomnienia, które zostają na długo.</p>
     </div>
 
-    <!-- Slider główny -->
-    <div id="gallery-slider" class="rounded-2xl relative overflow-hidden h-[420px] md:h-[560px] reveal reveal-scale">
-      <div class="g-slide active">
-        <img src="./images/galeria/1.jpg" alt="Adapciak - zdjęcie grupowe z lotu ptaka" loading="lazy">
-      </div>
-      <div class="g-slide">
-        <img src="./images/galeria/2.jpg" alt="Adapciak - uczestnicy przy budynku UEW" loading="lazy">
-      </div>
-      <div class="g-slide">
-        <img src="./images/galeria/3.jpg" alt="Adapciak - uczestnicy w różowych koszulkach" loading="lazy">
-      </div>
-      <div class="g-slide">
-        <img src="./images/galeria/4.jpg" alt="Adapciak - aula z prelegentem" loading="lazy">
-      </div>
-
-      <!-- Strzałki nawigacji -->
-      <button id="g-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center bg-black/50 hover:bg-primary text-white transition-colors duration-200" aria-label="Poprzednie zdjęcie">
-        <span class="material-symbols-outlined">&#xE5CB;</span>
+    <!-- Galeria masonry -->
+    <div class="masonry reveal">
+      <button type="button" class="masonry-item" onclick="openLightbox(0)" aria-label="Powiększ zdjęcie 1">
+        <img src="./images/galeria/1.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 1" loading="lazy" decoding="async">
       </button>
-      <button id="g-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center bg-black/50 hover:bg-primary text-white transition-colors duration-200" aria-label="Następne zdjęcie">
-        <span class="material-symbols-outlined">&#xE5CC;</span>
+      <button type="button" class="masonry-item" onclick="openLightbox(1)" aria-label="Powiększ zdjęcie 2">
+        <img src="./images/galeria/2.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 2" loading="lazy" decoding="async">
       </button>
-
-      <!-- Wskaźniki dot -->
-      <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-3 z-20" role="group" aria-label="Nawigacja galerii">
-        <button class="g-dot active" aria-label="Pokaż zdjęcie 1"></button>
-        <button class="g-dot" aria-label="Pokaż zdjęcie 2"></button>
-        <button class="g-dot" aria-label="Pokaż zdjęcie 3"></button>
-        <button class="g-dot" aria-label="Pokaż zdjęcie 4"></button>
-      </div>
+      <button type="button" class="masonry-item" onclick="openLightbox(2)" aria-label="Powiększ zdjęcie 3">
+        <img src="./images/galeria/3.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 3" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(3)" aria-label="Powiększ zdjęcie 4">
+        <img src="./images/galeria/4.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 4" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(4)" aria-label="Powiększ zdjęcie 5">
+        <img src="./images/galeria/5.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 5" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(5)" aria-label="Powiększ zdjęcie 6">
+        <img src="./images/galeria/6.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 6" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(6)" aria-label="Powiększ zdjęcie 7">
+        <img src="./images/galeria/7.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 7" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(7)" aria-label="Powiększ zdjęcie 8">
+        <img src="./images/galeria/8.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 8" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(8)" aria-label="Powiększ zdjęcie 9">
+        <img src="./images/galeria/9.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 9" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(9)" aria-label="Powiększ zdjęcie 10">
+        <img src="./images/galeria/10.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 10" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(10)" aria-label="Powiększ zdjęcie 11">
+        <img src="./images/galeria/11.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 11" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(11)" aria-label="Powiększ zdjęcie 12">
+        <img src="./images/galeria/12.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 12" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(12)" aria-label="Powiększ zdjęcie 13">
+        <img src="./images/galeria/13.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 13" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(13)" aria-label="Powiększ zdjęcie 14">
+        <img src="./images/galeria/14.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 14" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(14)" aria-label="Powiększ zdjęcie 15">
+        <img src="./images/galeria/15.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 15" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(15)" aria-label="Powiększ zdjęcie 16">
+        <img src="./images/galeria/16.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 16" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(16)" aria-label="Powiększ zdjęcie 17">
+        <img src="./images/galeria/17.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 17" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(17)" aria-label="Powiększ zdjęcie 18">
+        <img src="./images/galeria/18.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 18" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(18)" aria-label="Powiększ zdjęcie 19">
+        <img src="./images/galeria/19.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 19" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(19)" aria-label="Powiększ zdjęcie 20">
+        <img src="./images/galeria/20.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 20" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(20)" aria-label="Powiększ zdjęcie 21">
+        <img src="./images/galeria/21.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 21" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(21)" aria-label="Powiększ zdjęcie 22">
+        <img src="./images/galeria/22.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 22" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(22)" aria-label="Powiększ zdjęcie 23">
+        <img src="./images/galeria/23.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 23" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(23)" aria-label="Powiększ zdjęcie 24">
+        <img src="./images/galeria/24.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 24" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(24)" aria-label="Powiększ zdjęcie 25">
+        <img src="./images/galeria/25.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 25" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(25)" aria-label="Powiększ zdjęcie 26">
+        <img src="./images/galeria/26.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 26" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(26)" aria-label="Powiększ zdjęcie 27">
+        <img src="./images/galeria/27.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 27" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(27)" aria-label="Powiększ zdjęcie 28">
+        <img src="./images/galeria/28.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 28" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(28)" aria-label="Powiększ zdjęcie 29">
+        <img src="./images/galeria/29.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 29" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(29)" aria-label="Powiększ zdjęcie 30">
+        <img src="./images/galeria/30.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 30" loading="lazy" decoding="async">
+      </button>
     </div>
   </div>
 </section>
@@ -1751,68 +1835,49 @@ async function handleFormSubmit(e) {
 })();
 
 /* ─── GAL-01/02/03: Lightbox ────────────── */
-function initLightbox() {
-  var slides = Array.from(document.querySelectorAll('.g-slide'));
-  if (!slides.length) return;
-
-  // Build image list from DOM - adding a new .g-slide auto-extends this array (GAL-03)
-  var images = slides.map(function(s) {
-    var img = s.querySelector('img');
-    return { src: img.src, alt: img.alt };
+var lbImages = [];
+var lbIndex = 0;
+function lbBuildImages() {
+  lbImages = Array.prototype.slice.call(document.querySelectorAll('.masonry-item img')).map(function (img) {
+    return { src: img.currentSrc || img.src, alt: img.alt };
   });
-
-  var lb      = document.getElementById('lightbox');
-  var lbImg   = document.getElementById('lb-img');
+}
+function openLightbox(index) {
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  if (!lb || !lbImg) return;
+  if (!lbImages.length) lbBuildImages();
+  if (!lbImages.length) return;
+  var wasHidden = lb.classList.contains('hidden');
+  lbIndex = (index + lbImages.length) % lbImages.length;
+  lbImg.src = lbImages[lbIndex].src;
+  lbImg.alt = lbImages[lbIndex].alt;
+  lb.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  if (wasHidden && typeof trapFocus === 'function') trapFocus(lb);
+}
+function closeLightbox() {
+  var lb = document.getElementById('lightbox');
+  if (!lb || lb.classList.contains('hidden')) return;
+  lb.classList.add('hidden');
+  document.body.style.overflow = '';
+  if (typeof releaseFocus === 'function') releaseFocus(lb);
+}
+function initLightbox() {
+  var lb = document.getElementById('lightbox');
+  if (!lb) return;
   var lbClose = document.getElementById('lb-close');
   var lbPrev  = document.getElementById('lb-prev');
   var lbNext  = document.getElementById('lb-next');
-  var lbIndex = 0;
-
-  function openLightbox(index) {
-    var wasHidden = lb.classList.contains('hidden');
-    lbIndex = (index + images.length) % images.length;
-    lbImg.src = images[lbIndex].src;
-    lbImg.alt = images[lbIndex].alt;
-    lb.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    if (wasHidden) trapFocus(lb);
-  }
-
-  function closeLightbox() {
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+  if (lbPrev)  lbPrev.addEventListener('click', function () { openLightbox(lbIndex - 1); });
+  if (lbNext)  lbNext.addEventListener('click', function () { openLightbox(lbIndex + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', function (e) {
     if (lb.classList.contains('hidden')) return;
-    lb.classList.add('hidden');
-    document.body.style.overflow = '';
-    releaseFocus(lb);
-  }
-
-  // Attach click to each slide's img - opens lightbox at the carousel's current active index
-  slides.forEach(function(slide, i) {
-    var img = slide.querySelector('img');
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', function() {
-      // Read active index from DOM at click time - avoids stale closure over carousel's private `current`
-      var dots      = Array.from(document.querySelectorAll('.g-dot'));
-      var activeDot = document.querySelector('.g-dot.active');
-      var activeIndex = activeDot ? dots.indexOf(activeDot) : i;
-      openLightbox(activeIndex);
-    });
-  });
-
-  lbClose.addEventListener('click', closeLightbox);
-  lbPrev.addEventListener('click', function() { openLightbox(lbIndex - 1); });
-  lbNext.addEventListener('click', function() { openLightbox(lbIndex + 1); });
-
-  // Click on overlay background (not on image or buttons) closes lightbox
-  lb.addEventListener('click', function(e) {
-    if (e.target === lb) closeLightbox();
-  });
-
-  // Keyboard: Escape closes; ArrowLeft/ArrowRight navigates when open
-  document.addEventListener('keydown', function(e) {
-    if (lb.classList.contains('hidden')) return;
-    if (e.key === 'Escape')      { closeLightbox(); }
-    if (e.key === 'ArrowLeft')   { openLightbox(lbIndex - 1); }
-    if (e.key === 'ArrowRight')  { openLightbox(lbIndex + 1); }
+    if (e.key === 'Escape')     { closeLightbox(); }
+    if (e.key === 'ArrowLeft')  { openLightbox(lbIndex - 1); }
+    if (e.key === 'ArrowRight') { openLightbox(lbIndex + 1); }
   });
 }
 /* Skrypt jest nad elementami lightboxa w DOM - init po zparsowaniu strony. */

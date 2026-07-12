@@ -1,1 +1,4 @@
 node_modules/
+
+# Oryginały zdjęć galerii (ciężkie) — w repo trzymamy tylko zoptymalizowane .webp
+images/galeria/*.jpg
