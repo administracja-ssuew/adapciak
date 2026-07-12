@@ -29,16 +29,16 @@ module.exports = {
         'on-background':            '#1C1917',
       },
       borderRadius: {
-        'DEFAULT': '0.125rem', 'lg': '0.25rem', 'xl': '0.5rem', 'full': '0.75rem'
+        'DEFAULT': '0.5rem', 'lg': '0.75rem', 'xl': '1rem', '2xl': '1.25rem', 'full': '9999px'
       },
       spacing: {
         'margin-mobile': '16px', 'base': '8px',
         'margin-desktop': '64px', 'gutter': '24px', 'section-gap': '120px'
       },
       fontFamily: {
-        'caption': ['Inter'], 'body-md': ['Inter'], 'label-bold': ['Inter'],
-        'headline-lg': ['funkydori', 'Pacifico', 'cursive'], 'section-label': ['Inter'],
-        'display-hero': ['funkydori', 'Pacifico', 'cursive'], 'body-lg': ['Inter'], 'headline-md': ['Fredoka', 'Inter', 'sans-serif']
+        'caption': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'body-md': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'label-bold': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        'headline-lg': ['funkydori', 'Pacifico', 'cursive'], 'section-label': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        'display-hero': ['funkydori', 'Pacifico', 'cursive'], 'body-lg': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], 'headline-md': ['Fredoka', 'Plus Jakarta Sans', 'sans-serif']
       },
       fontSize: {
         'caption':      ['12px', { lineHeight: '16px', fontWeight: '400' }],

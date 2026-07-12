@@ -253,10 +253,10 @@
      Pacifico zostaje jako fallback w stacku, gdyby kit się nie wczytał. -->
 <!-- Fonty asynchronicznie (media=print → onload) - nie blokują renderu; fallback + <noscript>. -->
 <link rel="stylesheet" href="https://use.typekit.net/wxf7ujd.css" media="print" onload="this.media='all'"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;600;700&family=Pacifico&display=swap" media="print" onload="this.media='all'"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Pacifico&display=swap" media="print" onload="this.media='all'"/>
 <noscript>
   <link rel="stylesheet" href="https://use.typekit.net/wxf7ujd.css"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;600;700&family=Pacifico&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Pacifico&display=swap"/>
 </noscript>
 
 
@@ -591,7 +591,7 @@
     </div>
 
     <div class="flex items-center gap-3">
-      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block" href="#zapisy">ZAPISZ SIĘ</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block rounded-full" href="#zapisy">ZAPISZ SIĘ</a>
 
       <!-- Dark mode toggle -->
       <button id="dark-toggle" onclick="toggleDark()" class="w-9 h-9 flex items-center justify-center text-on-surface hover:text-primary" aria-label="Przełącz motyw">
@@ -616,7 +616,7 @@
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"       onclick="closeMobileMenu()">FAQ</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#kontakt"   onclick="closeMobileMenu()">Kontakt</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3"                                     href="#galeria"   onclick="closeMobileMenu()">Galeria</a>
-      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block" href="#zapisy" onclick="closeMobileMenu()">ZAPISZ SIĘ</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block rounded-full" href="#zapisy" onclick="closeMobileMenu()">ZAPISZ SIĘ</a>
     </div>
   </div>
 </nav>
@@ -655,8 +655,8 @@
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto reveal reveal-delay-3">
-      <a class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center" data-magnetic href="#zapisy">ZAPISZ SIĘ</a>
-      <button onclick="shareAdapciak()" class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center" aria-label="Udostępnij">
+      <a class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#zapisy">ZAPISZ SIĘ</a>
+      <button onclick="shareAdapciak()" class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center rounded-full" aria-label="Udostępnij">
         <span class="material-symbols-outlined text-[20px]">&#xE80D;</span> UDOSTĘPNIJ
       </button>
     </div>
@@ -951,7 +951,7 @@
       Zarejestruj się już teraz i zabezpiecz swoje miejsce na największej imprezie studenckiej UEW!
     </p>
     <!-- ← podmień href na link do formularza zapisów -->
-    <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block" href="#" onclick="fireConfetti()">ZAPISZ SIĘ ONLINE</a>
+    <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block rounded-full" href="#" onclick="fireConfetti()">ZAPISZ SIĘ ONLINE</a>
   </div>
 </section>
 
@@ -1172,7 +1172,7 @@
     </div>
 
     <div class="text-center mt-8 reveal">
-      <button id="faq-toggle" type="button" onclick="toggleFaqMore()" aria-expanded="false" aria-controls="faq-more" class="inline-flex items-center gap-2 bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors">
+      <button id="faq-toggle" type="button" onclick="toggleFaqMore()" aria-expanded="false" aria-controls="faq-more" class="inline-flex items-center gap-2 bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors rounded-full">
         <span id="faq-toggle-label">Więcej pytań</span>
         <span id="faq-toggle-icon" class="material-symbols-outlined text-[20px] transition-transform duration-300" aria-hidden="true">&#xE5CF;</span>
       </button>
@@ -1214,10 +1214,10 @@
         <div>
           <p class="font-section-label text-section-label text-primary uppercase mb-3">Social media</p>
           <div class="flex gap-3 flex-wrap">
-            <a href="https://www.facebook.com/AdapciakUEW/" target="_blank" rel="noopener" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2">
+            <a href="https://www.facebook.com/AdapciakUEW/" target="_blank" rel="noopener" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2 rounded-full">
               <span class="material-symbols-outlined text-[16px]" aria-hidden="true">&#xEA21;</span> Facebook
             </a>
-            <a href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2">
+            <a href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" class="border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 flex items-center gap-2 rounded-full">
               <span class="material-symbols-outlined text-[16px]" aria-hidden="true">&#xE412;</span> Instagram
             </a>
           </div>
@@ -1237,19 +1237,19 @@
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-name">Imię i nazwisko</label>
           <input id="contact-name" type="text" name="name" placeholder="Jan Kowalski" required
-            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
+            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted rounded-lg"/>
         </div>
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-email">Adres e-mail</label>
           <input id="contact-email" type="email" name="email" placeholder="jan.kowalski@example.com" required
-            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted"/>
+            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted rounded-lg"/>
         </div>
         <div>
           <label class="font-section-label text-section-label text-primary uppercase block mb-2" for="contact-msg">Wiadomość</label>
           <textarea id="contact-msg" name="message" rows="5" placeholder="Twoja wiadomość..." required
-            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted resize-none"></textarea>
+            class="w-full bg-surface border border-surface-border text-on-surface font-body-md text-body-md px-4 py-3 focus:outline-none focus:border-primary transition-colors placeholder:text-text-muted resize-none rounded-lg"></textarea>
         </div>
-        <button type="submit" class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors w-max">
+        <button type="submit" class="bg-primary text-white font-headline-md text-headline-md px-8 py-4 hover:bg-primary-dark transition-colors w-max rounded-full">
           WYŚLIJ WIADOMOŚĆ
         </button>
         <p id="form-success" class="hidden text-primary font-semibold mt-2">Wiadomość wysłana! Odezwiemy się wkrótce.</p>
@@ -1330,7 +1330,7 @@
           </div>
         </div>
         <a href="https://maps.app.goo.gl/xhzhpeCDHvLBJu689" target="_blank" rel="noopener"
-           class="inline-flex items-center gap-2 border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 w-max">
+           class="inline-flex items-center gap-2 border border-surface-border text-secondary hover:border-primary hover:text-primary transition-colors font-label-bold text-label-bold uppercase px-5 py-3 w-max rounded-full">
           <span class="material-symbols-outlined text-[16px]">&#xE89E;</span> Otwórz w Google Maps
         </a>
       </div>
@@ -2029,7 +2029,7 @@ document.addEventListener('keydown', function(e) {
     Ta strona nie używa plików cookies śledzących ani analityki - jedynie technicznej pamięci przeglądarki (np. wybór motywu). Szczegóły w naszej
     <a href="/polityka-prywatnosci" class="text-primary underline hover:no-underline">polityce prywatności</a>.
   </p>
-  <button id="cookie-accept" class="bg-primary text-white font-label-bold text-label-bold uppercase px-6 py-2 hover:bg-primary-dark transition-colors whitespace-nowrap shrink-0">
+  <button id="cookie-accept" class="bg-primary text-white font-label-bold text-label-bold uppercase px-6 py-2 hover:bg-primary-dark transition-colors whitespace-nowrap shrink-0 rounded-full">
     Rozumiem
   </button>
 </div>
