@@ -295,14 +295,23 @@
   /* ─── Scroll reveal animations ─── */
   .reveal {
     opacity: 0;
-    transform: translateY(36px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(44px);
+    transition: opacity .85s cubic-bezier(.2,.75,.25,1), transform .85s cubic-bezier(.2,.75,.25,1);
+    will-change: opacity, transform;
   }
-  .reveal.visible          { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1.visible  { transition-delay: 0.1s; }
-  .reveal-delay-2.visible  { transition-delay: 0.2s; }
-  .reveal-delay-3.visible  { transition-delay: 0.3s; }
-  .reveal-delay-4.visible  { transition-delay: 0.4s; }
+  .reveal.visible { opacity: 1; transform: none; }
+  /* warianty kierunkowe (choreografia „składania" treści) */
+  .reveal-left  { transform: translateX(-54px); }
+  .reveal-right { transform: translateX(54px); }
+  .reveal-scale { transform: translateY(22px) scale(.94); }
+  .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { transform: none; }
+  .reveal-delay-1.visible  { transition-delay: 0.08s; }
+  .reveal-delay-2.visible  { transition-delay: 0.16s; }
+  .reveal-delay-3.visible  { transition-delay: 0.24s; }
+  .reveal-delay-4.visible  { transition-delay: 0.32s; }
+
+  /* Parallax na scrollu (subtelny; wyłączany przy reduced-motion) */
+  [data-parallax] { will-change: transform; }
 
   /* ─── Mobile menu slide ─── */
   #mobile-menu {
@@ -661,8 +670,8 @@
   ">
   <!-- Dekoracyjne świecące orby - ciepłe, letnie barwy -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="absolute left-1/4 w-96 h-96 rounded-full blur-3xl" style="top: 280px; background: rgba(48,190,185,0.12);"></div>
-    <div class="absolute right-1/4 w-64 h-64 rounded-full blur-3xl" style="top: 440px; background: rgba(234,88,12,0.15);"></div>
+    <div class="absolute left-1/4 w-96 h-96 rounded-full blur-3xl" data-parallax="-0.06" style="top: 280px; background: rgba(48,190,185,0.12);"></div>
+    <div class="absolute right-1/4 w-64 h-64 rounded-full blur-3xl" data-parallax="0.05" style="top: 440px; background: rgba(234,88,12,0.15);"></div>
   </div>
 
   <div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto flex flex-col items-center gap-8">
@@ -738,7 +747,7 @@
 <section id="o-wydarzeniu" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
     <!-- Tekst -->
-    <div class="flex flex-col gap-6 reveal">
+    <div class="flex flex-col gap-6 reveal reveal-left">
       <span class="font-section-label text-section-label text-primary uppercase flex items-center gap-2">
         <span class="w-4 h-4 bg-primary inline-block" aria-hidden="true"></span>O wydarzeniu
       </span>
@@ -763,7 +772,7 @@
     </div>
 
     <!-- Zdjęcie - używa galeria/2.jpg (wstęga przy budynku UEW) -->
-    <div class="relative h-[480px] lg:h-[580px] w-full reveal reveal-delay-2">
+    <div class="relative h-[480px] lg:h-[580px] w-full reveal reveal-delay-2 reveal-right">
       <div class="absolute inset-0 bg-primary/20 translate-x-4 translate-y-4 border border-primary rounded-2xl" aria-hidden="true"></div>
       <img src="./images/galeria/2.jpg" alt="Adapciak - poprzednia edycja przy budynku UEW" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500 rounded-2xl">
     </div>
@@ -783,7 +792,7 @@
     </div>
 
     <!-- PARTY TILES - ZMIEŃ: nazwy, opisy, dress code, linki Pinterest, zdjęcia (kafelki) -->
-    <div class="reveal relative overflow-hidden border border-white/10 rounded-2xl" style="min-height:360px; background:linear-gradient(135deg,#1a1a2e,#16213e);">
+    <div class="reveal reveal-scale relative overflow-hidden border border-white/10 rounded-2xl" style="min-height:360px; background:linear-gradient(135deg,#1a1a2e,#16213e);">
       <div class="tape-strip ts1">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
       <div class="tape-strip ts2">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
       <div class="tape-strip ts3">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
@@ -1302,7 +1311,7 @@
     </div>
 
     <!-- Slider główny -->
-    <div id="gallery-slider" class="rounded-2xl relative overflow-hidden h-[420px] md:h-[560px] reveal">
+    <div id="gallery-slider" class="rounded-2xl relative overflow-hidden h-[420px] md:h-[560px] reveal reveal-scale">
       <div class="g-slide active">
         <img src="./images/galeria/1.jpg" alt="Adapciak - zdjęcie grupowe z lotu ptaka" loading="lazy">
       </div>
@@ -1891,6 +1900,28 @@ function fixPolishOrphans(root) {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ fixPolishOrphans(); });
 else fixPolishOrphans();
+
+/* ─── Parallax na scrollu (subtelny; poza reduced-motion) ─── */
+(function initScrollParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = document.querySelectorAll('[data-parallax]');
+  if (!els.length) return;
+  var ticking = false;
+  function update() {
+    var vh = window.innerHeight;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var speed = parseFloat(el.getAttribute('data-parallax')) || 0.08;
+      var r = el.getBoundingClientRect();
+      var off = ((r.top + r.height / 2) - vh / 2) * -speed;
+      el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
 
 /* ─── Share button ─── */
 function shareAdapciak() {
