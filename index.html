@@ -423,9 +423,15 @@
     background:none; cursor:pointer; position:relative; overflow:hidden; border-radius:1rem;
     line-height:0; box-shadow:0 1px 2px rgba(28,25,23,.05), 0 8px 20px rgba(28,25,23,.06);
     transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+    aspect-ratio:3/2;                 /* domyślnie poziome */
   }
+  /* Rytm wysokości — zdjęcia są wszystkie 3:2, więc kadrujemy część na kwadrat/pion,
+     żeby w kolumnach powstał prawdziwy efekt masonry (przeplatające się wysokości). */
+  .masonry-item:nth-child(6n+2){ aspect-ratio:1/1;  }   /* kwadrat */
+  .masonry-item:nth-child(6n+4){ aspect-ratio:4/5;  }   /* pionowe (wyższe) */
+  .masonry-item:nth-child(6n+6){ aspect-ratio:4/3;  }   /* lekko wyższe poziome */
   .masonry-item:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(28,25,23,.14); }
-  .masonry-item img{ width:100%; height:auto; display:block; transition:transform .55s cubic-bezier(.2,.8,.2,1); }
+  .masonry-item img{ width:100%; height:100%; object-fit:cover; object-position:center 42%; display:block; transition:transform .55s cubic-bezier(.2,.8,.2,1); }
   .masonry-item:hover img{ transform:scale(1.06); }
   .masonry-item::after{
     content:''; position:absolute; inset:0; border-radius:1rem;
@@ -643,7 +649,7 @@
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#start"            data-section="start">Start</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#imprezy"         data-section="imprezy">Imprezy</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#miejsce"         data-section="miejsce">Miejsce</a>
-      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy"       data-section="partnerzy">Partnerzy</a>
+      <!-- Partnerzy wyłączeni tymczasowo: <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy" data-section="partnerzy">Partnerzy</a> -->
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#faq"             data-section="faq">FAQ</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#kontakt"         data-section="kontakt">Kontakt</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#galeria"         data-section="galeria">Galeria</a>
@@ -671,7 +677,7 @@
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#start"    onclick="closeMobileMenu()">Start</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#imprezy"  onclick="closeMobileMenu()">Imprezy</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#miejsce"  onclick="closeMobileMenu()">Miejsce wydarzenia</a>
-      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy" onclick="closeMobileMenu()">Partnerzy</a>
+      <!-- Partnerzy wyłączeni tymczasowo: <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy" onclick="closeMobileMenu()">Partnerzy</a> -->
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"       onclick="closeMobileMenu()">FAQ</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#kontakt"   onclick="closeMobileMenu()">Kontakt</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3"                                     href="#galeria"   onclick="closeMobileMenu()">Galeria</a>
@@ -1020,6 +1026,9 @@
 <!-- ══════════════════════════════════════════════════════
      PARTNERZY
 ══════════════════════════════════════════════════════ -->
+<!-- PARTNERZY WYŁĄCZENI: brak potwierdzonych partnerów. Aby włączyć: usuń tag <template ...> poniżej
+     oraz zamykający </template> na końcu sekcji, i odkomentuj linki „Partnerzy" w nav (desktop + mobile). -->
+<template id="partnerzy-disabled">
 <section id="partnerzy" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
@@ -1057,6 +1066,7 @@
     </p>
   </div>
 </section>
+</template>
 
 
 <!-- ══════════════════════════════════════════════════════
