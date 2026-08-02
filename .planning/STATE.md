@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 2
 Plan: Not started
 Status: 02-03 complete, advancing to 02-04
-Last activity: 2026-05-25
+Last activity: 2026-08-02 - Completed quick task 260802-wyg: Motywy imprez: 7 kafelków z plakatami + popup z opisem i dress code
 
 Progress: [████████░░] 83% (plans)
 
@@ -87,6 +87,12 @@ None yet.
 - Formspree endpoint URL nieznany — potrzebne konto Formspree przed Phase 2
 - Zdjęcia do galerii (images/galeria/) nie istnieją jeszcze — lightbox zaimplementowany, gotowy gdy zdjęcia zostaną wgrane
 - URL-e social media i Google Form nieznane — zostają jako # z komentarzem HTML
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260802-wyg | Motywy imprez: 7 kafelków z plakatami + popup z opisem i dress code | 2026-08-02 | 29333bd | [260802-wyg-motywy-imprez-7-kafelkow-z-plakatami-pop](./quick/260802-wyg-motywy-imprez-7-kafelkow-z-plakatami-pop/) |
 
 ## Session Continuity
 
