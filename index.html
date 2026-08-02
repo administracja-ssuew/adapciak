@@ -375,18 +375,41 @@
      do optycznego środka liter (zamiast wyrównania do środka pełnego boxa). */
   .fd-pin { transform: translateY(-0.28em); }
 
-  /* ─── Imprezy: „taśma” Stay Tuned (zapowiedź motywów) ─── */
-  .tape-strip{
-    position:absolute; left:-10%; width:120%;
-    padding:9px 0; font:800 15px/1 system-ui,sans-serif; letter-spacing:.2em;
-    color:#141414; background:#F2CB49; white-space:nowrap; text-align:center; overflow:hidden;
-    box-shadow:0 8px 24px rgba(0,0,0,.4);
-    border-top:2px dashed rgba(0,0,0,.35); border-bottom:2px dashed rgba(0,0,0,.35);
-    user-select:none; pointer-events:none;
+  /* ─── Imprezy: kafelki motywów (cały plakat jest przyciskiem) ─── */
+  .party-tile{
+    position:relative; display:block; width:100%; padding:0; overflow:hidden;
+    border:1px solid #E5D5B5; border-radius:1rem; background:#F5F0E8;
+    cursor:pointer; -webkit-tap-highlight-color:transparent;
+    box-shadow:0 1px 2px rgba(28,25,23,.04), 0 6px 16px rgba(28,25,23,.05);
+    transition:transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, border-color .28s ease;
   }
-  .ts1{ top:15%; transform:rotate(-11deg); }
-  .ts2{ top:45%; transform:rotate(7deg); background:#141414; color:#F2CB49; border-color:rgba(242,203,73,.45); }
-  .ts3{ top:75%; transform:rotate(-6deg); }
+  .party-tile img{
+    display:block; width:100%; aspect-ratio:4/5; object-fit:cover;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .party-tile:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 18px rgba(28,25,23,.08), 0 22px 46px rgba(28,25,23,.11);
+    border-color:rgba(48,190,185,.55);
+  }
+  .party-tile:hover img{ transform:scale(1.05); }
+  .party-tile:focus-visible{ outline:3px solid #30BEB9; outline-offset:3px; }
+  .dark .party-tile{ background:#221F1C; border-color:rgba(255,255,255,.10); box-shadow:0 2px 10px rgba(0,0,0,.28); }
+  .dark .party-tile:hover{ box-shadow:0 14px 40px rgba(0,0,0,.5); border-color:rgba(143,217,204,.4); }
+
+  /* Podpowiedź „kliknij mnie” — plakat sam w sobie nie wygląda na interaktywny */
+  .party-tile-cta{
+    position:absolute; left:0; right:0; bottom:0; padding:20px 10px 12px;
+    font:700 12px/1 'Plus Jakarta Sans', system-ui, sans-serif;
+    letter-spacing:.1em; text-transform:uppercase; color:#fff; text-align:center;
+    background:linear-gradient(to top, rgba(10,10,12,.85), rgba(10,10,12,0));
+    opacity:0; transform:translateY(8px); pointer-events:none;
+    transition:opacity .28s ease, transform .28s ease;
+  }
+  .party-tile:hover .party-tile-cta,
+  .party-tile:focus-visible .party-tile-cta{ opacity:1; transform:translateY(0); }
+  /* Dotyk: bez hovera podpowiedź nigdy by się nie pokazała */
+  @media (hover: none){ .party-tile-cta{ opacity:1; transform:none; } }
 
   /* ─── „Polot": głębia + mikrointerakcje (karty i przyciski ożywają) ─── */
   /* Karty: delikatny cień w spoczynku, uniesienie + mocniejszy cień na hover */
@@ -828,18 +851,101 @@
       <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Każdy wieczór to inne przebranie - sprawdź co na Ciebie czeka i zacznij planować strój!</p>
     </div>
 
-    <!-- PARTY TILES - ZMIEŃ: nazwy, opisy, dress code, linki Pinterest, zdjęcia (kafelki) -->
-    <div class="reveal reveal-scale relative overflow-hidden border border-white/10 rounded-2xl" style="min-height:360px; background:linear-gradient(135deg,#1a1a2e,#16213e);">
-      <div class="tape-strip ts1">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
-      <div class="tape-strip ts2">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
-      <div class="tape-strip ts3">STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧 STAY TUNED 🚧</div>
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-10">
-        <div class="px-8 py-6" style="background:rgba(15,15,20,.66); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); border:1px solid rgba(255,255,255,.12);">
-          <span class="font-section-label text-section-label uppercase" style="color:#F2CB49;">Motywy wieczorów</span>
-          <div style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:clamp(40px,8vw,76px); line-height:1; color:#fff;" class="mt-1">Stay tuned</div>
-          <p class="font-body-md text-white/75 mt-3 max-w-sm mx-auto">Motywy wieczorów i dress code ogłosimy wkrótce. Śledźcie <a href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" style="color:#F2CB49;" class="underline">@adapciak.ue</a>!</p>
-        </div>
-      </div>
+    <!-- PARTY TILES — nazwa motywu jest wypalona w plakacie, więc kafelek nie nakłada tekstu.
+         Treść popupu siedzi w data-* (data-desc: akapity rozdzielone znakiem |). -->
+    <div id="party-grid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-1"
+        data-name="Dziki zachód"
+        aria-label="Dziki zachód - zobacz opis i dress code"
+        data-img="./images/imprezy/dziki-zachod-800.webp"
+        data-dress="Kapelusze, kowbojskie koszule, jeansy, frędzle i bandany."
+        data-desc="Załóżcie kapelusze, poprawcie bandany i przygotujcie się na wieczór, który przeniesie Was prosto w klimaty Dzikiego Zachodu! 🤠🐎|Przed Wami impreza pełna westernowego klimatu, kowbojskich przebrań, a także muzyki i zabawy, która nie skończy się, dopóki ostatni tancerz nie opuści parkietu! 🏜️✨|Zanim parkiet rozgrzeje się do czerwoności, będziecie mieli okazję sprawdzić swoje umiejętności, zmierzyć się na parkiecie i przekonać się, kto zasługuje na odznakę szeryfa, a kto trafi na listę najbardziej poszukiwanych przestępców 🍻🌵|Wyciągajcie kapelusze, kowbojskie koszule, jeansy, frędzle i bandany. Wskakujcie w swoje najlepsze przebrania i przygotujcie się na imprezę, o jakiej Dziki Zachód jeszcze nie słyszał! 🤎⭐️">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/dziki-zachod-400.webp 400w, ./images/imprezy/dziki-zachod-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/dziki-zachod.jpg" alt="Plakat imprezy Dziki zachód" loading="lazy" decoding="async" width="800" height="1006">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-2"
+        data-name="In da hood"
+        aria-label="In da hood - zobacz opis i dress code"
+        data-img="./images/imprezy/in-da-hood-800.webp"
+        data-dress="Bandany, oversize’owe T-shirty, koszulki baseballowe, szerokie jeansy - uliczny styl lat 2000."
+        data-desc="Czas cofnąć się do ery największych hip-hopowych bangerów, kultowych teledysków i niepowtarzalnego streetwearu. Welcome In da Hood 🏀🥷🏿|Przed Wami impreza pełna oldschoolowego hiphopu, kultowych hitów, luźnego stylu i zabawy, która nie zwalnia tempa do samego końca! 🎶✨|Zanim parkiet zamieni się w prawdziwy O’Block, będziecie mogli poczuć klimat osiedlowej imprezy wziętej rodem z amerykańskich teledysków. Czeka na Was masa dobrej energii i atmosfery, która sprawi, że tej nocy każdy stanie się częścią gangu 🔪🩸|Zakładajcie bandany, oversize’owe T-shirty, koszulki baseballowe, szerokie jeansy i wszystko co kojarzy wam się z ulicznym stylem lat 2000. Ubierzcie swoje najlepsze fity i przygotujcie się na najbardziej lit imprezę, która zapisze się w historii Adapciaka 🔥🧢">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/in-da-hood-400.webp 400w, ./images/imprezy/in-da-hood-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/in-da-hood.jpg" alt="Plakat imprezy In da hood" loading="lazy" decoding="async" width="800" height="1003">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-3"
+        data-name="Luau party"
+        aria-label="Luau party - zobacz opis i dress code"
+        data-img="./images/imprezy/luau-800.webp"
+        data-dress="Hawajskie koszule, zwiewne sukienki i okulary przeciwsłoneczne."
+        data-desc="Dajcie się ponieść rytmowi fal i poczujcie wraz z Nami iście tropikalny klimat na imprezie LUAU 🌺|Na imprezie będą czekać na Was kolorowe drinki z palemką, kwiatowe naszyjniki oraz dekoracje rodem z rajskiej plaży w Honolulu 🌴|Możecie spodziewać się nocy pełnej egzotycznych rytmów, które nie pozwolą Wam usiedzieć w miejscu aż do samego rana 🍹|Wyciągajcie więc z szaf hawajskie koszule, zwiewne sukienki oraz okulary przeciwsłoneczne i widzimy się na parkiecie 🏄‍♀️">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/luau-400.webp 400w, ./images/imprezy/luau-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/luau.jpg" alt="Plakat imprezy Luau party" loading="lazy" decoding="async" width="800" height="1002">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-4"
+        data-name="Mamma mia"
+        aria-label="Mamma mia - zobacz opis i dress code"
+        data-img="./images/imprezy/mamma-mia-800.webp"
+        data-dress="Zwiewne sukienki, lniane koszule, jasne odcienie i kwiaty we włosach."
+        data-desc="Słońce, muzyka, taniec i miłość unosząca się w powietrzu… jedyne co można rzec to MAMMA MIA, CZAS NA ŚLUB! 💙✨|Przed Wami GRECKIE WESELE inspirowane klimatem kultowego filmu Mamma Mia! - pełne śmiechu, tańców i zabawy do samego rana! 🕺🎶|Zanim jednak padnie sakramentalne słowo „tak”, czekają na Was wieczór panieński i kawalerski, a później wspólnie przeniesiemy się prosto na roztańczone wesele, które będzie trwało do białego rana! 👰‍♀️🤵‍♂️|Ubierajcie zwiewne sukienki, lniane koszule, jasne odcienie i kwiaty we włosach. Niech nie zabraknie greckiego klimatu, wakacyjnego luzu i przygotujcie się na najbardziej roztańczoną imprezę tego lata! 🌊🌸🍋">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/mamma-mia-400.webp 400w, ./images/imprezy/mamma-mia-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/mamma-mia.jpg" alt="Plakat imprezy Mamma mia - greckie wesele" loading="lazy" decoding="async" width="800" height="1005">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-1"
+        data-name="Mundial"
+        aria-label="Mundial - zobacz opis i dress code"
+        data-img="./images/imprezy/mundial-800.webp"
+        data-dress="Koszulki ulubionych klubów lub reprezentacji, szaliki kibica."
+        data-desc="Emocje po finale Mistrzostw Świata jeszcze nie opadły? Wciąż nie możecie wyjść z podziwu po występie Waszych faworytów? A może wręcz przeciwnie, czujecie spory niedosyt? Niezależnie od odpowiedzi, mamy dla Was świetną informację, ponieważ na Adapciaku będziecie mogli wziąć udział w…|⚽ IMPREZIE MUNDIAL ⚽|Zanim jednak wszyscy ruszymy do tańca, będziecie mieli okazję wziąć udział w Sports Day, podczas którego każdy będzie mógł sprawdzić swoje umiejętności i poczuć klimat prawdziwej, sportowej rywalizacji 🔥|Pakujcie więc koszulki swoich ulubionych klubów lub reprezentacji, zgarnijcie szaliki i uczcie się przyśpiewek, bo czeka was noc pełna piłkarskich wrażeń 👀">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/mundial-400.webp 400w, ./images/imprezy/mundial-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/mundial.jpg" alt="Plakat imprezy Mundial" loading="lazy" decoding="async" width="800" height="1003">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-2"
+        data-name="Strefa 51"
+        aria-label="Strefa 51 - zobacz opis i dress code"
+        data-img="./images/imprezy/strefa-51-800.webp"
+        data-dress="Białe fartuchy, okulary ochronne, rękawiczki i neonowe dodatki świecące w UV."
+        data-desc="Czas założyć fartuchy, chwycić za probówki i wkroczyć do miejsca, gdzie każda reakcja prowadzi do jeszcze lepszej zabawy. Witamy w LABORATORIUM CHEMICZNYM STREFY 51! 🧬🧪|Przed Wami impreza pełna świecących kolorów, chemicznych eksperymentów, neonowych dekoracji i energii, która będzie buzować aż do białego rana! 🔬✨|Jednak zanim parkiet zmieni się w najbardziej szalone laboratorium chemiczne, będziecie mogli poczuć się jak prawdziwi naukowcy tworzący recepturę na najlepszą imprezę! ⚗️💥|Wkładajcie białe fartuchy, okulary ochronne, neonowe dodatki, rękawiczki i wszystko, co będzie świecić w świetle UV. Przygotujcie swoje najlepsze laboratoryjne outfity i szykujcie się na eksperyment, którego rezultatem może być tylko jedna rzecz - dobra zabawa! 🧪👽">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/strefa-51-400.webp 400w, ./images/imprezy/strefa-51-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/strefa-51.jpg" alt="Plakat imprezy Strefa 51" loading="lazy" decoding="async" width="800" height="1000">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
+      <button type="button" class="party-tile reveal reveal-scale reveal-delay-3"
+        data-name="Mafia włoska"
+        aria-label="Mafia włoska - zobacz opis i dress code"
+        data-img="./images/imprezy/mafia-wloska-800.webp"
+        data-dress="Czarne garnitury, kapelusze, wieczorowe suknie i perły."
+        data-desc="Impreza Włoska Mafia 🍕🍷 - pełna elegancji, toastów i bezkompromisowej zabawy do białego rana 🎉|Zaczniemy od tajnych narad i powitalnych toastów, a potem przejdziemy do konkretnej, sycylijskiej biesiady 🍸|Szykujcie już czarne garnitury, kapelusze, wieczorowe suknie oraz perły i bądźcie gotowi na najbardziej klimatyczną imprezę tego lata!">
+        <picture>
+          <source type="image/webp" srcset="./images/imprezy/mafia-wloska-400.webp 400w, ./images/imprezy/mafia-wloska-800.webp 800w" sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw">
+          <img src="./images/imprezy/mafia-wloska.jpg" alt="Plakat imprezy Mafia włoska" loading="lazy" decoding="async" width="800" height="1000">
+        </picture>
+        <span class="party-tile-cta" aria-hidden="true">Zobacz opis</span>
+      </button>
+
     </div>
 
     <!-- Dawne panele dni (usunięte) -->
@@ -2106,18 +2212,44 @@ function releaseFocus(container) {
 }
 
 /* ─── Party popup ─── */
-function openPartyPopup(name, desc, dress, pinterest) {
-  document.getElementById('party-popup-name').textContent = name;
-  document.getElementById('party-popup-desc').textContent = desc;
-  document.getElementById('party-popup-dress').textContent = dress || 'Do ogłoszenia';
+/* Treść czytana z data-* kafelka; data-desc trzyma akapity rozdzielone znakiem "|". */
+function openPartyPopup(tile) {
+  var d = tile.dataset;
+  document.getElementById('party-popup-name').textContent = d.name;
+  document.getElementById('party-popup-dress').textContent = d.dress || 'Do ogłoszenia';
+
+  var img = document.getElementById('party-popup-img');
+  img.src = d.img;
+  img.alt = 'Plakat imprezy ' + d.name;
+
+  var desc = document.getElementById('party-popup-desc');
+  desc.textContent = '';
+  (d.desc || '').split('|').forEach(function(par) {
+    var p = document.createElement('p');
+    p.textContent = par;
+    desc.appendChild(p);
+  });
+
   var link = document.getElementById('party-popup-link');
-  if (pinterest) { link.href = pinterest; link.classList.remove('hidden'); }
+  if (d.pinterest) { link.href = d.pinterest; link.classList.remove('hidden'); }
   else { link.classList.add('hidden'); }
+
   var pp = document.getElementById('party-popup');
   pp.classList.remove('hidden');
+  document.getElementById('party-popup-scroll').scrollTop = 0;
   document.body.style.overflow = 'hidden';
   trapFocus(pp);
 }
+
+/* Delegacja na siatce - 7 kafelków, jeden listener */
+(function initPartyTiles() {
+  var grid = document.getElementById('party-grid');
+  if (!grid) return;
+  grid.addEventListener('click', function(e) {
+    var tile = e.target.closest('.party-tile');
+    if (tile) openPartyPopup(tile);
+  });
+})();
 function closePartyPopup() {
   var pp = document.getElementById('party-popup');
   if (pp.classList.contains('hidden')) return;
@@ -2155,18 +2287,28 @@ document.addEventListener('keydown', function(e) {
 </button>
 
 <!-- Party theme popup -->
-<div id="party-popup" class="hidden fixed inset-0 z-[9998] flex items-center justify-center" style="background:rgba(0,0,0,0.75);" onclick="if(event.target===this)closePartyPopup()">
-  <div class="bg-on-surface text-white max-w-md w-full mx-4 p-8 relative" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="party-popup-name">
-    <button onclick="closePartyPopup()" aria-label="Zamknij" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"><span class="material-symbols-outlined" aria-hidden="true">&#xE5CD;</span></button>
-    <span class="font-section-label text-section-label text-primary uppercase block mb-2">Motyw wieczoru</span>
-    <h3 id="party-popup-name" style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:40px; line-height:1.15;" class="text-white mb-4">Nazwa imprezy</h3>
-    <p id="party-popup-desc" class="font-body-md text-body-md text-white/70 mb-4">Opis imprezy.</p>
-    <div class="border-t border-white/20 pt-4">
-      <p class="font-section-label text-section-label text-primary uppercase mb-1">Dress code</p>
-      <p id="party-popup-dress" class="font-body-md text-body-md text-white/80 mb-4">Sugestia ubioru.</p>
-      <a id="party-popup-link" href="#" target="_blank" rel="noopener" class="hidden inline-flex items-center gap-2 text-primary hover:text-white transition-colors font-label-bold text-label-bold uppercase">
-        <span class="material-symbols-outlined text-[16px]">&#xE89E;</span> Inspiracje na Pinterest
-      </a>
+<div id="party-popup" class="hidden fixed inset-0 z-[9998] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.78);" onclick="if(event.target===this)closePartyPopup()">
+  <div class="bg-on-surface text-white w-full max-w-3xl max-h-[90vh] relative rounded-2xl overflow-hidden flex flex-col md:flex-row" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="party-popup-name">
+    <button onclick="closePartyPopup()" aria-label="Zamknij" class="absolute top-3 right-3 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/55 text-white/80 hover:text-white hover:bg-black/75 transition-colors"><span class="material-symbols-outlined" aria-hidden="true">&#xE5CD;</span></button>
+
+    <!-- Plakat: na mobile pasek u góry (object-top = tytuł zostaje w kadrze),
+         na desktop pełne 4:5 w ramce - kolumna jest wyższa niż plakat, więc rozciąganie
+         przycinałoby boki i ucinało nazwę motywu wypaloną w grafice. -->
+    <div class="shrink-0 md:w-[42%] md:bg-black/25 md:flex md:items-center md:p-4">
+      <img id="party-popup-img" src="" alt="" class="w-full h-44 md:h-auto md:aspect-[4/5] object-cover object-top md:rounded-xl">
+    </div>
+
+    <div id="party-popup-scroll" class="flex-1 overflow-y-auto p-6 md:p-8">
+      <span class="font-section-label text-section-label text-accent-light uppercase block mb-2">Motyw wieczoru</span>
+      <h3 id="party-popup-name" style="font-family:'funkydori','Pacifico',cursive; font-weight:700; font-size:40px; line-height:1.15;" class="text-white mb-4">Nazwa imprezy</h3>
+      <div id="party-popup-desc" class="font-body-md text-body-md text-white/75 space-y-3 mb-6"></div>
+      <div class="border-t border-white/20 pt-4">
+        <p class="font-section-label text-section-label text-accent-light uppercase mb-1">Dress code</p>
+        <p id="party-popup-dress" class="font-body-md text-body-md text-white/85 mb-4">Sugestia ubioru.</p>
+        <a id="party-popup-link" href="#" target="_blank" rel="noopener" class="hidden inline-flex items-center gap-2 text-accent-light hover:text-white transition-colors font-label-bold text-label-bold uppercase">
+          <span class="material-symbols-outlined text-[16px]">&#xE89E;</span> Inspiracje na Pinterest
+        </a>
+      </div>
     </div>
   </div>
 </div>
