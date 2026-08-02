@@ -70,6 +70,11 @@ bez pobranej przeglądarki), 1440×900 @2x i 390×844 @2x:
 - brak błędów JS i nieudanych żądań do `images/imprezy/`
 - tryb jasny i ciemny sprawdzone zrzutami
 
+> **Rewizja 2026-08-03** (commit `0db50d1`, wykonana przez `/gsd:fast`): organizatorzy
+> dostarczyli krótsze, jednoakapitowe opisy, nową kolejność kafelków i zmienili nazwy
+> czterech motywów. Punkty 1 i 2 poniżej zostały tym samym rozstrzygnięte — szczegóły
+> w treści commita.
+
 ## Do decyzji organizatorów
 
 1. **Emoji 🔪🩸 w opisie „In da hood"** („każdy stanie się częścią gangu") — przeniesione
