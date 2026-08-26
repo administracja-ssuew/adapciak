@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 2
 Plan: Not started
 Status: 02-03 complete, advancing to 02-04
-Last activity: 2026-08-03 - Rewizja treści motywów imprez (nowe opisy, kolejność, nazwy) + z-index banera cookies
+Last activity: 2026-08-26 - Completed quick task 260826-w7c: sekcja Partnerzy (taśma 3 logotypów) + cena noclegu 65 zł
 
 Progress: [████████░░] 83% (plans)
 
@@ -94,6 +94,7 @@ None yet.
 |---|-------------|------|--------|-----------|
 | 260802-wyg | Motywy imprez: 7 kafelków z plakatami + popup z opisem i dress code | 2026-08-02 | 29333bd | [260802-wyg-motywy-imprez-7-kafelkow-z-plakatami-pop](./quick/260802-wyg-motywy-imprez-7-kafelkow-z-plakatami-pop/) |
 | fast | Motywy imprez: nowe opisy, kolejność i nazwy + z-index banera cookies | 2026-08-03 | 0db50d1 | — (inline) |
+| 260826-w7c | Sekcja Partnerzy: taśma 3 logotypów + cena noclegu 65 zł | 2026-08-26 | 249c01f | [260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-](./quick/260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-/) |
 
 ## Session Continuity
 
