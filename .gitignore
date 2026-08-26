@@ -8,3 +8,6 @@ images/imprezy/oryginaly/
 
 # Źródła logotypów partnerów (w tym wektorowy PDF) — w repo tylko png/webp 128px
 images/partnerzy/oryginaly/
+
+# Oryginały zdjęć zespołu (4000×6000, ~10-13 MB) — w repo tylko webp/jpg 400/800px
+images/zespol/oryginaly/
