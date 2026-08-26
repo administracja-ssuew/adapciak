@@ -672,6 +672,53 @@
     #koza-easter-egg .koza-hop { animation: none !important; }
     #koza-easter-egg .koza-frames img { animation: none !important; }
   }
+
+  /* ─── Sekcja EKIPA (organizatorzy + kadra) ───
+     Siatka na własnym CSS, nie na klasach Tailwinda — build jest statyczny
+     (tailwind.css kompilowany w CI), więc grid-cols-* dla tej sekcji w nim nie istnieją. */
+  .team-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 640px)  { .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  /* kadra bez funkcji — gęściej, bo kafelków jest 12 */
+  .team-grid--crew { gap: 16px; }
+  @media (min-width: 1024px) { .team-grid--crew { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+  .team-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .35s ease;
+  }
+  .team-card:hover      { transform: translateY(-4px); border-color: #1B7A75; box-shadow: 0 14px 34px rgba(27,122,117,.18); }
+  .dark .team-card:hover{ border-color: rgba(143,217,204,.45); box-shadow: 0 14px 40px rgba(0,0,0,.5); }
+
+  .team-photo { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: #F5F0E8; }
+  .dark .team-photo { background: #172033; }
+  .team-photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .team-card:hover .team-photo img { transform: scale(1.05); }
+
+  .team-meta { padding: 12px 12px 14px; text-align: center; }
+  .team-name {
+    font-family: 'Baloo 2', 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600; font-size: 16px; line-height: 1.25;
+  }
+  .team-card--lead .team-name { font-size: 18px; }
+  .team-role {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 600; font-size: 12px; line-height: 1.35;
+    margin-top: 4px; color: #1B7A75;
+  }
+  .dark .team-role { color: #8FD9CC; }
+  .team-subhead { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .team-subhead::after { content: ''; flex: 1; height: 1px; background: #E5D5B5; }
+  .dark .team-subhead::after { background: #334155; }
 </style>
 <!-- Vercel Web Analytics - bez cookies, zgodne z RODO. WŁĄCZ: Vercel -> projekt -> Analytics -> Enable. -->
 <script defer src="/_vercel/insights/script.js"></script>
@@ -696,6 +743,7 @@
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#start"            data-section="start">Start</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#imprezy"         data-section="imprezy">Imprezy</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#miejsce"         data-section="miejsce">Miejsce</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#ekipa"           data-section="ekipa">Ekipa</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy" data-section="partnerzy">Partnerzy</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#faq"             data-section="faq">FAQ</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#kontakt"         data-section="kontakt">Kontakt</a>
@@ -724,6 +772,7 @@
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#start"    onclick="closeMobileMenu()">Start</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#imprezy"  onclick="closeMobileMenu()">Imprezy</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#miejsce"  onclick="closeMobileMenu()">Miejsce wydarzenia</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#ekipa"     onclick="closeMobileMenu()">Ekipa</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy" onclick="closeMobileMenu()">Partnerzy</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"       onclick="closeMobileMenu()">FAQ</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#kontakt"   onclick="closeMobileMenu()">Kontakt</a>
@@ -1703,76 +1752,279 @@
 
 
 <!-- ══════════════════════════════════════════════════════
-     ORGANIZATORZY - SEKCJA CHWILOWO WYŁĄCZONA (brak zdjęć zespołu; odkomentuj gdy gotowe)
+     EKIPA - organizatorzy Adapciaka (kadra projektowa + kadra)
 ══════════════════════════════════════════════════════ -->
-<!-- ZESPÓŁ WYŁĄCZONY: odkomentuj poniższą sekcję gdy będą zdjęcia i dane
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+<section id="ekipa" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container border-b border-surface-border">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
       <span class="font-section-label text-section-label text-primary uppercase block mb-2">Organizatorzy</span>
-      <h2 class="font-headline-lg text-headline-lg text-on-surface">Nasz zespół</h2>
-      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Poznaj ludzi stojących za Adapciakiem. Pracujemy z pasją, żeby stworzyć dla Was niezapomniane wydarzenie.</p>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Ekipa Adapciaka</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">
+        Ci ludzie od miesięcy szykują dla Was te osiem dni. Na miejscu poznacie ich wszystkich - a póki co możecie zapamiętać twarze.
+      </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+    <div class="team-subhead reveal">
+      <span class="font-section-label text-section-label text-primary uppercase">Kadra Projektowa</span>
+    </div>
 
-      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal flex flex-col rounded-xl">
-        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(48,190,185,0.12);">
-            <span class="font-headline-md text-headline-md text-primary">XX</span>
-          </div>
+    <div class="team-grid">
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/stoklosa-400.webp 400w, ./images/zespol/stoklosa-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/stoklosa.jpg" alt="Wiktoria Stokłosa" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
         </div>
-        <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
-          <p class="font-caption text-caption text-secondary flex-1">Koordynator/ka Adapciaka</p>
-          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
-        </div>
-      </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Wiktoria Stokłosa</p>
+          <p class="team-role">Koordynatorka</p>
+        </figcaption>
+      </figure>
 
-      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-1 flex flex-col rounded-xl">
-        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(48,190,185,0.12);">
-            <span class="font-headline-md text-headline-md text-primary">XX</span>
-          </div>
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/szklarczyk-400.webp 400w, ./images/zespol/szklarczyk-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/szklarczyk.jpg" alt="Sara Szklarczyk" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
         </div>
-        <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
-          <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Marketingu</p>
-          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
-        </div>
-      </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Sara Szklarczyk</p>
+          <p class="team-role">Wicekoordynatorka</p>
+        </figcaption>
+      </figure>
 
-      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-2 flex flex-col rounded-xl">
-        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(48,190,185,0.12);">
-            <span class="font-headline-md text-headline-md text-primary">XX</span>
-          </div>
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/stachowski-400.webp 400w, ./images/zespol/stachowski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/stachowski.jpg" alt="Hubert Stachowski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
         </div>
-        <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
-          <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Logistyki</p>
-          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
-        </div>
-      </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Hubert Stachowski</p>
+          <p class="team-role">Członek Zarządu ds. Finansów</p>
+        </figcaption>
+      </figure>
 
-      <div class="bg-surface border border-surface-border hover:border-primary hover:shadow-md transition-all duration-300 group reveal reveal-delay-3 flex flex-col rounded-xl">
-        <div class="h-64 bg-surface-container-low border-b border-surface-border flex items-center justify-center">
-          <div class="w-20 h-20 rounded-full border border-primary/40 flex items-center justify-center" style="background: rgba(48,190,185,0.12);">
-            <span class="font-headline-md text-headline-md text-primary">XX</span>
-          </div>
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/derej-400.webp 400w, ./images/zespol/derej-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/derej.jpg" alt="Oliwia Derej" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
         </div>
-        <div class="p-6 flex flex-col gap-2 flex-1">
-          <h3 class="font-headline-md text-[20px] text-on-surface group-hover:text-primary transition-colors">Imię Nazwisko</h3>
-          <p class="font-caption text-caption text-secondary flex-1">Członek/Członkini ds. Promocji</p>
-          <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary font-caption text-caption hover:underline break-all">adapciak@samorzad.ue.wroc.pl</a>
-        </div>
-      </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Oliwia Derej</p>
+          <p class="team-role">Członkini Zarządu ds. Promocji</p>
+        </figcaption>
+      </figure>
 
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/adamski-400.webp 400w, ./images/zespol/adamski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/adamski.jpg" alt="Michał Adamski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Michał Adamski</p>
+          <p class="team-role">Członek Zarządu ds. Harmonogramu</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/szydlowska-400.webp 400w, ./images/zespol/szydlowska-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/szydlowska.jpg" alt="Martyna Szydłowska" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Martyna Szydłowska</p>
+          <p class="team-role">Członkini Zarządu ds. Kontaktów Zewnętrznych</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/buczkowski-400.webp 400w, ./images/zespol/buczkowski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/buczkowski.jpg" alt="Bartosz Buczkowski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Bartosz Buczkowski</p>
+          <p class="team-role">Członek Zarządu ds. Logitechu</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/goetze-400.webp 400w, ./images/zespol/goetze-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/goetze.jpg" alt="Hanna Goetze" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Hanna Goetze</p>
+          <p class="team-role">Członkini Zarządu ds. Administracji</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="team-subhead reveal" style="margin-top:64px;">
+      <span class="font-section-label text-section-label text-primary uppercase">Kadra</span>
+    </div>
+
+    <div class="team-grid team-grid--crew">
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/dawid-400.webp 400w, ./images/zespol/dawid-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/dawid.jpg" alt="Ania Dawid" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Ania Dawid</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/sosinska-400.webp 400w, ./images/zespol/sosinska-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/sosinska.jpg" alt="Ewa Sosińska" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Ewa Sosińska</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/gusiacki-400.webp 400w, ./images/zespol/gusiacki-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/gusiacki.jpg" alt="Filip Gusiacki" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Filip Gusiacki</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/godlewska-400.webp 400w, ./images/zespol/godlewska-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/godlewska.jpg" alt="Gosia Godlewska" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Gosia Godlewska</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/lachowicz-400.webp 400w, ./images/zespol/lachowicz-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/lachowicz.jpg" alt="Gosia Lachowicz" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Gosia Lachowicz</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/pelak-400.webp 400w, ./images/zespol/pelak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/pelak.jpg" alt="Gosia Pelak" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Gosia Pelak</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/pabisiak-400.webp 400w, ./images/zespol/pabisiak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/pabisiak.jpg" alt="Hubert Pabisiak" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Hubert Pabisiak</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/cwirko-400.webp 400w, ./images/zespol/cwirko-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/cwirko.jpg" alt="Inga Ćwioro" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Inga Ćwioro</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/zamojski-400.webp 400w, ./images/zespol/zamojski-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/zamojski.jpg" alt="Maciek Zamojski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Maciek Zamojski</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/krzywicka-400.webp 400w, ./images/zespol/krzywicka-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/krzywicka.jpg" alt="Martyna Krzywicka" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Martyna Krzywicka</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/pozniak-400.webp 400w, ./images/zespol/pozniak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/pozniak.jpg" alt="Mateusz Poźniak" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Mateusz Poźniak</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/sobantka-400.webp 400w, ./images/zespol/sobantka-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/sobantka.jpg" alt="Ola Sobańtka" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Ola Sobańtka</p>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
--->
-<!-- KONIEC wyłączonej sekcji ZESPÓŁ -->
 
 
 <!-- ══════════════════════════════════════════════════════
