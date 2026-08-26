@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 2
 Plan: Not started
 Status: 02-03 complete, advancing to 02-04
-Last activity: 2026-08-26 - Completed quick task 260826-w7c: sekcja Partnerzy (taśma 3 logotypów) + cena noclegu 65 zł
+Last activity: 2026-08-27 - Completed quick task 260826-x05: sekcja Ekipa (20 osób) + tryb finiszu licznika
 
 Progress: [████████░░] 83% (plans)
 
@@ -77,6 +77,10 @@ Recent decisions affecting current work:
 - 02-03: Read active slide index from .g-dot.active at click time — avoids stale closure over initGallerySlider's private current
 - 02-03: Lightbox uses hidden class (display:none) not opacity-0, so it is removed from tab order when closed
 - 02-03: Image list built from DOM at IIFE init — GAL-03 satisfied with HTML-only slide additions
+- 260826-x05: Siatka sekcji #ekipa na własnym CSS — skompilowany tailwind.css nie zawiera sm:grid-cols-3 / lg:grid-cols-4 / grid-cols-6 (build statyczny w CI). Kolory i typografia zostają na klasach Tailwinda, żeby dark mode działał bez dopisków.
+- 260826-x05: `[hidden]` przegrywa specyficznością z `.flex` — ukrywanie #countdown/#cd-live wymaga jawnego `[hidden]{display:none!important}`
+- 260826-x05: Stan licznika trzymany klasami .is-final/.is-live na `<html>`, żeby kicker i CTA poza licznikiem mogły reagować
+- 260826-x05: Kadry zdjęć zespołu generowane skryptem (OpenCV Haar + 3 korekty ręczne); oryginały zostają lokalnie w images/zespol/oryginaly/, więc kadr można przegenerować
 
 ### Pending Todos
 
@@ -95,6 +99,7 @@ None yet.
 | 260802-wyg | Motywy imprez: 7 kafelków z plakatami + popup z opisem i dress code | 2026-08-02 | 29333bd | [260802-wyg-motywy-imprez-7-kafelkow-z-plakatami-pop](./quick/260802-wyg-motywy-imprez-7-kafelkow-z-plakatami-pop/) |
 | fast | Motywy imprez: nowe opisy, kolejność i nazwy + z-index banera cookies | 2026-08-03 | 0db50d1 | — (inline) |
 | 260826-w7c | Sekcja Partnerzy: taśma 3 logotypów + cena noclegu 65 zł | 2026-08-26 | 249c01f | [260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-](./quick/260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-/) |
+| 260826-x05 | Sekcja Organizatorzy (20 osób) + tryb finiszu licznika | 2026-08-27 | c2d75ba | [260826-x05-sekcja-organizatorzy-20-osob-finalowy-sz](./quick/260826-x05-sekcja-organizatorzy-20-osob-finalowy-sz/) |
 
 ## Session Continuity
 
