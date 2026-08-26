@@ -5,3 +5,6 @@ images/galeria/*.jpg
 
 # Oryginały plakatów motywów (2160×2700, ~2-4 MB) — w repo tylko webp/jpg 800px
 images/imprezy/oryginaly/
+
+# Źródła logotypów partnerów (w tym wektorowy PDF) — w repo tylko png/webp 128px
+images/partnerzy/oryginaly/
