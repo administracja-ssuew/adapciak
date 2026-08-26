@@ -593,6 +593,21 @@
   .marquee-outer:hover .marquee-track,
   .marquee-outer:focus-within .marquee-track { animation-play-state: paused; }
 
+  /* Kafel logotypu. Białe tło w obu motywach: znak NOMAR jest niemal czarny na przezroczystym
+     tle, a `.dark .bg-surface` to #1E293B — bez kafla zniknąłby w trybie ciemnym. Przebarwianie
+     logotypu filtrem odpada (identyfikacja marki), więc podkładamy biel.
+     Margines zamiast `gap` na tracku — patrz komentarz przy .marquee-track w sekcji Partnerzy. */
+  .partner-chip {
+    flex: 0 0 auto; display: flex; align-items: center; justify-content: center;
+    height: 96px; margin: 0 20px; padding: 0 24px; border-radius: 12px; background: #fff;
+  }
+  .partner-chip img { display: block; height: 56px; width: auto; object-fit: contain; }
+  .dark .partner-chip { box-shadow: 0 2px 12px rgba(0,0,0,.35); }
+  @media (max-width: 640px) {
+    .partner-chip { height: 76px; margin: 0 12px; padding: 0 16px; }
+    .partner-chip img { height: 42px; }
+  }
+
   /* ─── Partner popup overlay ─── */
   #partner-popup { transition: opacity 0.2s ease, transform 0.2s ease; }
 
@@ -681,7 +696,7 @@
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#start"            data-section="start">Start</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#imprezy"         data-section="imprezy">Imprezy</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#miejsce"         data-section="miejsce">Miejsce</a>
-      <!-- Partnerzy wyłączeni tymczasowo: <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy" data-section="partnerzy">Partnerzy</a> -->
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy" data-section="partnerzy">Partnerzy</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#faq"             data-section="faq">FAQ</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#kontakt"         data-section="kontakt">Kontakt</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#galeria"         data-section="galeria">Galeria</a>
@@ -709,7 +724,7 @@
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#start"    onclick="closeMobileMenu()">Start</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#imprezy"  onclick="closeMobileMenu()">Imprezy</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#miejsce"  onclick="closeMobileMenu()">Miejsce wydarzenia</a>
-      <!-- Partnerzy wyłączeni tymczasowo: <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy" onclick="closeMobileMenu()">Partnerzy</a> -->
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy" onclick="closeMobileMenu()">Partnerzy</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"       onclick="closeMobileMenu()">FAQ</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#kontakt"   onclick="closeMobileMenu()">Kontakt</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3"                                     href="#galeria"   onclick="closeMobileMenu()">Galeria</a>
@@ -1144,9 +1159,6 @@
 <!-- ══════════════════════════════════════════════════════
      PARTNERZY
 ══════════════════════════════════════════════════════ -->
-<!-- PARTNERZY WYŁĄCZENI: brak potwierdzonych partnerów. Aby włączyć: usuń tag <template ...> poniżej
-     oraz zamykający </template> na końcu sekcji, i odkomentuj linki „Partnerzy" w nav (desktop + mobile). -->
-<template id="partnerzy-disabled">
 <section id="partnerzy" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
@@ -1154,28 +1166,122 @@
       <h2 class="font-headline-lg text-headline-lg text-on-surface">Partnerzy Adapciaka</h2>
     </div>
 
-    <!-- Marquee: hover = pause, klik = popup z opisem partnera -->
-    <!-- ZMIEŃ: wstaw prawdziwe nazwy/loga partnerów + opisy -->
+    <!-- Taśma logotypów: hover = pauza. Zestaw powtórzony 3x na połowę — przy 3 logotypach
+         jedna połowa (~700px) byłaby węższa niż kontener i w pętli robiłaby się dziura. -->
     <div class="marquee-outer overflow-hidden border-y border-surface-border reveal" style="mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);">
-      <div class="marquee-track py-8 gap-16">
+      <!-- bez gap: przy 18 kaflach flex daje 17 przerw, więc translateX(-50%) lądowałby
+           w połowie przerwy i pętla szarpałaby przy każdym cyklu. Odstęp siedzi w marginesie kafla. -->
+      <div class="marquee-track py-8">
         <!-- Zestaw 1 -->
-        <button onclick="openPartnerPopup('UEW','Uniwersytet Ekonomiczny we Wrocławiu - gospodarz Adapciaka.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">UEW</button>
-        <button onclick="openPartnerPopup('SSUEW','Samorząd Studentów UEW - organizator Adapciaka 2026.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">SSUEW</button>
-        <button onclick="openPartnerPopup('Partner 3','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 3</button>
-        <button onclick="openPartnerPopup('Partner 4','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 4</button>
-        <button onclick="openPartnerPopup('Partner 5','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 5</button>
-        <button onclick="openPartnerPopup('Partner 6','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 6</button>
-        <button onclick="openPartnerPopup('Partner 7','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 7</button>
-        <button onclick="openPartnerPopup('Partner 8','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 8</button>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/nomar.webp">
+            <img src="./images/partnerzy/nomar.png" alt="NOMAR" width="281" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/winiary.webp">
+            <img src="./images/partnerzy/winiary.png" alt="Winiary" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/dm.webp">
+            <img src="./images/partnerzy/dm.png" alt="dm" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/nomar.webp">
+            <img src="./images/partnerzy/nomar.png" alt="NOMAR" width="281" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/winiary.webp">
+            <img src="./images/partnerzy/winiary.png" alt="Winiary" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/dm.webp">
+            <img src="./images/partnerzy/dm.png" alt="dm" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/nomar.webp">
+            <img src="./images/partnerzy/nomar.png" alt="NOMAR" width="281" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/winiary.webp">
+            <img src="./images/partnerzy/winiary.png" alt="Winiary" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/dm.webp">
+            <img src="./images/partnerzy/dm.png" alt="dm" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
         <!-- Zestaw 2 (duplikat dla seamless loop) -->
-        <button onclick="openPartnerPopup('UEW','Uniwersytet Ekonomiczny we Wrocławiu - gospodarz Adapciaka.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">UEW</button>
-        <button onclick="openPartnerPopup('SSUEW','Samorząd Studentów UEW - organizator Adapciaka 2026.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">SSUEW</button>
-        <button onclick="openPartnerPopup('Partner 3','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 3</button>
-        <button onclick="openPartnerPopup('Partner 4','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 4</button>
-        <button onclick="openPartnerPopup('Partner 5','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 5</button>
-        <button onclick="openPartnerPopup('Partner 6','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 6</button>
-        <button onclick="openPartnerPopup('Partner 7','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 7</button>
-        <button onclick="openPartnerPopup('Partner 8','Opis partnera - uzupełnij.')" class="shrink-0 px-8 font-headline-md text-headline-md text-surface-bright hover:text-primary transition-colors whitespace-nowrap">Partner 8</button>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/nomar.webp">
+            <img src="./images/partnerzy/nomar.png" alt="" width="281" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/winiary.webp">
+            <img src="./images/partnerzy/winiary.png" alt="" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/dm.webp">
+            <img src="./images/partnerzy/dm.png" alt="" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/nomar.webp">
+            <img src="./images/partnerzy/nomar.png" alt="" width="281" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/winiary.webp">
+            <img src="./images/partnerzy/winiary.png" alt="" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/dm.webp">
+            <img src="./images/partnerzy/dm.png" alt="" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/nomar.webp">
+            <img src="./images/partnerzy/nomar.png" alt="" width="281" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/winiary.webp">
+            <img src="./images/partnerzy/winiary.png" alt="" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="partner-chip" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="./images/partnerzy/dm.webp">
+            <img src="./images/partnerzy/dm.png" alt="" width="216" height="128" loading="lazy" decoding="async">
+          </picture>
+        </div>
       </div>
     </div>
     <p class="text-center font-caption text-caption text-secondary mt-6">
@@ -1184,7 +1290,6 @@
     </p>
   </div>
 </section>
-</template>
 
 
 <!-- ══════════════════════════════════════════════════════
