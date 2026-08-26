@@ -719,6 +719,60 @@
   .team-subhead { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
   .team-subhead::after { content: ''; flex: 1; height: 1px; background: #E5D5B5; }
   .dark .team-subhead::after { background: #334155; }
+
+  /* ─── Licznik: tryb finiszu i stan „trwa/po" ───
+     Stan trzymany na <html> (klasy .is-final / .is-live), żeby mogły reagować
+     też elementy spoza licznika (kicker, CTA). */
+  /* atrybut [hidden] przegrywa specyficznością z .flex / display:flex poniżej,
+     więc wymuszamy ukrycie jawnie */
+  #countdown[hidden], #cd-live[hidden], #cd-lead[hidden] { display: none !important; }
+  .cd-box { padding: 4px 10px; border-radius: 14px; }
+  .cd-lead {
+    font-family: 'funkydori', 'Pacifico', cursive; font-weight: 700;
+    font-size: clamp(21px, 3.4vw, 33px); line-height: 1.15;
+    color: #F2CB49; text-shadow: 0 2px 18px rgba(242,203,73,.35);
+    margin-bottom: 2px;
+  }
+  .is-final #cd-days   { color: #F2CB49; }
+  .is-final #cd-box-days { animation: cdGlow 2.2s ease-in-out infinite; }
+  @keyframes cdGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(242,203,73,0); }
+    50%      { box-shadow: 0 0 26px 6px rgba(242,203,73,.26); }
+  }
+  /* „tyknięcie" sekundnika */
+  .cd-tick { animation: cdTick .35s ease-out; }
+  @keyframes cdTick {
+    0%   { transform: translateY(-3px); opacity: .5; }
+    100% { transform: none; opacity: 1; }
+  }
+  /* komunikat w trakcie obozu / po nim */
+  .cd-live { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .cd-live-title {
+    font-family: 'funkydori', 'Pacifico', cursive; font-weight: 700;
+    font-size: clamp(34px, 6vw, 58px); line-height: 1.1; color: #F2CB49;
+    text-shadow: 0 2px 22px rgba(242,203,73,.4);
+  }
+  .cd-live-sub {
+    font-family: 'Baloo 2', 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+    font-size: clamp(14px, 2vw, 18px); letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+  }
+  /* delikatny połysk na głównym CTA, gdy zbliża się start */
+  .is-final #hero-cta { position: relative; overflow: hidden; }
+  .is-final #hero-cta::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 45%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent);
+    animation: ctaShine 3.6s ease-in-out infinite;
+  }
+  @keyframes ctaShine {
+    0%       { left: -55%; }
+    55%, 100%{ left: 115%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .is-final #cd-box-days   { animation: none; }
+    .cd-tick                 { animation: none; }
+    .is-final #hero-cta::after { display: none; }
+  }
 </style>
 <!-- Vercel Web Analytics - bez cookies, zgodne z RODO. WŁĄCZ: Vercel -> projekt -> Analytics -> Enable. -->
 <script defer src="/_vercel/insights/script.js"></script>
@@ -802,7 +856,7 @@
     <!-- Kicker badge -->
     <div class="inline-flex items-center gap-2 bg-black/50 border border-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full reveal">
       <span class="w-2 h-2 bg-orange rounded-full badge-dot"></span>
-      <span class="font-section-label text-section-label text-accent uppercase">30.08-06.09.2026 • GŁUCHOŁAZY • UEW</span>
+      <span id="hero-kicker" class="font-section-label text-section-label text-accent uppercase">30.08-06.09.2026 • GŁUCHOŁAZY • UEW</span>
     </div>
 
     <!-- Logo -->
@@ -816,7 +870,7 @@
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto reveal reveal-delay-3">
-      <a class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#zapisy">ZAPISZ SIĘ</a>
+      <a id="hero-cta" class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#zapisy">ZAPISZ SIĘ</a>
       <button onclick="shareAdapciak()" class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center rounded-full" aria-label="Udostępnij">
         <span class="material-symbols-outlined text-[20px]">&#xE80D;</span> UDOSTĘPNIJ
       </button>
@@ -842,23 +896,34 @@
            class="text-white/70 uppercase mt-0.5">30 Sierpnia - 6 Września 2026</div>
     </div>
 
-    <!-- ANIM-01: countdown timer -->
-    <div id="countdown" class="flex gap-6 mt-4 reveal reveal-delay-4">
-      <div class="flex flex-col items-center">
-        <span id="cd-days" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
-        <span class="font-section-label text-section-label text-primary uppercase">Dni</span>
+    <!-- ANIM-01: countdown timer + tryb finiszu (patrz initCountdown) -->
+    <div id="cd-wrap" class="flex flex-col items-center gap-3 mt-4 reveal reveal-delay-4">
+
+      <p id="cd-lead" class="cd-lead" hidden></p>
+
+      <div id="countdown" class="flex gap-6">
+        <div class="cd-box flex flex-col items-center" id="cd-box-days">
+          <span id="cd-days" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span class="font-section-label text-section-label text-primary uppercase">Dni</span>
+        </div>
+        <div class="cd-box flex flex-col items-center">
+          <span id="cd-hours" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span class="font-section-label text-section-label text-primary uppercase">Godz</span>
+        </div>
+        <div class="cd-box flex flex-col items-center">
+          <span id="cd-mins" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span class="font-section-label text-section-label text-primary uppercase">Min</span>
+        </div>
+        <div class="cd-box flex flex-col items-center">
+          <span id="cd-secs" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span class="font-section-label text-section-label text-primary uppercase">Sek</span>
+        </div>
       </div>
-      <div class="flex flex-col items-center">
-        <span id="cd-hours" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
-        <span class="font-section-label text-section-label text-primary uppercase">Godz</span>
-      </div>
-      <div class="flex flex-col items-center">
-        <span id="cd-mins" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
-        <span class="font-section-label text-section-label text-primary uppercase">Min</span>
-      </div>
-      <div class="flex flex-col items-center">
-        <span id="cd-secs" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
-        <span class="font-section-label text-section-label text-primary uppercase">Sek</span>
+
+      <!-- Widok na czas trwania obozu i po nim - zamiast martwego 00:00:00:00 -->
+      <div id="cd-live" class="cd-live" hidden>
+        <span id="cd-live-title" class="cd-live-title"></span>
+        <span id="cd-live-sub" class="cd-live-sub"></span>
       </div>
     </div>
   </div>
@@ -2184,9 +2249,19 @@ async function handleFormSubmit(e) {
   }, { passive: true });
 })();
 
-/* ─── ANIM-01: Countdown timer ──────────── */
+/* ─── ANIM-01: Countdown timer + narracja finiszu ───────────
+   Pięć stanów zależnych od daty:
+     > 7 dni   → zwykły licznik
+     1-7 dni   → tryb finiszu (blask na „Dni", hasło nad licznikiem, połysk na CTA)
+     0 dni     → „Startujemy jutro!"
+     w trakcie → „Trwa Adapciak!" + numer dnia (zamiast martwego 00:00:00:00)
+     po        → „To był Adapciak!" */
 (function initCountdown() {
-  const TARGET = new Date('2026-08-29T22:00:00Z'); // midnight Warsaw CEST
+  const TARGET = new Date('2026-08-29T22:00:00Z'); // północ w Warszawie -> start 30.08
+  const END    = new Date('2026-09-06T22:00:00Z'); // koniec 06.09 (północ z 6 na 7.09)
+  const DAY    = 86400000;
+  const DNI    = 8; // długość obozu
+
   const els = {
     d: document.getElementById('cd-days'),
     h: document.getElementById('cd-hours'),
@@ -2194,18 +2269,83 @@ async function handleFormSubmit(e) {
     s: document.getElementById('cd-secs'),
   };
   if (!els.d) return;
+
+  const root      = document.documentElement;
+  const cd        = document.getElementById('countdown');
+  const lead      = document.getElementById('cd-lead');
+  const live      = document.getElementById('cd-live');
+  const liveTitle = document.getElementById('cd-live-title');
+  const liveSub   = document.getElementById('cd-live-sub');
+  const kicker    = document.getElementById('hero-kicker');
+  const kickerBase = kicker ? kicker.textContent : '';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function pad(n) { return String(n).padStart(2, '0'); }
+  function setKicker(txt) { if (kicker) kicker.textContent = txt; }
+
+  function showLive(title, sub, kick) {
+    if (cd)   cd.hidden = true;
+    if (lead) lead.hidden = true;
+    if (live) { live.hidden = false; liveTitle.textContent = title; liveSub.textContent = sub; }
+    root.classList.remove('is-final');
+    root.classList.add('is-live');
+    setKicker(kick);
+  }
+
+  var lastSec = -1;
+  if (els.s) els.s.addEventListener('animationend', function () { els.s.classList.remove('cd-tick'); });
+
   function tick() {
-    const diff = TARGET - Date.now();
-    if (diff <= 0) { Object.values(els).forEach(el => el.textContent = '00'); return; }
-    var t = Math.floor(diff / 1000);
-    els.d.textContent = pad(Math.floor(t / 86400));
+    const now  = Date.now();
+    const diff = TARGET.getTime() - now;
+
+    if (now >= END.getTime()) {
+      showLive('To był Adapciak!', 'Do zobaczenia za rok', 'DO ZOBACZENIA ZA ROK • SSUEW');
+      return true; // koniec odliczania
+    }
+    if (diff <= 0) {
+      const dayNo = Math.min(Math.floor((now - TARGET.getTime()) / DAY) + 1, DNI);
+      showLive('Trwa Adapciak!', 'Dzień ' + dayNo + ' z ' + DNI, 'TRWA ADAPCIAK • DZIEŃ ' + dayNo + ' Z ' + DNI);
+      return false;
+    }
+
+    // przed startem
+    if (cd)   cd.hidden = false;
+    if (live) live.hidden = true;
+    root.classList.remove('is-live');
+
+    const t = Math.floor(diff / 1000);
+    const d = Math.floor(t / 86400);
+    const s = t % 60;
+    els.d.textContent = pad(d);
     els.h.textContent = pad(Math.floor((t % 86400) / 3600));
     els.m.textContent = pad(Math.floor((t % 3600) / 60));
-    els.s.textContent = pad(t % 60);
+    els.s.textContent = pad(s);
+
+    if (!reduce && s !== lastSec) { els.s.classList.add('cd-tick'); lastSec = s; }
+
+    if (d <= 7) {
+      root.classList.add('is-final');
+      if (lead) {
+        lead.hidden = false;
+        lead.textContent = d === 0 ? 'Startujemy jutro!'
+                         : d === 1 ? 'Został ostatni dzień!'
+                         : 'Zostały ostatnie ' + d + ' dni!';
+      }
+      setKicker(d === 0 ? 'JUŻ JUTRO • GŁUCHOŁAZY • UEW'
+              : d === 1 ? 'ZOSTAŁ 1 DZIEŃ • GŁUCHOŁAZY • UEW'
+              : 'ZOSTAŁY ' + d + ' DNI • GŁUCHOŁAZY • UEW');
+    } else {
+      root.classList.remove('is-final');
+      if (lead) lead.hidden = true;
+      setKicker(kickerBase);
+    }
+    return false;
   }
-  tick();
-  setInterval(tick, 1000);
+
+  if (!tick()) {
+    const id = setInterval(function () { if (tick()) clearInterval(id); }, 1000);
+  }
 })();
 
 /* ─── ANIM-03: Number counters ──────────── */
