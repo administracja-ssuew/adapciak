@@ -68,8 +68,8 @@
     "name": "Udział w obozie Adapciak 2026",
     "price": "980",
     "priceCurrency": "PLN",
-    "availability": "https://schema.org/InStock",
-    "url": "https://forms.gle/cuiJx3QiVdcUH8Hb9",
+    "availability": "https://schema.org/SoldOut",
+    "url": "https://www.adapciak-uewroc.pl/#zapisy",
     "validFrom": "2026-06-01"
   },
   "sameAs": [
@@ -314,6 +314,13 @@
   .reveal-right { transform: translateX(54px); }
   .reveal-scale { transform: translateY(22px) scale(.94); }
   .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { transform: none; }
+  /* Na wąskich ekranach wjazd z boku odpada: dopóki element nie jest odsłonięty,
+     translateX(54px) wystaje poza ekran i rozpycha layout w poziomie — a wtedy
+     przeglądarka mobilna pozwala oddalić stronę gestem i widać puste pole.
+     Pionowy wjazd daje ten sam efekt bez przepełnienia. */
+  @media (max-width: 768px) {
+    .reveal-left, .reveal-right { transform: translateY(44px); }
+  }
   .reveal-delay-1.visible  { transition-delay: 0.08s; }
   .reveal-delay-2.visible  { transition-delay: 0.16s; }
   .reveal-delay-3.visible  { transition-delay: 0.24s; }
@@ -726,19 +733,22 @@
   /* atrybut [hidden] przegrywa specyficznością z .flex / display:flex poniżej,
      więc wymuszamy ukrycie jawnie */
   #countdown[hidden], #cd-live[hidden], #cd-lead[hidden] { display: none !important; }
+  /* Cyfry skalują się z szerokością ekranu — przy stałych 56 px cztery boksy
+     dawały 425 px i rozpychały stronę w poziomie na telefonach (~390 px). */
+  .cd-num { font-size: clamp(34px, 10.5vw, 56px); line-height: 1; }
   .cd-box { padding: 4px 10px; border-radius: 14px; }
+  @media (max-width: 480px) {
+    #countdown { gap: 8px; }
+    .cd-box { padding: 4px 5px; }
+  }
   .cd-lead {
     font-family: 'funkydori', 'Pacifico', cursive; font-weight: 700;
     font-size: clamp(21px, 3.4vw, 33px); line-height: 1.15;
     color: #F2CB49; text-shadow: 0 2px 18px rgba(242,203,73,.35);
     margin-bottom: 2px;
   }
-  .is-final #cd-days   { color: #F2CB49; }
-  .is-final #cd-box-days { animation: cdGlow 2.2s ease-in-out infinite; }
-  @keyframes cdGlow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(242,203,73,0); }
-    50%      { box-shadow: 0 0 26px 6px rgba(242,203,73,.26); }
-  }
+  /* Sama zmiana koloru — bez pulsującej poświaty pod liczbą (źle czytała się na zdjęciu w tle). */
+  .is-final #cd-days { color: #F2CB49; }
   /* „tyknięcie" sekundnika */
   .cd-tick { animation: cdTick .35s ease-out; }
   @keyframes cdTick {
@@ -757,21 +767,14 @@
     font-size: clamp(14px, 2vw, 18px); letter-spacing: .1em; text-transform: uppercase;
     color: rgba(255,255,255,.75);
   }
-  /* delikatny połysk na głównym CTA, gdy zbliża się start */
-  .is-final #hero-cta { position: relative; overflow: hidden; }
-  .is-final #hero-cta::after {
-    content: ''; position: absolute; top: 0; bottom: 0; width: 45%;
-    background: linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent);
-    animation: ctaShine 3.6s ease-in-out infinite;
-  }
-  @keyframes ctaShine {
-    0%       { left: -55%; }
-    55%, 100%{ left: 115%; }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .is-final #cd-box-days   { animation: none; }
-    .cd-tick                 { animation: none; }
-    .is-final #hero-cta::after { display: none; }
+    .cd-tick { animation: none; }
+  }
+
+  /* „WYŚLIJ WIADOMOŚĆ" przy 32 px ma 368 px szerokości i przez `w-max` nie zwęża się,
+     więc na 360-px telefonach wystawało poza ekran. */
+  @media (max-width: 480px) {
+    #kontakt button[type="submit"] { font-size: 24px; padding-left: 22px; padding-right: 22px; }
   }
 </style>
 <!-- Vercel Web Analytics - bez cookies, zgodne z RODO. WŁĄCZ: Vercel -> projekt -> Analytics -> Enable. -->
@@ -805,7 +808,7 @@
     </div>
 
     <div class="flex items-center gap-3">
-      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block rounded-full" href="#zapisy">ZAPISZ SIĘ</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block rounded-full" href="#zapisy">ZAPISY</a>
 
       <!-- Dark mode toggle -->
       <button id="dark-toggle" onclick="toggleDark()" class="w-9 h-9 flex items-center justify-center text-on-surface hover:text-primary" aria-label="Przełącz motyw">
@@ -831,7 +834,7 @@
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"       onclick="closeMobileMenu()">FAQ</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#kontakt"   onclick="closeMobileMenu()">Kontakt</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3"                                     href="#galeria"   onclick="closeMobileMenu()">Galeria</a>
-      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block rounded-full" href="#zapisy" onclick="closeMobileMenu()">ZAPISZ SIĘ</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block rounded-full" href="#zapisy" onclick="closeMobileMenu()">ZAPISY</a>
     </div>
   </div>
 </nav>
@@ -870,14 +873,14 @@
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto reveal reveal-delay-3">
-      <a id="hero-cta" class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#zapisy">ZAPISZ SIĘ</a>
+      <a id="hero-cta" class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#faq">SPRAWDŹ FAQ</a>
       <button onclick="shareAdapciak()" class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center rounded-full" aria-label="Udostępnij">
         <span class="material-symbols-outlined text-[20px]">&#xE80D;</span> UDOSTĘPNIJ
       </button>
     </div>
     <!-- Odesłanie do Regulaminu pod CTA -->
     <p class="reveal reveal-delay-3 font-body-md text-white/70 mt-3" style="font-size:14px;">
-      Klikając „Zapisz się", akceptujesz
+      <a href="#zapisy" class="text-accent hover:text-white transition-colors">Zapisy zamknięte</a> - komplet miejsc. Obowiązuje
       <a href="/regulamin.pdf" target="_blank" rel="noopener" class="text-white/90 underline underline-offset-2 hover:text-primary transition-colors">Regulamin wydarzenia</a>.
     </p>
     <!-- Share toast -->
@@ -903,19 +906,19 @@
 
       <div id="countdown" class="flex gap-6">
         <div class="cd-box flex flex-col items-center" id="cd-box-days">
-          <span id="cd-days" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span id="cd-days" class="font-display-hero text-white cd-num">00</span>
           <span class="font-section-label text-section-label text-primary uppercase">Dni</span>
         </div>
         <div class="cd-box flex flex-col items-center">
-          <span id="cd-hours" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span id="cd-hours" class="font-display-hero text-white cd-num">00</span>
           <span class="font-section-label text-section-label text-primary uppercase">Godz</span>
         </div>
         <div class="cd-box flex flex-col items-center">
-          <span id="cd-mins" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span id="cd-mins" class="font-display-hero text-white cd-num">00</span>
           <span class="font-section-label text-section-label text-primary uppercase">Min</span>
         </div>
         <div class="cd-box flex flex-col items-center">
-          <span id="cd-secs" class="font-display-hero text-white" style="font-size:56px;line-height:1;">00</span>
+          <span id="cd-secs" class="font-display-hero text-white cd-num">00</span>
           <span class="font-section-label text-section-label text-primary uppercase">Sek</span>
         </div>
       </div>
@@ -1253,17 +1256,30 @@
 ══════════════════════════════════════════════════════ -->
 <section id="zapisy" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #1B7A75 0%, #30BEB9 50%, #8FD9CC 100%);">
   <div class="max-w-4xl mx-auto text-center reveal">
-    <h2 class="font-display-hero text-display-hero md:text-[100px] md:leading-[1.2] text-white mb-6 drop-shadow-2xl">
-      Gotowy<br/>na Adapciaka?
+    <div class="inline-flex items-center gap-2 bg-black/25 border border-white/30 backdrop-blur-sm px-4 py-1.5 rounded-full mb-6">
+      <span class="w-2 h-2 bg-accent rounded-full"></span>
+      <span class="font-section-label text-section-label text-white uppercase">Zapisy zamknięte</span>
+    </div>
+    <!-- „Dziękujemy!" to jedno długie słowo — przy stałych 80 px wychodziło poza ekran telefonu -->
+    <h2 class="font-display-hero text-white mb-6 drop-shadow-2xl" style="font-size:clamp(46px,12vw,100px);line-height:1.15;">
+      Dziękujemy!
     </h2>
-    <p class="font-body-lg text-body-lg mb-8 max-w-xl mx-auto" style="color: rgba(255,255,255,0.85);">
-      Zarejestruj się już teraz i zabezpiecz swoje miejsce na największej imprezie studenckiej UEW!
+    <p class="font-body-lg text-body-lg mb-4 max-w-2xl mx-auto" style="color: rgba(255,255,255,0.9);">
+      Lista uczestników Adapciaka 2026 jest już zamknięta - komplet miejsc rozszedł się co do jednego.
+      Dziękujemy za zaufanie i za to, że chcecie zacząć studia razem z nami.
     </p>
     <p class="font-headline-md text-headline-md text-white mb-10">
-      Cena: <strong>980 zł</strong>
-      <span class="font-body-md text-body-md block mt-1" style="color: rgba(255,255,255,0.85);">7 dni - nocleg, wyżywienie, transport, ubezpieczenie i atrakcje w cenie</span>
+      Widzimy się 30 sierpnia w Głuchołazach!
     </p>
-    <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block rounded-full" href="https://forms.gle/cuiJx3QiVdcUH8Hb9" target="_blank" rel="noopener" onclick="fireConfetti()">ZAPISZ SIĘ ONLINE</a>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block rounded-full" href="#faq">SPRAWDŹ FAQ</a>
+      <a class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:bg-white hover:text-on-surface transition-colors duration-300 inline-block rounded-full" href="mailto:adapciak@samorzad.ue.wroc.pl">NAPISZ DO NAS</a>
+    </div>
+    <p class="font-body-md text-body-md mt-8" style="color: rgba(255,255,255,0.8);">
+      Nie udało Ci się załapać? Śledź
+      <a href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" class="text-white underline underline-offset-2 hover:text-accent transition-colors">nasz Instagram</a>
+      - o przyszłorocznej edycji poinformujemy tam jako pierwsi.
+    </p>
   </div>
 </section>
 
@@ -2153,7 +2169,11 @@ const revealObs = new IntersectionObserver((entries) => {
       revealObs.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+/* threshold musi zostać na 0: przy progu ułamkowym elementy wyższe od okna nigdy
+   nie odsłaniają wymaganego procentu i zostają na opacity:0. Galeria masonry na
+   telefonie ma ~9400 px (jedna kolumna), więc przy 0.12 wymagałaby 1130 px widocznych
+   naraz przy oknie 844 px — i była niewidoczna. Moment odsłonięcia reguluje rootMargin. */
+}, { threshold: 0, rootMargin: '0px 0px -80px 0px' });
 
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
@@ -2565,6 +2585,11 @@ function toggleFaqMore() {
   var btn  = document.getElementById('faq-toggle');
   if (!more) return;
   var isHidden = more.classList.toggle('hidden');
+  // Pytania rozwijane ręcznie pokazujemy od razu — inaczej te poniżej zgięcia czekałyby
+  // na scroll-reveal i użytkownik zobaczyłby pustą przestrzeń zaraz po kliknięciu.
+  if (!isHidden) {
+    more.querySelectorAll('.reveal:not(.visible)').forEach(function (el) { el.classList.add('visible'); });
+  }
   if (lbl)  lbl.textContent = isHidden ? 'Więcej pytań' : 'Mniej pytań';
   if (icon) icon.style.transform = isHidden ? '' : 'rotate(180deg)';
   if (btn)  btn.setAttribute('aria-expanded', String(!isHidden));
