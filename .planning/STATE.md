@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 2
 Plan: Not started
 Status: 02-03 complete, advancing to 02-04
-Last activity: 2026-08-27 - Completed quick task 260826-x05: sekcja Ekipa (20 osób) + tryb finiszu licznika
+Last activity: 2026-08-27 - Zapisy zamknięte + naprawa galerii na mobile i przepełnienia w poziomie
 
 Progress: [████████░░] 83% (plans)
 
@@ -81,6 +81,9 @@ Recent decisions affecting current work:
 - 260826-x05: `[hidden]` przegrywa specyficznością z `.flex` — ukrywanie #countdown/#cd-live wymaga jawnego `[hidden]{display:none!important}`
 - 260826-x05: Stan licznika trzymany klasami .is-final/.is-live na `<html>`, żeby kicker i CTA poza licznikiem mogły reagować
 - 260826-x05: Kadry zdjęć zespołu generowane skryptem (OpenCV Haar + 3 korekty ręczne); oryginały zostają lokalnie w images/zespol/oryginaly/, więc kadr można przegenerować
+- fast/260827: revealObs MUSI mieć threshold 0 — przy progu ułamkowym elementy wyższe od okna (galeria masonry ~9400 px na mobile) nigdy nie odsłaniają wymaganego procentu i zostają na opacity:0
+- fast/260827: `.reveal-left/.reveal-right` rozpychały layout w poziomie na telefonach (translateX(54px) przed odsłonięciem) — na ≤768 px wjazd jest pionowy; to była przyczyna możliwości oddalenia strony gestem
+- fast/260827: Sekcja #sched-panels („Dawne panele dni") to martwy, ukryty markup — kandydat do usunięcia przy sprzątaniu
 
 ### Pending Todos
 
@@ -100,6 +103,7 @@ None yet.
 | fast | Motywy imprez: nowe opisy, kolejność i nazwy + z-index banera cookies | 2026-08-03 | 0db50d1 | — (inline) |
 | 260826-w7c | Sekcja Partnerzy: taśma 3 logotypów + cena noclegu 65 zł | 2026-08-26 | 249c01f | [260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-](./quick/260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-/) |
 | 260826-x05 | Sekcja Organizatorzy (20 osób) + tryb finiszu licznika | 2026-08-27 | c2d75ba | [260826-x05-sekcja-organizatorzy-20-osob-finalowy-sz](./quick/260826-x05-sekcja-organizatorzy-20-osob-finalowy-sz/) |
+| fast | Galeria na mobile, przepełnienie w poziomie, zapisy zamknięte | 2026-08-27 | f5d1d44 | — (inline) |
 
 ## Session Continuity
 
