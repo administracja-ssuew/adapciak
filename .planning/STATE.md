@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 2
 Plan: Not started
 Status: 02-03 complete, advancing to 02-04
-Last activity: 2026-08-27 - Zapisy zamknięte + naprawa galerii na mobile i przepełnienia w poziomie
+Last activity: 2026-09-24 - Completed quick task 260924-q2o: tryb po wydarzeniu + Partnerzy na orbitach
 
 Progress: [████████░░] 83% (plans)
 
@@ -84,6 +84,8 @@ Recent decisions affecting current work:
 - fast/260827: revealObs MUSI mieć threshold 0 — przy progu ułamkowym elementy wyższe od okna (galeria masonry ~9400 px na mobile) nigdy nie odsłaniają wymaganego procentu i zostają na opacity:0
 - fast/260827: `.reveal-left/.reveal-right` rozpychały layout w poziomie na telefonach (translateX(54px) przed odsłonięciem) — na ≤768 px wjazd jest pionowy; to była przyczyna możliwości oddalenia strony gestem
 - fast/260827: Sekcja #sched-panels („Dawne panele dni") to martwy, ukryty markup — kandydat do usunięcia przy sprzątaniu
+- 260924-q2o: Archiwizacja sekcji w `<template>`, nie w `<!-- -->` — sekcje mają wewnętrzne komentarze, a komentarzy HTML nie da się zagnieżdżać. Zawartość `<template>` nie jest renderowana ani pobierana, a JS dostaje null z getElementById (funkcje muszą to tolerować).
+- 260924-q2o: Orbity partnerów pozycjonowane w JS po okręgu (nie rotacja CSS + kontr-rotacja) — logotypy zawsze pionowo; rozmiary pierścieni tylko w CSS (zmienne na .orbit-stage), JS czyta promień z wyrenderowanego pierścienia.
 
 ### Pending Todos
 
@@ -104,6 +106,7 @@ None yet.
 | 260826-w7c | Sekcja Partnerzy: taśma 3 logotypów + cena noclegu 65 zł | 2026-08-26 | 249c01f | [260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-](./quick/260826-w7c-sekcja-partnerzy-tasma-3-logotypow-cena-/) |
 | 260826-x05 | Sekcja Organizatorzy (20 osób) + tryb finiszu licznika | 2026-08-27 | c2d75ba | [260826-x05-sekcja-organizatorzy-20-osob-finalowy-sz](./quick/260826-x05-sekcja-organizatorzy-20-osob-finalowy-sz/) |
 | fast | Galeria na mobile, przepełnienie w poziomie, zapisy zamknięte | 2026-08-27 | f5d1d44 | — (inline) |
+| 260924-q2o | Tryb po wydarzeniu: strona podsumowująca + sekcja Partnerzy (orbity, 6 logotypów) | 2026-09-24 | a067c78 | [260924-q2o-tryb-po-wydarzeniu-strona-podsumowuj-ca-](./quick/260924-q2o-tryb-po-wydarzeniu-strona-podsumowuj-ca-/) |
 
 ## Session Continuity
 
