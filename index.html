@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Adapciak 2026 - obóz adaptacyjny UEW | 30.08-06.09, Głuchołazy</title>
-<meta name="description" content="Adapciak 2026 - obóz adaptacyjny dla studentów I roku Uniwersytetu Ekonomicznego we Wrocławiu (UEW). 30.08-06.09.2026, Ośrodek Banderoza w Głuchołazach. Poznaj znajomych i zacznij studia z przytupem!"/>
+<title>Adapciak 2026 - dziękujemy! | Obóz adaptacyjny UEW, Głuchołazy</title>
+<meta name="description" content="Adapciak 2026 za nami - osiem dni obozu adaptacyjnego dla studentów I roku Uniwersytetu Ekonomicznego we Wrocławiu (UEW) w Głuchołazach. Dziękujemy uczestnikom, ekipie i partnerom. Do zobaczenia za rok!"/>
 <meta name="robots" content="index, follow"/>
 <meta name="author" content="Samorząd Studentów UEW"/>
 
@@ -16,8 +16,8 @@
 <meta property="og:locale" content="pl_PL"/>
 <meta property="og:site_name" content="Adapciak - SSUEW"/>
 <meta property="og:url" content="https://www.adapciak-uewroc.pl/"/>
-<meta property="og:title" content="Adapciak 2026 - obóz adaptacyjny UEW (30.08-06.09)"/>
-<meta property="og:description" content="Obóz adaptacyjny dla pierwszorocznych studentów UEW - 30.08-06.09.2026, Ośrodek Banderoza w Głuchołazach. Bądź tam!"/>
+<meta property="og:title" content="Adapciak 2026 za nami - dziękujemy!"/>
+<meta property="og:description" content="Osiem dni obozu adaptacyjnego UEW w Głuchołazach (30.08-06.09.2026). Dziękujemy uczestnikom, ekipie i partnerom - do zobaczenia za rok!"/>
 <meta property="og:image" content="https://www.adapciak-uewroc.pl/og.jpg"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
@@ -25,8 +25,8 @@
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Adapciak 2026 - obóz adaptacyjny UEW (30.08-06.09)"/>
-<meta name="twitter:description" content="Obóz adaptacyjny dla pierwszorocznych studentów UEW - 30.08-06.09.2026, Ośrodek Banderoza w Głuchołazach. Bądź tam!"/>
+<meta name="twitter:title" content="Adapciak 2026 za nami - dziękujemy!"/>
+<meta name="twitter:description" content="Osiem dni obozu adaptacyjnego UEW w Głuchołazach (30.08-06.09.2026). Dziękujemy uczestnikom, ekipie i partnerom - do zobaczenia za rok!"/>
 <meta name="twitter:image" content="https://www.adapciak-uewroc.pl/og.jpg"/>
 
 <!-- Dane strukturalne wydarzenia - Google rich results (event) -->
@@ -95,6 +95,9 @@
 }
 </script>
 
+<!-- ARCHIWUM (po wydarzeniu, 09.2026): FAQ zniknęło ze strony, a Google wymaga, żeby dane
+     strukturalne odpowiadały widocznej treści. Przywrócenie = usuń <template> i </template>. -->
+<template id="archiwum-faq-jsonld">
 <!-- FAQ - Google rich results / AEO (snippety odpowiedzi) -->
 <script type="application/ld+json">
 {
@@ -224,6 +227,7 @@
   ]
 }
 </script>
+</template>
 
 <!-- PWA -->
 <link rel="manifest" href="./manifest.json"/>
@@ -776,6 +780,75 @@
   @media (max-width: 480px) {
     #kontakt button[type="submit"] { font-size: 24px; padding-left: 22px; padding-right: 22px; }
   }
+
+  /* ─── Podziękowania: edycja w liczbach ───
+     Własny grid (jak .team-grid) — md:grid-cols-4 nie musi istnieć w statycznym tailwind.css. */
+  .thanks-stats {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 16px; max-width: 760px; margin: 0 auto 48px;
+  }
+  @media (min-width: 768px) { .thanks-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  /* dt przed dd w DOM, wizualnie liczba nad etykietą; flex-end w column-reverse = góra,
+     więc liczby trzymają jedną linię, nawet gdy etykieta łamie się na dwa wiersze */
+  .thanks-stats > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; align-items: center; gap: 8px; }
+  .thanks-stat-num {
+    font-family: 'Baloo 2', 'Plus Jakarta Sans', sans-serif; font-weight: 800;
+    font-size: clamp(44px, 8vw, 68px); line-height: 1; color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .thanks-stat-label {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 600;
+    font-size: 13px; line-height: 1.3; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.85);
+  }
+
+  /* ─── Partnerzy: glob z cząsteczek + logotypy na orbitach (JS: initPartnerOrbit) ───
+     Środek globu i pierścieni leży na dolnej krawędzi sceny, więc widać górne połowy.
+     Rozmiary siedzą w zmiennych — JS czyta promień z wyrenderowanego pierścienia,
+     więc responsywność ustawia się tylko tutaj. */
+  .orbit-section { padding-top: 120px; overflow: hidden; }
+  @media (max-width: 767px) { .orbit-section { padding-top: 88px; } }
+  .orbit-stage {
+    --globe: 700px; --r-inner: 720px; --r-middle: 880px; --r-outer: 1060px; --chip: 104px;
+    --orbit-line: #E7E5E4; --orbit-dot: 28, 25, 23;
+    position: relative; height: 640px; margin-top: 8px; overflow: hidden;
+  }
+  @media (max-width: 767px) {
+    .orbit-stage { --globe: 360px; --r-inner: 440px; --r-middle: 600px; --r-outer: 720px; --chip: 76px; height: 440px; }
+  }
+  .dark .orbit-stage { --orbit-line: #334155; --orbit-dot: 203, 213, 225; }
+
+  .orbit-ring {
+    position: absolute; left: 50%; top: 100%; border-radius: 50%;
+    border: 1px solid var(--orbit-line); transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 0;
+  }
+  .orbit-ring[data-ring="inner"]  { width: var(--r-inner);  height: var(--r-inner); }
+  .orbit-ring[data-ring="middle"] { width: var(--r-middle); height: var(--r-middle); }
+  .orbit-ring[data-ring="outer"]  { width: var(--r-outer);  height: var(--r-outer); }
+
+  /* canvas obejmuje tylko górną połowę kuli — dolnej i tak nie widać */
+  .orbit-globe {
+    position: absolute; left: 50%; bottom: 0; z-index: 1; display: block;
+    width: var(--globe); height: calc(var(--globe) / 2); transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  /* Kafle większe niż ikony w briefie (64/48 px): to logotypy-napisy, przy 32 px byłyby
+     nieczytelne. Białe w obu motywach — logotypy potrzebują białego podłoża. */
+  .orbit-chip {
+    position: absolute; left: 0; top: 0; z-index: 2;
+    width: var(--chip); height: var(--chip); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; border: 1px solid var(--orbit-line);
+    box-shadow: 0 1px 2px rgba(28,25,23,.04), 0 8px 22px rgba(28,25,23,.07);
+    will-change: transform; visibility: hidden;   /* do pierwszego pozycjonowania w JS */
+  }
+  .orbit-stage.is-ready .orbit-chip { visibility: visible; }
+  .dark .orbit-chip { border-color: transparent; box-shadow: 0 6px 22px rgba(0,0,0,.4); }
+  .orbit-chip picture { display: contents; }
+  .orbit-chip img { display: block; width: auto; height: auto; max-width: 70%; max-height: 44%; object-fit: contain; }
+  .orbit-chip--wide img { max-width: 80%; }
 </style>
 <!-- Vercel Web Analytics - bez cookies, zgodne z RODO. WŁĄCZ: Vercel -> projekt -> Analytics -> Enable. -->
 <script defer src="/_vercel/insights/script.js"></script>
@@ -798,17 +871,14 @@
     <!-- Desktop nav -->
     <div class="hidden md:flex gap-gutter items-center">
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#start"            data-section="start">Start</a>
-      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#imprezy"         data-section="imprezy">Imprezy</a>
-      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#miejsce"         data-section="miejsce">Miejsce</a>
+      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#podziekowania"   data-section="podziekowania">Podziękowania</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#ekipa"           data-section="ekipa">Ekipa</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#partnerzy" data-section="partnerzy">Partnerzy</a>
-      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#faq"             data-section="faq">FAQ</a>
-      <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#kontakt"         data-section="kontakt">Kontakt</a>
       <a class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors duration-200" href="#galeria"         data-section="galeria">Galeria</a>
     </div>
 
     <div class="flex items-center gap-3">
-      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block rounded-full" href="#zapisy">ZAPISY</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-2 hover:bg-primary-dark transition-colors duration-200 hidden sm:block rounded-full" href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener">INSTAGRAM</a>
 
       <!-- Dark mode toggle -->
       <button id="dark-toggle" onclick="toggleDark()" class="w-9 h-9 flex items-center justify-center text-on-surface hover:text-primary" aria-label="Przełącz motyw">
@@ -827,14 +897,11 @@
   <div id="mobile-menu" class="md:hidden border-t border-surface-border bg-white">
     <div class="flex flex-col px-margin-mobile py-4 gap-1">
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#start"    onclick="closeMobileMenu()">Start</a>
-      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#imprezy"  onclick="closeMobileMenu()">Imprezy</a>
-      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#miejsce"  onclick="closeMobileMenu()">Miejsce wydarzenia</a>
+      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#podziekowania" onclick="closeMobileMenu()">Podziękowania</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#ekipa"     onclick="closeMobileMenu()">Ekipa</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#partnerzy" onclick="closeMobileMenu()">Partnerzy</a>
-      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#faq"       onclick="closeMobileMenu()">FAQ</a>
-      <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3 border-b border-surface-border/50" href="#kontakt"   onclick="closeMobileMenu()">Kontakt</a>
       <a class="font-label-bold text-label-bold uppercase tracking-wider text-on-surface hover:text-primary transition-colors py-3"                                     href="#galeria"   onclick="closeMobileMenu()">Galeria</a>
-      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block rounded-full" href="#zapisy" onclick="closeMobileMenu()">ZAPISY</a>
+      <a class="bg-primary text-white font-headline-md text-headline-md px-8 py-3 hover:bg-primary-dark transition-colors mt-4 text-center block rounded-full" href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" onclick="closeMobileMenu()">INSTAGRAM</a>
     </div>
   </div>
 </nav>
@@ -859,30 +926,25 @@
     <!-- Kicker badge -->
     <div class="inline-flex items-center gap-2 bg-black/50 border border-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full reveal">
       <span class="w-2 h-2 bg-orange rounded-full badge-dot"></span>
-      <span id="hero-kicker" class="font-section-label text-section-label text-accent uppercase">30.08-06.09.2026 • GŁUCHOŁAZY • UEW</span>
+      <span id="hero-kicker" class="font-section-label text-section-label text-accent uppercase">30.08-06.09.2026 • GŁUCHOŁAZY • DZIĘKUJEMY</span>
     </div>
 
     <!-- Logo -->
     <div id="hero-title" class="reveal reveal-delay-1">
-      <h1 class="sr-only">Adapciak 2026 - największa studencka impreza integracyjna UEW we Wrocławiu, 30 sierpnia - 6 września 2026, Głuchołazy</h1>
+      <h1 class="sr-only">Adapciak 2026 za nami - obóz adaptacyjny UEW, 30 sierpnia - 6 września 2026, Głuchołazy. Dziękujemy!</h1>
       <img src="./ADAPCIAK_LOGO.png" alt="" class="h-44 md:h-64 mx-auto select-none" draggable="false"/>
     </div>
 
     <p class="font-body-lg text-body-lg text-white/80 max-w-2xl mx-auto reveal reveal-delay-2">
-      Największa studencka impreza integracyjna UEW wraca! Dołącz do społeczności akademickiej i przeżyj coś niezapomnianego.
+      Osiem dni, siedem imprez i mnóstwo nowych znajomości. Adapciak 2026 za nami - dziękujemy, że byliście z nami w Głuchołazach!
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto reveal reveal-delay-3">
-      <a id="hero-cta" class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#faq">SPRAWDŹ FAQ</a>
-      <button onclick="shareAdapciak()" class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center rounded-full" aria-label="Udostępnij">
-        <span class="material-symbols-outlined text-[20px]">&#xE80D;</span> UDOSTĘPNIJ
-      </button>
+      <a id="hero-cta" class="bg-primary text-white font-headline-md text-headline-md px-12 py-4 hover:bg-primary-dark transition-colors text-center rounded-full" data-magnetic href="#galeria">ZOBACZ GALERIĘ</a>
+      <a href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener" class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:border-primary hover:text-primary transition-colors flex items-center gap-2 justify-center rounded-full">
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">&#xE412;</span> INSTAGRAM
+      </a>
     </div>
-    <!-- Odesłanie do Regulaminu pod CTA -->
-    <p class="reveal reveal-delay-3 font-body-md text-white/70 mt-3" style="font-size:14px;">
-      <a href="#zapisy" class="text-accent hover:text-white transition-colors">Zapisy zamknięte</a> - komplet miejsc. Obowiązuje
-      <a href="/regulamin.pdf" target="_blank" rel="noopener" class="text-white/90 underline underline-offset-2 hover:text-primary transition-colors">Regulamin wydarzenia</a>.
-    </p>
     <!-- Share toast -->
     <div id="share-toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-on-surface text-white font-label-bold text-label-bold px-6 py-3 z-[9999] opacity-0 pointer-events-none -translate-y-4 flex items-center gap-2">
       <span class="material-symbols-outlined text-primary text-[18px]">&#xF0BE;</span> Link skopiowany!
@@ -899,6 +961,15 @@
            class="text-white/70 uppercase mt-0.5">30 Sierpnia - 6 Września 2026</div>
     </div>
 
+    <!-- Po wydarzeniu: statyczny komunikat zamiast licznika (bez mignięcia 00:00:00:00
+         przed startem skryptu). Licznik w archiwum niżej; initCountdown bez niego nic nie robi. -->
+    <div class="cd-live mt-4 reveal reveal-delay-4">
+      <span class="cd-live-title">To był Adapciak!</span>
+      <span class="cd-live-sub">Do zobaczenia za rok</span>
+    </div>
+
+    <!-- ARCHIWUM (po wydarzeniu, 09.2026): licznik. Przywrócenie = usuń <template> i </template>. -->
+    <template id="archiwum-licznik">
     <!-- ANIM-01: countdown timer + tryb finiszu (patrz initCountdown) -->
     <div id="cd-wrap" class="flex flex-col items-center gap-3 mt-4 reveal reveal-delay-4">
 
@@ -929,10 +1000,507 @@
         <span id="cd-live-sub" class="cd-live-sub"></span>
       </div>
     </div>
+    </template>
   </div>
 </section>
 
 
+<!-- ══════════════════════════════════════════════════════
+     PODZIĘKOWANIA - podsumowanie edycji 2026 (w miejscu dawnego banera zapisów)
+══════════════════════════════════════════════════════ -->
+<section id="podziekowania" class="py-32 px-margin-mobile md:px-margin-desktop" style="background: linear-gradient(135deg, #1B7A75 0%, #30BEB9 50%, #8FD9CC 100%);">
+  <div class="max-w-4xl mx-auto text-center reveal">
+    <div class="inline-flex items-center gap-2 bg-black/25 border border-white/30 backdrop-blur-sm px-4 py-1.5 rounded-full mb-6">
+      <span class="w-2 h-2 bg-accent rounded-full"></span>
+      <span class="font-section-label text-section-label text-white uppercase">Adapciak 2026 za nami</span>
+    </div>
+    <!-- „Dziękujemy!" to jedno długie słowo — przy stałych 80 px wychodziło poza ekran telefonu -->
+    <h2 class="font-display-hero text-white mb-6 drop-shadow-2xl" style="font-size:clamp(46px,12vw,100px);line-height:1.15;">
+      Dziękujemy!
+    </h2>
+    <p class="font-body-lg text-body-lg mb-12 max-w-2xl mx-auto" style="color: rgba(255,255,255,0.9);">
+      Za wspólne osiem dni w Głuchołazach, za każdą imprezę do rana, za gry, rozmowy i nowe przyjaźnie.
+      Byliście najlepszą ekipą, o jaką mogliśmy prosić.
+    </p>
+
+    <!-- Edycja w liczbach (animacja: initCounters, klasa .counter) -->
+    <dl class="thanks-stats">
+      <div>
+        <dt class="thanks-stat-label">dni obozu</dt>
+        <dd class="thanks-stat-num"><span class="counter" data-target="8">8</span></dd>
+      </div>
+      <div>
+        <dt class="thanks-stat-label">imprez tematycznych</dt>
+        <dd class="thanks-stat-num"><span class="counter" data-target="7">7</span></dd>
+      </div>
+      <div>
+        <dt class="thanks-stat-label">uczestników</dt>
+        <dd class="thanks-stat-num">~<span class="counter" data-target="150">150</span></dd>
+      </div>
+      <div>
+        <dt class="thanks-stat-label">osób w ekipie</dt>
+        <dd class="thanks-stat-num"><span class="counter" data-target="20">20</span></dd>
+      </div>
+    </dl>
+
+    <p class="font-body-md text-body-md mb-10 max-w-2xl mx-auto" style="color: rgba(255,255,255,0.85);">
+      Dziękujemy też kadrze, która przez miesiące szykowała ten wyjazd, partnerom, dzięki którym mogliśmy zrobić więcej,
+      oraz Uniwersytetowi Ekonomicznemu we Wrocławiu.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a class="bg-white text-on-surface font-headline-md text-headline-md px-12 py-4 hover:bg-on-surface hover:text-white transition-colors duration-300 inline-block rounded-full" href="https://www.instagram.com/adapciak.ue/" target="_blank" rel="noopener">INSTAGRAM</a>
+      <a class="border-2 border-white text-white font-headline-md text-headline-md px-12 py-4 hover:bg-white hover:text-on-surface transition-colors duration-300 inline-block rounded-full" href="https://www.facebook.com/AdapciakUEW/" target="_blank" rel="noopener">FACEBOOK</a>
+    </div>
+    <p class="font-body-md text-body-md mt-8" style="color: rgba(255,255,255,0.8);">
+      O Adapciaku 2027 poinformujemy na Instagramie jako pierwsi. Pytania?
+      <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-white underline underline-offset-2 hover:text-accent transition-colors break-all">adapciak@samorzad.ue.wroc.pl</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     EKIPA - organizatorzy Adapciaka (kadra projektowa + kadra)
+══════════════════════════════════════════════════════ -->
+<section id="ekipa" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container border-b border-surface-border">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Organizatorzy</span>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Ekipa Adapciaka</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">
+        To oni przez miesiące szykowali dla Was te osiem dni, a w Głuchołazach pilnowali, żeby wszystko grało - od pobudki do ostatniej piosenki. Dziękujemy!
+      </p>
+    </div>
+
+    <div class="team-subhead reveal">
+      <span class="font-section-label text-section-label text-primary uppercase">Kadra Projektowa</span>
+    </div>
+
+    <div class="team-grid">
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/stoklosa-400.webp 400w, ./images/zespol/stoklosa-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/stoklosa.jpg" alt="Wiktoria Stokłosa" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Wiktoria Stokłosa</p>
+          <p class="team-role">Koordynatorka</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/szklarczyk-400.webp 400w, ./images/zespol/szklarczyk-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/szklarczyk.jpg" alt="Sara Szklarczyk" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Sara Szklarczyk</p>
+          <p class="team-role">Wicekoordynatorka</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/stachowski-400.webp 400w, ./images/zespol/stachowski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/stachowski.jpg" alt="Hubert Stachowski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Hubert Stachowski</p>
+          <p class="team-role">Członek Zarządu ds. Finansów</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/derej-400.webp 400w, ./images/zespol/derej-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/derej.jpg" alt="Oliwia Derej" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Oliwia Derej</p>
+          <p class="team-role">Członkini Zarządu ds. Promocji</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/adamski-400.webp 400w, ./images/zespol/adamski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/adamski.jpg" alt="Michał Adamski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Michał Adamski</p>
+          <p class="team-role">Członek Zarządu ds. Harmonogramu</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/szydlowska-400.webp 400w, ./images/zespol/szydlowska-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/szydlowska.jpg" alt="Martyna Szydłowska" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Martyna Szydłowska</p>
+          <p class="team-role">Członkini Zarządu ds. Kontaktów Zewnętrznych</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/buczkowski-400.webp 400w, ./images/zespol/buczkowski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/buczkowski.jpg" alt="Bartosz Buczkowski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Bartosz Buczkowski</p>
+          <p class="team-role">Członek Zarządu ds. Logitechu</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/goetze-400.webp 400w, ./images/zespol/goetze-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/goetze.jpg" alt="Hanna Goetze" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Hanna Goetze</p>
+          <p class="team-role">Członkini Zarządu ds. Administracji</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="team-subhead reveal" style="margin-top:64px;">
+      <span class="font-section-label text-section-label text-primary uppercase">Kadra</span>
+    </div>
+
+    <div class="team-grid team-grid--crew">
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/dawid-400.webp 400w, ./images/zespol/dawid-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/dawid.jpg" alt="Ania Dawid" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Ania Dawid</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/sosinska-400.webp 400w, ./images/zespol/sosinska-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/sosinska.jpg" alt="Ewa Sosińska" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Ewa Sosińska</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/gusiacki-400.webp 400w, ./images/zespol/gusiacki-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/gusiacki.jpg" alt="Filip Gusiacki" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Filip Gusiacki</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/godlewska-400.webp 400w, ./images/zespol/godlewska-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/godlewska.jpg" alt="Gosia Godlewska" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Gosia Godlewska</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/lachowicz-400.webp 400w, ./images/zespol/lachowicz-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/lachowicz.jpg" alt="Gosia Lachowicz" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Gosia Lachowicz</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/pelak-400.webp 400w, ./images/zespol/pelak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/pelak.jpg" alt="Gosia Pelak" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Gosia Pelak</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/pabisiak-400.webp 400w, ./images/zespol/pabisiak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/pabisiak.jpg" alt="Hubert Pabisiak" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Hubert Pabisiak</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/cwirko-400.webp 400w, ./images/zespol/cwirko-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/cwirko.jpg" alt="Inga Ćwioro" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Inga Ćwioro</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/zamojski-400.webp 400w, ./images/zespol/zamojski-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/zamojski.jpg" alt="Maciek Zamojski" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Maciek Zamojski</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/krzywicka-400.webp 400w, ./images/zespol/krzywicka-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/krzywicka.jpg" alt="Martyna Krzywicka" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Martyna Krzywicka</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/pozniak-400.webp 400w, ./images/zespol/pozniak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/pozniak.jpg" alt="Mateusz Poźniak" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Mateusz Poźniak</p>
+        </figcaption>
+      </figure>
+
+      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
+        <div class="team-photo">
+          <picture>
+            <source type="image/webp" srcset="./images/zespol/sobantka-400.webp 400w, ./images/zespol/sobantka-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
+            <img src="./images/zespol/sobantka.jpg" alt="Ola Sobańtka" width="800" height="1066" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-meta">
+          <p class="team-name text-on-surface">Ola Sobańtka</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PARTNERZY - glob z cząsteczek + logotypy na trzech orbitach (patrz initPartnerOrbit).
+     Każdy logotyp ma w JS lustrzaną kopię o +180°, żeby widoczna górna połowa orbity
+     nigdy nie była pusta. Kąt 0° = godzina 12, dodatni = zgodnie z ruchem wskazówek.
+══════════════════════════════════════════════════════ -->
+<section id="partnerzy" class="orbit-section bg-surface border-b border-surface-border">
+  <div class="text-center px-margin-mobile md:px-margin-desktop reveal">
+    <span class="font-section-label text-section-label text-primary uppercase block mb-2">Partnerzy</span>
+    <h2 class="font-headline-lg text-headline-lg text-on-surface">Dziękujemy naszym partnerom</h2>
+    <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">Dzięki nim Adapciak 2026 był jeszcze lepszy.</p>
+    <p class="font-caption text-caption text-secondary mt-3">
+      Chcesz wesprzeć kolejną edycję?
+      <a href="mailto:adapciak@samorzad.ue.wroc.pl" class="text-primary hover:underline">Napisz do nas!</a>
+    </p>
+  </div>
+
+  <!-- Scena jest dekoracją (aria-hidden) — nazwy partnerów dla czytników ekranu: -->
+  <ul class="sr-only">
+    <li>NOMAR</li><li>Winiary</li><li>dm</li><li>Polar</li><li>Tarczyński</li><li>Vitamizu</li>
+  </ul>
+
+  <div id="partner-orbit" class="orbit-stage" aria-hidden="true">
+    <div class="orbit-ring" data-ring="inner"></div>
+    <div class="orbit-ring" data-ring="middle"></div>
+    <div class="orbit-ring" data-ring="outer"></div>
+    <canvas class="orbit-globe"></canvas>
+
+    <div class="orbit-chip" data-ring="inner" data-angle="-45">
+      <picture><source type="image/webp" srcset="./images/partnerzy/nomar.webp"><img src="./images/partnerzy/nomar.png" alt="" width="281" height="128" decoding="async"></picture>
+    </div>
+    <div class="orbit-chip" data-ring="inner" data-angle="45">
+      <picture><source type="image/webp" srcset="./images/partnerzy/winiary.webp"><img src="./images/partnerzy/winiary.png" alt="" width="216" height="128" decoding="async"></picture>
+    </div>
+    <div class="orbit-chip" data-ring="middle" data-angle="0">
+      <picture><source type="image/webp" srcset="./images/partnerzy/dm.webp"><img src="./images/partnerzy/dm.png" alt="" width="216" height="128" decoding="async"></picture>
+    </div>
+    <div class="orbit-chip orbit-chip--wide" data-ring="middle" data-angle="-90">
+      <picture><source type="image/webp" srcset="./images/partnerzy/polar.webp"><img src="./images/partnerzy/polar.png" alt="" width="763" height="128" decoding="async"></picture>
+    </div>
+    <div class="orbit-chip orbit-chip--wide" data-ring="outer" data-angle="-45">
+      <picture><source type="image/webp" srcset="./images/partnerzy/tarczynski.webp"><img src="./images/partnerzy/tarczynski.png" alt="" width="294" height="128" decoding="async"></picture>
+    </div>
+    <div class="orbit-chip" data-ring="outer" data-angle="45">
+      <picture><source type="image/webp" srcset="./images/partnerzy/vitamizu.webp"><img src="./images/partnerzy/vitamizu.png" alt="" width="246" height="128" decoding="async"></picture>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     GALERIA - wspomnienia
+══════════════════════════════════════════════════════ -->
+<section id="galeria" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Galeria</span>
+      <h2 class="font-headline-lg text-headline-lg text-on-surface">Wspomnienia</h2>
+      <p class="font-body-lg text-body-lg text-secondary mt-4">Kadry, które zostają na długo.</p>
+    </div>
+
+    <!-- Galeria masonry -->
+    <div class="masonry reveal">
+      <button type="button" class="masonry-item" onclick="openLightbox(0)" aria-label="Powiększ zdjęcie 1">
+        <img src="./images/galeria/1.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 1" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(1)" aria-label="Powiększ zdjęcie 2">
+        <img src="./images/galeria/2.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 2" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(2)" aria-label="Powiększ zdjęcie 3">
+        <img src="./images/galeria/3.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 3" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(3)" aria-label="Powiększ zdjęcie 4">
+        <img src="./images/galeria/4.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 4" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(4)" aria-label="Powiększ zdjęcie 5">
+        <img src="./images/galeria/5.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 5" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(5)" aria-label="Powiększ zdjęcie 6">
+        <img src="./images/galeria/6.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 6" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(6)" aria-label="Powiększ zdjęcie 7">
+        <img src="./images/galeria/7.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 7" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(7)" aria-label="Powiększ zdjęcie 8">
+        <img src="./images/galeria/8.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 8" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(8)" aria-label="Powiększ zdjęcie 9">
+        <img src="./images/galeria/9.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 9" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(9)" aria-label="Powiększ zdjęcie 10">
+        <img src="./images/galeria/10.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 10" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(10)" aria-label="Powiększ zdjęcie 11">
+        <img src="./images/galeria/11.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 11" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(11)" aria-label="Powiększ zdjęcie 12">
+        <img src="./images/galeria/12.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 12" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(12)" aria-label="Powiększ zdjęcie 13">
+        <img src="./images/galeria/13.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 13" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(13)" aria-label="Powiększ zdjęcie 14">
+        <img src="./images/galeria/14.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 14" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(14)" aria-label="Powiększ zdjęcie 15">
+        <img src="./images/galeria/15.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 15" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(15)" aria-label="Powiększ zdjęcie 16">
+        <img src="./images/galeria/16.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 16" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(16)" aria-label="Powiększ zdjęcie 17">
+        <img src="./images/galeria/17.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 17" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(17)" aria-label="Powiększ zdjęcie 18">
+        <img src="./images/galeria/18.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 18" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(18)" aria-label="Powiększ zdjęcie 19">
+        <img src="./images/galeria/19.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 19" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(19)" aria-label="Powiększ zdjęcie 20">
+        <img src="./images/galeria/20.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 20" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(20)" aria-label="Powiększ zdjęcie 21">
+        <img src="./images/galeria/21.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 21" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(21)" aria-label="Powiększ zdjęcie 22">
+        <img src="./images/galeria/22.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 22" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(22)" aria-label="Powiększ zdjęcie 23">
+        <img src="./images/galeria/23.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 23" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(23)" aria-label="Powiększ zdjęcie 24">
+        <img src="./images/galeria/24.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 24" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(24)" aria-label="Powiększ zdjęcie 25">
+        <img src="./images/galeria/25.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 25" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(25)" aria-label="Powiększ zdjęcie 26">
+        <img src="./images/galeria/26.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 26" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(26)" aria-label="Powiększ zdjęcie 27">
+        <img src="./images/galeria/27.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 27" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(27)" aria-label="Powiększ zdjęcie 28">
+        <img src="./images/galeria/28.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 28" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(28)" aria-label="Powiększ zdjęcie 29">
+        <img src="./images/galeria/29.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 29" loading="lazy" decoding="async">
+      </button>
+      <button type="button" class="masonry-item" onclick="openLightbox(29)" aria-label="Powiększ zdjęcie 30">
+        <img src="./images/galeria/30.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 30" loading="lazy" decoding="async">
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     ARCHIWUM (po wydarzeniu, 09.2026) - sekcje z okresu promocji i zapisów:
+     O wydarzeniu, Imprezy (+ dawne panele harmonogramu), Zapisy, taśma Partnerów,
+     FAQ, Kontakt (formularz), Miejsce. <template> zamiast komentarza HTML, bo sekcje
+     mają w środku własne komentarze, a tych nie da się zagnieżdżać.
+     Przeglądarka nie renderuje zawartości <template> i nie pobiera z niej obrazów.
+     Przywrócenie sekcji = przenieś ją z powrotem przed <template>.
+══════════════════════════════════════════════════════ -->
+<template id="archiwum-2026">
 <!-- ══════════════════════════════════════════════════════
      O WYDARZENIU
 ══════════════════════════════════════════════════════ -->
@@ -1685,114 +2253,6 @@
 
 
 <!-- ══════════════════════════════════════════════════════
-     GALERIA - auto-slider z poprzednich edycji
-══════════════════════════════════════════════════════ -->
-<section id="galeria" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Galeria</span>
-      <h2 class="font-headline-lg text-headline-lg text-on-surface">Poprzednie edycje</h2>
-      <p class="font-body-lg text-body-lg text-secondary mt-4">Wspomnienia, które zostają na długo.</p>
-    </div>
-
-    <!-- Galeria masonry -->
-    <div class="masonry reveal">
-      <button type="button" class="masonry-item" onclick="openLightbox(0)" aria-label="Powiększ zdjęcie 1">
-        <img src="./images/galeria/1.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 1" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(1)" aria-label="Powiększ zdjęcie 2">
-        <img src="./images/galeria/2.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 2" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(2)" aria-label="Powiększ zdjęcie 3">
-        <img src="./images/galeria/3.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 3" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(3)" aria-label="Powiększ zdjęcie 4">
-        <img src="./images/galeria/4.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 4" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(4)" aria-label="Powiększ zdjęcie 5">
-        <img src="./images/galeria/5.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 5" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(5)" aria-label="Powiększ zdjęcie 6">
-        <img src="./images/galeria/6.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 6" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(6)" aria-label="Powiększ zdjęcie 7">
-        <img src="./images/galeria/7.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 7" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(7)" aria-label="Powiększ zdjęcie 8">
-        <img src="./images/galeria/8.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 8" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(8)" aria-label="Powiększ zdjęcie 9">
-        <img src="./images/galeria/9.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 9" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(9)" aria-label="Powiększ zdjęcie 10">
-        <img src="./images/galeria/10.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 10" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(10)" aria-label="Powiększ zdjęcie 11">
-        <img src="./images/galeria/11.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 11" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(11)" aria-label="Powiększ zdjęcie 12">
-        <img src="./images/galeria/12.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 12" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(12)" aria-label="Powiększ zdjęcie 13">
-        <img src="./images/galeria/13.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 13" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(13)" aria-label="Powiększ zdjęcie 14">
-        <img src="./images/galeria/14.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 14" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(14)" aria-label="Powiększ zdjęcie 15">
-        <img src="./images/galeria/15.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 15" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(15)" aria-label="Powiększ zdjęcie 16">
-        <img src="./images/galeria/16.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 16" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(16)" aria-label="Powiększ zdjęcie 17">
-        <img src="./images/galeria/17.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 17" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(17)" aria-label="Powiększ zdjęcie 18">
-        <img src="./images/galeria/18.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 18" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(18)" aria-label="Powiększ zdjęcie 19">
-        <img src="./images/galeria/19.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 19" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(19)" aria-label="Powiększ zdjęcie 20">
-        <img src="./images/galeria/20.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 20" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(20)" aria-label="Powiększ zdjęcie 21">
-        <img src="./images/galeria/21.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 21" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(21)" aria-label="Powiększ zdjęcie 22">
-        <img src="./images/galeria/22.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 22" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(22)" aria-label="Powiększ zdjęcie 23">
-        <img src="./images/galeria/23.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 23" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(23)" aria-label="Powiększ zdjęcie 24">
-        <img src="./images/galeria/24.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 24" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(24)" aria-label="Powiększ zdjęcie 25">
-        <img src="./images/galeria/25.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 25" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(25)" aria-label="Powiększ zdjęcie 26">
-        <img src="./images/galeria/26.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 26" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(26)" aria-label="Powiększ zdjęcie 27">
-        <img src="./images/galeria/27.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 27" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(27)" aria-label="Powiększ zdjęcie 28">
-        <img src="./images/galeria/28.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 28" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(28)" aria-label="Powiększ zdjęcie 29">
-        <img src="./images/galeria/29.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 29" loading="lazy" decoding="async">
-      </button>
-      <button type="button" class="masonry-item" onclick="openLightbox(29)" aria-label="Powiększ zdjęcie 30">
-        <img src="./images/galeria/30.webp" alt="Adapciak - wspomnienia z obozu, zdjęcie 30" loading="lazy" decoding="async">
-      </button>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════════════
      MIEJSCE WYDARZENIA
 ══════════════════════════════════════════════════════ -->
 <section id="miejsce" class="bg-surface border-b border-surface-border">
@@ -1830,282 +2290,7 @@
     </div>
   </div>
 </section>
-
-
-<!-- ══════════════════════════════════════════════════════
-     EKIPA - organizatorzy Adapciaka (kadra projektowa + kadra)
-══════════════════════════════════════════════════════ -->
-<section id="ekipa" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container border-b border-surface-border">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <span class="font-section-label text-section-label text-primary uppercase block mb-2">Organizatorzy</span>
-      <h2 class="font-headline-lg text-headline-lg text-on-surface">Ekipa Adapciaka</h2>
-      <p class="font-body-lg text-body-lg text-secondary mt-4 max-w-xl mx-auto">
-        Ci ludzie od miesięcy szykują dla Was te osiem dni. Na miejscu poznacie ich wszystkich - a póki co możecie zapamiętać twarze.
-      </p>
-    </div>
-
-    <div class="team-subhead reveal">
-      <span class="font-section-label text-section-label text-primary uppercase">Kadra Projektowa</span>
-    </div>
-
-    <div class="team-grid">
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/stoklosa-400.webp 400w, ./images/zespol/stoklosa-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/stoklosa.jpg" alt="Wiktoria Stokłosa" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Wiktoria Stokłosa</p>
-          <p class="team-role">Koordynatorka</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/szklarczyk-400.webp 400w, ./images/zespol/szklarczyk-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/szklarczyk.jpg" alt="Sara Szklarczyk" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Sara Szklarczyk</p>
-          <p class="team-role">Wicekoordynatorka</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/stachowski-400.webp 400w, ./images/zespol/stachowski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/stachowski.jpg" alt="Hubert Stachowski" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Hubert Stachowski</p>
-          <p class="team-role">Członek Zarządu ds. Finansów</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/derej-400.webp 400w, ./images/zespol/derej-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/derej.jpg" alt="Oliwia Derej" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Oliwia Derej</p>
-          <p class="team-role">Członkini Zarządu ds. Promocji</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/adamski-400.webp 400w, ./images/zespol/adamski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/adamski.jpg" alt="Michał Adamski" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Michał Adamski</p>
-          <p class="team-role">Członek Zarządu ds. Harmonogramu</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/szydlowska-400.webp 400w, ./images/zespol/szydlowska-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/szydlowska.jpg" alt="Martyna Szydłowska" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Martyna Szydłowska</p>
-          <p class="team-role">Członkini Zarządu ds. Kontaktów Zewnętrznych</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/buczkowski-400.webp 400w, ./images/zespol/buczkowski-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/buczkowski.jpg" alt="Bartosz Buczkowski" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Bartosz Buczkowski</p>
-          <p class="team-role">Członek Zarządu ds. Logitechu</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card team-card--lead bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/goetze-400.webp 400w, ./images/zespol/goetze-800.webp 800w" sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/goetze.jpg" alt="Hanna Goetze" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Hanna Goetze</p>
-          <p class="team-role">Członkini Zarządu ds. Administracji</p>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="team-subhead reveal" style="margin-top:64px;">
-      <span class="font-section-label text-section-label text-primary uppercase">Kadra</span>
-    </div>
-
-    <div class="team-grid team-grid--crew">
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/dawid-400.webp 400w, ./images/zespol/dawid-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/dawid.jpg" alt="Ania Dawid" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Ania Dawid</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/sosinska-400.webp 400w, ./images/zespol/sosinska-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/sosinska.jpg" alt="Ewa Sosińska" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Ewa Sosińska</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/gusiacki-400.webp 400w, ./images/zespol/gusiacki-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/gusiacki.jpg" alt="Filip Gusiacki" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Filip Gusiacki</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/godlewska-400.webp 400w, ./images/zespol/godlewska-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/godlewska.jpg" alt="Gosia Godlewska" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Gosia Godlewska</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/lachowicz-400.webp 400w, ./images/zespol/lachowicz-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/lachowicz.jpg" alt="Gosia Lachowicz" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Gosia Lachowicz</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/pelak-400.webp 400w, ./images/zespol/pelak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/pelak.jpg" alt="Gosia Pelak" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Gosia Pelak</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/pabisiak-400.webp 400w, ./images/zespol/pabisiak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/pabisiak.jpg" alt="Hubert Pabisiak" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Hubert Pabisiak</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/cwirko-400.webp 400w, ./images/zespol/cwirko-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/cwirko.jpg" alt="Inga Ćwioro" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Inga Ćwioro</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/zamojski-400.webp 400w, ./images/zespol/zamojski-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/zamojski.jpg" alt="Maciek Zamojski" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Maciek Zamojski</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-1">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/krzywicka-400.webp 400w, ./images/zespol/krzywicka-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/krzywicka.jpg" alt="Martyna Krzywicka" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Martyna Krzywicka</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-2">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/pozniak-400.webp 400w, ./images/zespol/pozniak-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/pozniak.jpg" alt="Mateusz Poźniak" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Mateusz Poźniak</p>
-        </figcaption>
-      </figure>
-
-      <figure class="team-card bg-surface border border-surface-border rounded-xl reveal reveal-scale reveal-delay-3">
-        <div class="team-photo">
-          <picture>
-            <source type="image/webp" srcset="./images/zespol/sobantka-400.webp 400w, ./images/zespol/sobantka-800.webp 800w" sizes="(min-width:1024px) 17vw, (min-width:640px) 33vw, 50vw">
-            <img src="./images/zespol/sobantka.jpg" alt="Ola Sobańtka" width="800" height="1066" loading="lazy" decoding="async">
-          </picture>
-        </div>
-        <figcaption class="team-meta">
-          <p class="team-name text-on-surface">Ola Sobańtka</p>
-        </figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
+</template>
 
 
 <!-- ══════════════════════════════════════════════════════
@@ -2127,7 +2312,7 @@
   <div class="flex flex-wrap justify-center gap-6">
     <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="/polityka-prywatnosci">Polityka Prywatności</a>
     <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="/regulamin.pdf" target="_blank" rel="noopener">Regulamin</a>
-    <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="#kontakt">Kontakt</a>
+    <a class="hover:text-primary transition-colors font-body-md text-body-md" style="color: #A8A29E;" href="mailto:adapciak@samorzad.ue.wroc.pl">Kontakt</a>
   </div>
   <div class="font-caption text-caption text-center md:text-right" style="color: #A8A29E;">
     © 2026 Samorząd Studentów UEW.<br/>Wszelkie prawa zastrzeżone.
@@ -2774,7 +2959,7 @@ function openPartyPopup(tile) {
 })();
 function closePartyPopup() {
   var pp = document.getElementById('party-popup');
-  if (pp.classList.contains('hidden')) return;
+  if (!pp || pp.classList.contains('hidden')) return;   // popup może być w archiwum
   pp.classList.add('hidden');
   document.body.style.overflow = '';
   releaseFocus(pp);
@@ -2799,6 +2984,160 @@ function closePartnerPopup() {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closePartyPopup(); closePartnerPopup(); }
 });
+
+/* ─── Partnerzy: glob z cząsteczek + logotypy na orbitach ───
+   Logotypy pozycjonujemy w JS po okręgu (kąt liczony z czasu), a nie obracając pierścień
+   w CSS — dzięki temu zawsze stoją pionowo i nie trzeba kontr-rotacji. Glob i orbity
+   chodzą w jednej pętli rAF, która staje, gdy sekcja jest poza ekranem albo karta ukryta.
+   Reduced motion: jedna statyczna klatka. */
+(function initPartnerOrbit() {
+  var stage = document.getElementById('partner-orbit');
+  if (!stage) return;
+  var canvas = stage.querySelector('.orbit-globe');
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  // okres obiegu [s] i kierunek (1 = zgodnie z ruchem wskazówek)
+  var RINGS = {
+    inner:  { period: 18, dir:  1 },
+    middle: { period: 24, dir: -1 },
+    outer:  { period: 30, dir:  1 }
+  };
+  var GLOBE_PERIOD = 70;          // pełny obrót globu [s] — bardzo powoli
+  var TILT = 0.38;                // pochylenie osi [rad]: widać trochę „czubka" kuli
+  var CAM = 3.2;                  // odległość kamery w promieniach kuli (perspektywa)
+  var N = 960;
+
+  // Lustrzana kopia każdego logotypu o +180°, żeby widoczna górna połowa orbity nie pustoszała
+  Array.prototype.slice.call(stage.querySelectorAll('.orbit-chip')).forEach(function (chip) {
+    var twin = chip.cloneNode(true);
+    twin.dataset.angle = String(parseFloat(chip.dataset.angle) + 180);
+    stage.appendChild(twin);
+  });
+  var chips = Array.prototype.slice.call(stage.querySelectorAll('.orbit-chip')).map(function (el) {
+    return { el: el, ring: el.dataset.ring, a0: parseFloat(el.dataset.angle) * Math.PI / 180 };
+  });
+
+  // Punkty na sferze — rozkład Fibonacciego (złoty kąt), równomierny bez skupisk na biegunach
+  var pts = new Float32Array(N * 3);
+  var GA = Math.PI * (3 - Math.sqrt(5));
+  for (var i = 0; i < N; i++) {
+    var y = 1 - (i + 0.5) * 2 / N;
+    var r = Math.sqrt(1 - y * y);
+    pts[i * 3]     = Math.cos(GA * i) * r;
+    pts[i * 3 + 1] = y;
+    pts[i * 3 + 2] = Math.sin(GA * i) * r;
+  }
+
+  var W = 0, H = 0, radius = {}, chipHalf = 0, gW = 0, gH = 0, dotScale = 1, dotRGB = '28, 25, 23';
+
+  function measure() {
+    W = stage.clientWidth;
+    H = stage.clientHeight;
+    ['inner', 'middle', 'outer'].forEach(function (k) {
+      var ring = stage.querySelector('.orbit-ring[data-ring="' + k + '"]');
+      radius[k] = ring ? ring.offsetWidth / 2 : 0;
+    });
+    chipHalf = chips.length ? chips[0].el.offsetWidth / 2 : 0;
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    gW = canvas.clientWidth;
+    gH = canvas.clientHeight;
+    canvas.width  = Math.round(gW * dpr);
+    canvas.height = Math.round(gH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dotScale = Math.max(0.75, Math.sqrt(gW / 700));
+    readColor();
+  }
+
+  function readColor() {
+    var v = getComputedStyle(stage).getPropertyValue('--orbit-dot').trim();
+    if (v) dotRGB = v;
+  }
+
+  function drawGlobe(t) {
+    ctx.clearRect(0, 0, gW, gH);
+    var R = gW / 2 * 0.93;               // zapas na powiększenie perspektywą
+    var cx = gW / 2, cy = gH;            // środek kuli = dolna krawędź canvasu
+    var rot = (t / GLOBE_PERIOD) * Math.PI * 2;
+    var cr = Math.cos(rot), sr = Math.sin(rot);
+    var ct = Math.cos(TILT), st = Math.sin(TILT);
+    ctx.fillStyle = 'rgb(' + dotRGB + ')';
+    for (var i = 0; i < N; i++) {
+      var x = pts[i * 3], y = pts[i * 3 + 1], z = pts[i * 3 + 2];
+      // obrót wokół osi Y, potem pochylenie wokół X
+      var x1 = x * cr + z * sr;
+      var z1 = -x * sr + z * cr;
+      var y2 = y * ct - z1 * st;
+      var z2 = y * st + z1 * ct;
+      if (y2 < -0.04) continue;           // dolna półkula — poza sceną
+      var p = CAM / (CAM - z2);           // perspektywa: bliżej = większe
+      var depth = (z2 + 1) / 2;           // 0 = tył, 1 = przód
+      ctx.globalAlpha = 0.1 + 0.8 * depth * depth;
+      ctx.beginPath();
+      ctx.arc(cx + x1 * R * p, cy - y2 * R * p, (0.6 + 1.5 * depth) * dotScale, 0, 6.2832);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function placeChips(t) {
+    var cx = W / 2, cy = H;
+    for (var i = 0; i < chips.length; i++) {
+      var c = chips[i], ring = RINGS[c.ring];
+      var a = c.a0 + ring.dir * (t / ring.period) * Math.PI * 2;
+      var R = radius[c.ring];
+      var x = cx + Math.sin(a) * R - chipHalf;
+      var y = cy - Math.cos(a) * R - chipHalf;
+      c.el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    }
+  }
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var elapsed = 0, last = 0, raf = 0, onScreen = false;
+
+  function render() { drawGlobe(elapsed); placeChips(elapsed); }
+
+  function frame(now) {
+    // czas liczony tylko w trakcie animacji: po pauzie ruch rusza z tego samego miejsca
+    if (last) elapsed += Math.min(now - last, 100) / 1000;
+    last = now;
+    render();
+    raf = requestAnimationFrame(frame);
+  }
+  function start() {
+    if (raf || reduce.matches || !onScreen || document.hidden) return;
+    last = 0;
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+
+  measure();
+  render();
+  stage.classList.add('is-ready');
+
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(function () { measure(); render(); }).observe(stage);
+  } else {
+    window.addEventListener('resize', function () { measure(); render(); });
+  }
+  new IntersectionObserver(function (entries) {
+    onScreen = entries[0].isIntersecting;
+    if (onScreen) start(); else stop();
+  }, { rootMargin: '100px 0px' }).observe(stage);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop(); else start();
+  });
+  if (reduce.addEventListener) {
+    reduce.addEventListener('change', function () { if (reduce.matches) { stop(); render(); } else start(); });
+  }
+  // zmiana motywu (klasa .dark na <html>) → nowy kolor punktów
+  new MutationObserver(function () { readColor(); render(); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+})();
 </script>
 
 <!-- UX-02: Back to top -->
@@ -2808,6 +3147,9 @@ document.addEventListener('keydown', function(e) {
   <span class="material-symbols-outlined">&#xE5D8;</span>
 </button>
 
+<!-- ARCHIWUM (po wydarzeniu, 09.2026): popup motywu imprezy - kafelki Imprez są w archiwum.
+     Przywrócenie razem z sekcją Imprezy = usuń <template> i </template>. -->
+<template id="archiwum-party-popup">
 <!-- Party theme popup -->
 <div id="party-popup" class="hidden fixed inset-0 z-[9998] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.78);" onclick="if(event.target===this)closePartyPopup()">
   <div class="bg-on-surface text-white w-full max-w-3xl max-h-[90vh] relative rounded-2xl overflow-hidden flex flex-col md:flex-row" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="party-popup-name">
@@ -2835,6 +3177,7 @@ document.addEventListener('keydown', function(e) {
     </div>
   </div>
 </div>
+</template>
 
 <!-- Partner popup -->
 <div id="partner-popup" class="hidden fixed inset-0 z-[9997] flex items-center justify-center" style="background:rgba(0,0,0,0.6);" onclick="if(event.target===this)closePartnerPopup()">
