@@ -108,6 +108,7 @@ None yet.
 | fast | Galeria na mobile, przepełnienie w poziomie, zapisy zamknięte | 2026-08-27 | f5d1d44 | — (inline) |
 | 260924-q2o | Tryb po wydarzeniu: strona podsumowująca + sekcja Partnerzy (orbity, 6 logotypów) | 2026-09-24 | a067c78 | [260924-q2o-tryb-po-wydarzeniu-strona-podsumowuj-ca-](./quick/260924-q2o-tryb-po-wydarzeniu-strona-podsumowuj-ca-/) |
 | fast | Mail kontakt@, bez badge'y z kropką, Partnerzy wielką literą, Ekipa→Kadra, galeria → zapowiedź zdjęć 2026 | 2026-09-24 | (ten commit) | — (inline) |
+| fast | Liczba uczestników: ok. 200 zamiast 150 (statystyka, FAQ, llms.txt) | 2026-09-27 | dfd38b1 | — (inline) |
 
 ## Session Continuity
 
